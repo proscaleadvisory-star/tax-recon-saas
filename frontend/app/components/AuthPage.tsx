@@ -284,7 +284,7 @@ export default function AuthPage() {
                 },
               },
             }}
-            providers={[]}
+            providers={["google"]}
             redirectTo={
               typeof window !== "undefined" ? window.location.origin : ""
             }
