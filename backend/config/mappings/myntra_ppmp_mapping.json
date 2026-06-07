@@ -1,0 +1,20 @@
+{
+  "Customer Order ID": "order_id",
+  "SKU": "sku",
+  "Quantity": "quantity",
+  "Invoice Value": "invoice_value",
+  "Taxable Value": "taxable_value",
+  "CGST": "cgst_amount",
+  "SGST": "sgst_amount",
+  "IGST": "igst_amount",
+  "Settled Amount": "settled_amount",
+  "Commission": "marketplace_fee",
+  "Fixed Fee": "marketplace_fee",
+  "PG Fee": "marketplace_fee",
+  "Pick & Pack Fee": "marketplace_fee",
+  "Forward Shipping Fee": "marketplace_fee",
+  "TCS": "tcs_amount",
+  "TDS": "tds_amount",
+  "Payment Date": "settlement_date",
+  "State": "shipping_state"
+}

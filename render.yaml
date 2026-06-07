@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: tax-recon-backend
+    env: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: MAX_CHUNK_SIZE
+        value: "5000"

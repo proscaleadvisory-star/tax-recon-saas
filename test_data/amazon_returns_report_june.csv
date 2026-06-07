@@ -1,0 +1,6 @@
+order_id_ref,sku_code,returned_qty,refund_amt_gross,reason_code,month_period
+403-2000000-3000001,SKU-PRO-01,1,1299.0,Size mismatch,2026-06
+403-2000000-3000002,SKU-PRO-02,1,1999.0,Size mismatch,2026-06
+403-2000000-3000003,SKU-PRO-02,1,1999.0,Size mismatch,2026-06
+403-2000000-3000004,SKU-PRO-01,1,1299.0,Size mismatch,2026-06
+403-2000000-3000005,SKU-PRO-02,1,1999.0,Size mismatch,2026-06

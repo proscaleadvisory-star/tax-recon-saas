@@ -1,0 +1,4 @@
+sku,product_name,cost_price,selling_price,min_safety_stock,stock_in_transit
+SKU-PRO-01,Premium Leather Wallet,450.0,1299.0,25,50
+SKU-PRO-02,Wireless Charger Stand,750.0,1999.0,15,30
+SKU-PRO-03,Minimalist Travel Bag,1200.0,3499.0,10,10

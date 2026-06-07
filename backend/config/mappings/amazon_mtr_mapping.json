@@ -1,0 +1,16 @@
+{
+  "order-id": "order_id",
+  "merchant-sku": "sku",
+  "product-name": "product_description",
+  "quantity": "quantity",
+  "total-amount": "settled_amount",
+  "selling-fees": "marketplace_fee",
+  "transaction-status": "transaction_status",
+  "posted-date": "settlement_date",
+  "transaction-release-date": "transaction_release_date",
+  "invoice-number": "invoice_number",
+  "cgst-tax": "cgst_amount",
+  "sgst-tax": "sgst_amount",
+  "igst-tax": "igst_amount",
+  "ship-to-state": "shipping_state"
+}

@@ -1,0 +1,14 @@
+{
+  "Order Item Id": "order_id",
+  "FSN": "sku",
+  "Quantity": "quantity",
+  "Settlement Value": "settled_amount",
+  "Commission": "marketplace_fee",
+  "Collection Fee": "marketplace_fee",
+  "Fixed Fee": "marketplace_fee",
+  "TCS Amount": "tcs_amount",
+  "TDS Amount": "tds_amount",
+  "Order Date": "month_year",
+  "Settlement Date": "settlement_date",
+  "Customer State": "shipping_state"
+}

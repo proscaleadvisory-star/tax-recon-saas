@@ -1,0 +1,419 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+/* =========================================================================
+   DESIGN TOKENS — Premium Dark Theme
+   ========================================================================= */
+:root {
+  --bg-primary: #07080a;
+  --bg-secondary: #0d0f14;
+  --bg-card: #111318;
+  --bg-card-hover: #161921;
+  --bg-elevated: #1a1d27;
+  --bg-input: #12141b;
+
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.1);
+  --border-focus: rgba(99, 102, 241, 0.5);
+
+  --text-primary: #f0f1f5;
+  --text-secondary: #8b8fa3;
+  --text-muted: #565a6e;
+  --text-inverse: #07080a;
+
+  --accent-indigo: #818cf8;
+  --accent-indigo-dim: rgba(129, 140, 248, 0.15);
+  --accent-emerald: #34d399;
+  --accent-emerald-dim: rgba(52, 211, 153, 0.15);
+  --accent-rose: #fb7185;
+  --accent-rose-dim: rgba(251, 113, 133, 0.15);
+  --accent-amber: #fbbf24;
+  --accent-amber-dim: rgba(251, 191, 36, 0.15);
+  --accent-cyan: #22d3ee;
+  --accent-cyan-dim: rgba(34, 211, 238, 0.15);
+
+  --gradient-hero: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
+  --gradient-success: linear-gradient(135deg, #34d399 0%, #22d3ee 100%);
+  --gradient-danger: linear-gradient(135deg, #fb7185 0%, #f97316 100%);
+  --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-glow-indigo: 0 0 30px rgba(129, 140, 248, 0.15);
+  --shadow-glow-emerald: 0 0 30px rgba(52, 211, 153, 0.15);
+  --shadow-glow-rose: 0 0 30px rgba(251, 113, 133, 0.15);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+}
+
+/* =========================================================================
+   BASE RESET
+   ========================================================================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Subtle grid background pattern */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 25% 25%, rgba(129, 140, 248, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(192, 132, 252, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =========================================================================
+   UTILITY CLASSES
+   ========================================================================= */
+.glass-card {
+  background: var(--gradient-card);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: var(--border-default);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.metric-card {
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem;
+}
+
+.metric-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.metric-card.indigo::before { background: var(--gradient-hero); }
+.metric-card.emerald::before { background: var(--gradient-success); }
+.metric-card.rose::before { background: var(--gradient-danger); }
+.metric-card.amber::before { background: linear-gradient(90deg, #fbbf24, #f97316); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badge-ok {
+  background: var(--accent-emerald-dim);
+  color: var(--accent-emerald);
+}
+.badge-under {
+  background: var(--accent-rose-dim);
+  color: var(--accent-rose);
+}
+.badge-over {
+  background: var(--accent-amber-dim);
+  color: var(--accent-amber);
+}
+.badge-missing {
+  background: var(--accent-cyan-dim);
+  color: var(--accent-cyan);
+}
+
+/* =========================================================================
+   BUTTONS
+   ========================================================================= */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: var(--accent-indigo);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: -0.01em;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #6366f1;
+  box-shadow: var(--shadow-glow-indigo);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--bg-elevated);
+  border-color: var(--accent-indigo);
+}
+
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: var(--accent-rose-dim);
+  color: var(--accent-rose);
+  border: 1px solid rgba(251, 113, 133, 0.2);
+  border-radius: var(--radius-md);
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: rgba(251, 113, 133, 0.25);
+  box-shadow: var(--shadow-glow-rose);
+}
+
+/* =========================================================================
+   INPUTS
+   ========================================================================= */
+.input-field {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.input-field::placeholder {
+  color: var(--text-muted);
+}
+
+/* =========================================================================
+   UPLOAD DROPZONE
+   ========================================================================= */
+.dropzone {
+  position: relative;
+  border: 2px dashed var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--bg-card);
+  overflow: hidden;
+}
+
+.dropzone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(129, 140, 248, 0.03), transparent 70%);
+  pointer-events: none;
+}
+
+.dropzone:hover,
+.dropzone.active {
+  border-color: var(--accent-indigo);
+  background: var(--bg-card-hover);
+  box-shadow: var(--shadow-glow-indigo);
+}
+
+.dropzone.uploading {
+  border-color: var(--accent-emerald);
+  box-shadow: var(--shadow-glow-emerald);
+}
+
+/* =========================================================================
+   DATA TABLE
+   ========================================================================= */
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.8rem;
+}
+
+.data-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--bg-secondary);
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.data-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.data-table tbody tr:hover {
+  background: var(--bg-card-hover);
+}
+
+.data-table tbody td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.data-table tbody td.mono {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+}
+
+/* =========================================================================
+   SPINNER
+   ========================================================================= */
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-subtle);
+  border-top-color: var(--accent-indigo);
+  border-radius: 50%;
+  animation: spin-slow 0.8s linear infinite;
+}
+
+.pulse-text {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 25%,
+    var(--bg-elevated) 50%,
+    var(--bg-card) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* =========================================================================
+   SCROLLBAR
+   ========================================================================= */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* =========================================================================
+   SUPABASE AUTH UI OVERRIDES
+   ========================================================================= */
+[data-supabase-auth-ui] {
+  --colors-brand: #818cf8 !important;
+  --colors-brandAccent: #6366f1 !important;
+  --colors-brandButtonText: #07080a !important;
+  --colors-inputBackground: #12141b !important;
+  --colors-inputBorder: rgba(255, 255, 255, 0.1) !important;
+  --colors-inputText: #f0f1f5 !important;
+  --colors-inputPlaceholder: #565a6e !important;
+  --colors-messageText: #8b8fa3 !important;
+  --colors-anchorTextColor: #818cf8 !important;
+  --colors-dividerBackground: rgba(255, 255, 255, 0.06) !important;
+  --space-inputPadding: 12px !important;
+  --borderWidths-inputBorderWidth: 1px !important;
+  --radii-inputBorderRadius: 12px !important;
+  --radii-buttonBorderRadius: 12px !important;
+}
+
+/* =========================================================================
+   RESPONSIVE HELPERS
+   ========================================================================= */
+@media (max-width: 768px) {
+  .metric-card { padding: 1rem; }
+  .dropzone { padding: 2rem 1rem; }
+}

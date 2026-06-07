@@ -1,0 +1,9 @@
+{
+  "sub_order_num": "order_id",
+  "total_invoice_value": "invoice_value",
+  "total_taxable_sale_value": "taxable_value",
+  "tax_amount": "total_tax",
+  "end_customer_state_new": "shipping_state",
+  "quantity": "quantity",
+  "order_date": "month_year"
+}

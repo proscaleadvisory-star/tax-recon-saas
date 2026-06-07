@@ -1,0 +1,15 @@
+{
+  "Sub Order No": "order_id",
+  "Supplier SKU": "sku",
+  "Product Name": "product_description",
+  "Quantity": "quantity",
+  "Final Settlement Amount": "settled_amount",
+  "Meesho Commission (Incl. GST)": "marketplace_fee",
+  "TDS": "tds_amount",
+  "Payment Date": "settlement_date",
+  "Live Order Status": "order_status",
+  "Shipping Charge (Incl. GST)": "shipping_charge",
+  "Return Shipping Charge (Incl. GST)": "return_shipping_charge",
+  "Recovery": "recovery_amount",
+  "TCS": "tcs_amount"
+}
