@@ -10,6 +10,6 @@ services:
       - key: DATABASE_URL
         sync: false
       - key: ALLOWED_ORIGINS
-        sync: false
+        value: "http://localhost:3000,https://tax-recon-saas.vercel.app"
       - key: MAX_CHUNK_SIZE
         value: "5000"

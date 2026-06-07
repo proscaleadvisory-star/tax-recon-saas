@@ -33,7 +33,10 @@ from extractor import MeeshoExtractionEngine, calculate_file_hash
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL", "")
-ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+ALLOWED_ORIGINS = os.getenv(
+    "ALLOWED_ORIGINS",
+    "http://localhost:3000,http://127.0.0.1:3000,https://tax-recon-saas.vercel.app"
+).split(",")
 MAX_CHUNK_SIZE = int(os.getenv("MAX_CHUNK_SIZE", "5000"))
 
 if not DATABASE_URL:
@@ -61,7 +64,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
+    allow_origins=ALLOWED_ORIGINS + ["https://tax-recon-saas.vercel.app"],
+    allow_origin_regex=r"https://tax-recon-saas.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
