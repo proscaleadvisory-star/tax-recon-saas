@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { 
   Settings, 
   User, 
@@ -11,17 +11,28 @@ import {
   Bell, 
   Globe,
   Save,
-  ChevronRight
+  ChevronRight,
+  KeyRound,
+  ShieldCheck
 } from "lucide-react";
 import { PersistenceService } from "@/lib/services/persistence-service";
 
+type SectionType = "profile" | "business" | "security" | "notifications" | "data";
+
 export default function SettingsPage() {
+  const [activeSection, setActiveSection] = useState<SectionType>("profile");
+  
   const handleClearData = () => {
     if (confirm("CRITICAL: This will permanently wipe all local reconciliation data and settings. Proceed?")) {
       PersistenceService.clearAll();
       alert("All local data has been cleared.");
       window.location.reload();
     }
+  };
+
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert("Settings saved successfully.");
   };
 
   return (
@@ -38,85 +49,193 @@ export default function SettingsPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Left Nav */}
         <aside className="space-y-2">
-           <SettingsNavItem icon={<User />} label="Profile Info" active />
-           <SettingsNavItem icon={<Building2 />} label="Business Account" />
-           <SettingsNavItem icon={<Shield />} label="Security" />
-           <SettingsNavItem icon={<Bell />} label="Notifications" />
-           <SettingsNavItem icon={<Database />} label="Data Management" />
+           <SettingsNavItem 
+             icon={<User />} 
+             label="Profile Info" 
+             active={activeSection === "profile"} 
+             onClick={() => setActiveSection("profile")} 
+           />
+           <SettingsNavItem 
+             icon={<Building2 />} 
+             label="Business Account" 
+             active={activeSection === "business"} 
+             onClick={() => setActiveSection("business")} 
+           />
+           <SettingsNavItem 
+             icon={<Shield />} 
+             label="Security" 
+             active={activeSection === "security"} 
+             onClick={() => setActiveSection("security")} 
+           />
+           <SettingsNavItem 
+             icon={<Bell />} 
+             label="Notifications" 
+             active={activeSection === "notifications"} 
+             onClick={() => setActiveSection("notifications")} 
+           />
+           <SettingsNavItem 
+             icon={<Database />} 
+             label="Data Management" 
+             active={activeSection === "data"} 
+             onClick={() => setActiveSection("data")} 
+           />
         </aside>
 
         {/* Right Content */}
-        <main className="md:col-span-2 space-y-8">
-          {/* Profile Section */}
-          <section className="glass-card p-8 space-y-6">
-            <h3 className="text-xl font-bold text-white border-b border-white/5 pb-4">Personal Profile</h3>
-            
-            <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-500 uppercase">First Name</label>
-                <input type="text" defaultValue="John" className="settings-input" />
+        <main className="md:col-span-2">
+          {activeSection === "profile" && (
+            <form onSubmit={handleSave} className="glass-card p-8 space-y-6">
+              <h3 className="text-xl font-bold text-white border-b border-white/5 pb-4">Personal Profile</h3>
+              
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-500 uppercase">First Name</label>
+                  <input type="text" defaultValue="John" required className="settings-input" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-500 uppercase">Last Name</label>
+                  <input type="text" defaultValue="Advisor" required className="settings-input" />
+                </div>
               </div>
+
               <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-500 uppercase">Last Name</label>
-                <input type="text" defaultValue="Advisor" className="settings-input" />
+                <label className="text-xs font-bold text-slate-500 uppercase">Email Address</label>
+                <input type="email" defaultValue="demo@proscale.com" required className="settings-input" />
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-500 uppercase">Email Address</label>
-              <input type="email" defaultValue="demo@proscale.com" className="settings-input" />
-            </div>
+              <div className="pt-4 flex justify-end">
+                <button type="submit" className="btn-primary px-6 py-2.5 flex items-center gap-2 text-sm">
+                  <Save className="h-4 w-4" /> Save Changes
+                </button>
+              </div>
+            </form>
+          )}
 
-            <div className="pt-4 flex justify-end">
-              <button className="btn-primary px-6 py-2.5 flex items-center gap-2 text-sm">
-                <Save className="h-4 w-4" /> Save Changes
+          {activeSection === "business" && (
+            <form onSubmit={handleSave} className="glass-card p-8 space-y-6">
+              <h3 className="text-xl font-bold text-white border-b border-white/5 pb-4">Organization Details</h3>
+              
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-slate-500 uppercase">Firm Name</label>
+                <input type="text" defaultValue="ProScale Consulting LLP" required className="settings-input" />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-slate-500 uppercase">Firm Registration No / GSTIN</label>
+                <input type="text" defaultValue="27AAAPW1234A1Z1" required className="settings-input text-indigo-400 font-mono" />
+              </div>
+
+              <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+                <div className="flex items-center gap-3">
+                   <Globe className="h-5 w-5 text-slate-500" />
+                   <div>
+                     <p className="text-sm font-bold text-white">Public Profile</p>
+                     <p className="text-xs text-slate-500">Allow clients to find you on the portal</p>
+                   </div>
+                </div>
+                <button type="button" className="w-12 h-6 bg-indigo-500 rounded-full relative flex items-center justify-end px-1 cursor-pointer border-none">
+                   <div className="w-4 h-4 bg-white rounded-full" />
+                </button>
+              </div>
+
+              <div className="pt-4 flex justify-end">
+                <button type="submit" className="btn-primary px-6 py-2.5 flex items-center gap-2 text-sm">
+                  <Save className="h-4 w-4" /> Save Changes
+                </button>
+              </div>
+            </form>
+          )}
+
+          {activeSection === "security" && (
+            <form onSubmit={handleSave} className="glass-card p-8 space-y-6">
+              <h3 className="text-xl font-bold text-white border-b border-white/5 pb-4">Security Settings</h3>
+              
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-500 uppercase">Current Password</label>
+                  <input type="password" placeholder="••••••••" className="settings-input" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-500 uppercase">New Password</label>
+                  <input type="password" placeholder="Min. 8 characters" className="settings-input" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-500 uppercase">Confirm New Password</label>
+                  <input type="password" placeholder="Re-type new password" className="settings-input" />
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between p-4 bg-emerald-500/5 rounded-xl border border-emerald-500/10">
+                <div className="flex items-center gap-3">
+                   <ShieldCheck className="h-5 w-5 text-emerald-400" />
+                   <div>
+                     <p className="text-sm font-bold text-white">Two-Factor Authentication</p>
+                     <p className="text-xs text-slate-500">Secure your account with Google Authenticator</p>
+                   </div>
+                </div>
+                <button type="button" className="w-12 h-6 bg-slate-800 rounded-full relative flex items-center justify-start px-1 cursor-pointer border-none">
+                   <div className="w-4 h-4 bg-white rounded-full shadow" />
+                </button>
+              </div>
+
+              <div className="pt-4 flex justify-end">
+                <button type="submit" className="btn-primary px-6 py-2.5 flex items-center gap-2 text-sm">
+                  <KeyRound className="h-4 w-4" /> Update Credentials
+                </button>
+              </div>
+            </form>
+          )}
+
+          {activeSection === "notifications" && (
+            <form onSubmit={handleSave} className="glass-card p-8 space-y-6">
+              <h3 className="text-xl font-bold text-white border-b border-white/5 pb-4">Notification Preferences</h3>
+              
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+                  <div>
+                    <p className="text-sm font-bold text-white">Email Reconciliation Alerts</p>
+                    <p className="text-xs text-slate-500">Receive email notification when local matching finishes</p>
+                  </div>
+                  <button type="button" className="w-12 h-6 bg-indigo-500 rounded-full relative flex items-center justify-end px-1 cursor-pointer border-none">
+                     <div className="w-4 h-4 bg-white rounded-full" />
+                  </button>
+                </div>
+
+                <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+                  <div>
+                    <p className="text-sm font-bold text-white">Weekly Summary Digests</p>
+                    <p className="text-xs text-slate-500">Receive a weekly PDF dashboard containing compiled GST logs</p>
+                  </div>
+                  <button type="button" className="w-12 h-6 bg-slate-800 rounded-full relative flex items-center justify-start px-1 cursor-pointer border-none">
+                     <div className="w-4 h-4 bg-white rounded-full shadow" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="pt-4 flex justify-end">
+                <button type="submit" className="btn-primary px-6 py-2.5 flex items-center gap-2 text-sm">
+                  <Save className="h-4 w-4" /> Save Preferences
+                </button>
+              </div>
+            </form>
+          )}
+
+          {activeSection === "data" && (
+            <section className="glass-card p-8 border-rose-500/20 bg-rose-500/[0.02] space-y-6">
+              <h3 className="text-xl font-bold text-rose-400 flex items-center gap-2">
+                <Trash2 className="h-5 w-5" /> Danger Zone
+              </h3>
+              <p className="text-sm text-slate-400 font-medium leading-relaxed">
+                Permanently delete all your reconciliation history, saved files, and local settings. This action is irreversible.
+              </p>
+              <button 
+                onClick={handleClearData}
+                className="px-6 py-3 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-400 font-bold hover:bg-rose-500/20 transition-all text-sm active:scale-95 cursor-pointer"
+              >
+                Delete All Workspace Data
               </button>
-            </div>
-          </section>
-
-          {/* Business Section */}
-          <section className="glass-card p-8 space-y-6">
-            <h3 className="text-xl font-bold text-white border-b border-white/5 pb-4">Organization Details</h3>
-            
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-500 uppercase">Firm Name</label>
-              <input type="text" defaultValue="ProScale Consulting LLP" className="settings-input" />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-500 uppercase">Firm Registration No / GSTIN</label>
-              <input type="text" defaultValue="27AAAPW1234A1Z1" className="settings-input text-indigo-400 font-mono" />
-            </div>
-
-            <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
-              <div className="flex items-center gap-3">
-                 <Globe className="h-5 w-5 text-slate-500" />
-                 <div>
-                   <p className="text-sm font-bold text-white">Public Profile</p>
-                   <p className="text-xs text-slate-500">Allow clients to find you on the portal</p>
-                 </div>
-              </div>
-              <div className="w-12 h-6 bg-indigo-500 rounded-full relative">
-                 <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full" />
-              </div>
-            </div>
-          </section>
-
-          {/* Danger Zone */}
-          <section className="glass-card p-8 border-rose-500/20 bg-rose-500/[0.02] space-y-6">
-             <h3 className="text-xl font-bold text-rose-400 flex items-center gap-2">
-               <Trash2 className="h-5 w-5" /> Danger Zone
-             </h3>
-             <p className="text-sm text-slate-400">
-               Permanently delete all your reconciliation history, saved files, and account settings. This action is irreversible.
-             </p>
-             <button 
-               onClick={handleClearData}
-               className="px-6 py-3 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-400 font-bold hover:bg-rose-500/20 transition-all text-sm"
-             >
-               Delete All Workspace Data
-             </button>
-          </section>
+            </section>
+          )}
         </main>
       </div>
 
@@ -141,11 +260,14 @@ export default function SettingsPage() {
   );
 }
 
-function SettingsNavItem({ icon, label, active }: any) {
+function SettingsNavItem({ icon, label, active, onClick }: any) {
   return (
-    <button className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all ${
-      active ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/20" : "text-slate-400 hover:bg-white/5 hover:text-white"
-    }`}>
+    <button 
+      onClick={onClick}
+      className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all active:scale-98 ${
+        active ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/20" : "text-slate-400 hover:bg-white/5 hover:text-white"
+      }`}
+    >
       <div className="flex items-center gap-3">
         {React.cloneElement(icon, { className: "w-5 h-5" })}
         <span className="text-sm font-semibold">{label}</span>

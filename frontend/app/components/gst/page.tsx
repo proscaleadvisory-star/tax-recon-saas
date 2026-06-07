@@ -34,7 +34,7 @@ export default function DashboardPage() {
   const hasData = data && recentRuns.length > 0;
 
   return (
-    <div className="space-y-10">
+    <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
       {/* Welcome & Stats */}
       <header className="flex justify-between items-end">
         <div>
@@ -52,7 +52,7 @@ export default function DashboardPage() {
       </header>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" style={{ minHeight: "140px" }}>
         <KPICard 
           icon={<CheckCircle2 className="text-emerald-400" />}
           label="Match Efficiency"
@@ -162,21 +162,50 @@ export default function DashboardPage() {
 
 
 function KPICard({ icon, label, value, trend, color, isUrgent }: any) {
+  const glowColorMap: any = {
+    emerald: "rgba(52, 211, 153, 0.05)",
+    amber: "rgba(251, 191, 36, 0.05)",
+    primary: "rgba(129, 140, 248, 0.05)",
+    slate: "rgba(148, 163, 184, 0.05)"
+  };
+
   return (
-    <motion.div 
-      whileHover={{ y: -5 }}
-      className="glass-card p-6 rounded-3xl relative overflow-hidden group"
+    <div 
+      style={{
+        background: "rgba(17, 19, 24, 0.85)",
+        border: "1px solid rgba(255, 255, 255, 0.08)",
+        borderRadius: "24px",
+        padding: "24px",
+        position: "relative",
+        overflow: "hidden",
+        transition: "all 0.3s ease",
+        minHeight: "140px",
+        boxShadow: "0 8px 30px rgba(0, 0, 0, 0.4)"
+      }}
+      className="hover:border-indigo-500/30 hover:-translate-y-1 transition-all group"
     >
-      <div className={`absolute top-0 right-0 w-32 h-32 bg-${color}-500/5 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform`} />
+      <div 
+        style={{
+          position: "absolute",
+          top: "-30px",
+          right: "-30px",
+          width: "120px",
+          height: "120px",
+          borderRadius: "50%",
+          background: glowColorMap[color] || "rgba(255, 255, 255, 0.02)",
+          filter: "blur(15px)",
+          pointerEvents: "none"
+        }}
+      />
       <div className="flex items-center gap-3 mb-4">
         <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
           {icon}
         </div>
         <span className="text-sm font-medium text-slate-400">{label}</span>
       </div>
-      <div className="text-2xl font-bold mb-1">{value}</div>
+      <div className="text-2xl font-bold mb-1 text-white">{value}</div>
       <div className={`text-xs font-medium ${isUrgent ? "text-amber-400" : "text-slate-500"}`}>{trend}</div>
-    </motion.div>
+    </div>
   );
 }
 
