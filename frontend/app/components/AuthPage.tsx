@@ -285,9 +285,8 @@ export default function AuthPage() {
               },
             }}
             providers={["google"]}
-            redirectTo={
-              typeof window !== "undefined" ? window.location.origin : ""
-            }
+            view="sign_up"
+            redirectTo="https://tax-recon-saas.vercel.app"
           />
         </div>
       </div>
