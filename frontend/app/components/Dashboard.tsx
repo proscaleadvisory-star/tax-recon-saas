@@ -13,6 +13,7 @@ import {
   Map,
   ClipboardList,
   ShieldAlert,
+  ArrowLeft,
 } from "lucide-react";
 import FileUpload from "./FileUpload";
 import MetricCards from "./MetricCards";
@@ -37,7 +38,7 @@ function getCurrentMonth(): string {
 
 type TabType = "reconcile" | "financials" | "geographic" | "disputes";
 
-export default function Dashboard({ user }: { user: User }) {
+export default function Dashboard({ user, onBackToHub }: { user: User; onBackToHub?: () => void }) {
   const [monthYear, setMonthYear] = useState(getCurrentMonth());
   const [analytics, setAnalytics] = useState<AnalyticsResponse | null>(null);
   const [reconcileResult, setReconcileResult] = useState<ReconcileResponse | null>(null);
@@ -123,6 +124,28 @@ export default function Dashboard({ user }: { user: User }) {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          {onBackToHub && (
+            <button
+              onClick={onBackToHub}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "34px",
+                height: "34px",
+                borderRadius: "var(--radius-sm)",
+                border: "1px solid var(--border-subtle)",
+                background: "rgba(255, 255, 255, 0.05)",
+                color: "var(--text-secondary)",
+                cursor: "pointer",
+                marginRight: "4px",
+                transition: "all 0.2s"
+              }}
+              title="Back to Suite Hub"
+            >
+              <ArrowLeft size={16} />
+            </button>
+          )}
           <div
             style={{
               width: "34px",

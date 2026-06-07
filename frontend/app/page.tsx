@@ -4,11 +4,14 @@ import { useState, useEffect } from "react";
 import { supabase } from "./lib/supabase";
 import type { User } from "@supabase/supabase-js";
 import AuthPage from "./components/AuthPage";
+import HubPage from "./components/HubPage";
 import Dashboard from "./components/Dashboard";
+import GstDashboard from "./components/GstDashboard";
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [currentTool, setCurrentTool] = useState<"hub" | "taxrecon" | "gstrecon">("hub");
 
   useEffect(() => {
     // Check initial session
@@ -22,6 +25,9 @@ export default function Home() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      if (!session) {
+        setCurrentTool("hub"); // reset tool choice on logout
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -51,5 +57,13 @@ export default function Home() {
     return <AuthPage />;
   }
 
-  return <Dashboard user={user} />;
+  if (currentTool === "taxrecon") {
+    return <Dashboard user={user} onBackToHub={() => setCurrentTool("hub")} />;
+  }
+
+  if (currentTool === "gstrecon") {
+    return <GstDashboard onBackToHub={() => setCurrentTool("hub")} />;
+  }
+
+  return <HubPage user={user} onSelectTool={setCurrentTool} />;
 }
