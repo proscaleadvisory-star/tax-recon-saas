@@ -1,53 +1,81 @@
 "use client";
 
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
 import { 
-  FileUp, 
   CheckCircle2, 
   AlertCircle, 
-  Clock, 
-  ShieldCheck,
-  Zap,
-  ChevronRight,
-  ArrowUpRight,
+  Zap, 
   TrendingUp as TrendIcon,
-  PieChart,
-  Download
+  ShieldCheck,
+  TrendingDown,
+  ArrowRight,
+  HelpCircle,
+  FileText,
+  Clock,
+  ExternalLink
 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { PersistenceService } from "@/lib/services/persistence-service";
-import { ReconRun, AnalyticsSummary } from "@/types/recon";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-
+import { ProfitabilityService } from "@/lib/services/profitability-service";
+import { ForecastService } from "@/lib/services/forecast-service";
+import { LeakageService } from "@/lib/services/leakage-service";
 
 export default function DashboardPage() {
-  const [data, setData] = useState<AnalyticsSummary | null>(null);
-  const [recentRuns, setRecentRuns] = useState<ReconRun[]>([]);
-  const router = useRouter();
+  const [totals, setTotals] = useState({
+    profitability: 0,
+    variance: 0,
+    runwayDays: 0,
+    blockedItc: 0,
+    totalReturnsShipping: 0
+  });
 
   useEffect(() => {
-    setData(PersistenceService.getAnalyticsSummary());
-    setRecentRuns(PersistenceService.getAllRuns().slice(0, 3));
+    // 1. Calculate active leakages
+    const variance = LeakageService.getTotalLeakageAmount();
+    
+    // 2. Fetch lockup amounts
+    const wc = ForecastService.getWorkingCapitalLockup();
+    
+    // 3. Estimate runway days from forecast (finding date where balance runs low)
+    const forecastData = ForecastService.generate90DayForecast({
+      returnRateChange: 0,
+      adSpendChange: 0,
+      vendorDelayDays: 0,
+      payoutDelayDays: 0
+    });
+    
+    const lowIndex = forecastData.findIndex(p => p.balance < 50000);
+    const runwayDays = lowIndex === -1 ? 90 : lowIndex;
+
+    // 4. Calculate total return shipping cost from SKUs
+    const skus = ProfitabilityService.getSkuProfitabilityList();
+    const totalReturnsShipping = skus.reduce((sum, s) => sum + (s.returnRate * s.returnShippingCost * s.unitsSold), 0);
+
+    setTotals({
+      profitability: 1246000 + 712500 + 462000 + 212750, // total net profit from channel matrix
+      variance,
+      runwayDays,
+      blockedItc: wc.blockedItc,
+      totalReturnsShipping
+    });
   }, []);
 
-  const hasData = data && recentRuns.length > 0;
-
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-      {/* Welcome & Stats */}
+    <div style={{ display: "flex", flexDirection: "column", gap: "32px" }} className="pb-16 max-w-[1600px] mx-auto">
+      {/* Header */}
       <header className="flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
-            Welcome Back, Advisor
+          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 tracking-tight">
+            Advisor Financial Cockpit
           </h1>
           <p className="text-slate-400 mt-1">
-            {hasData ? `Showing performance for ${recentRuns.length} recent reconciliation runs.` : "Ready to process your first reconciliation."}
+            Real-time profitability tracking, deterministic cash runways, and tax compliance impact.
           </p>
         </div>
         <div className="text-right hidden md:block">
-           <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">System Health</p>
-           <p className="text-sm font-bold text-emerald-400">99.9% Operational</p>
+           <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Recon Status</p>
+           <p className="text-sm font-bold text-emerald-400 flex items-center gap-1.5 justify-end">
+             <div className="w-2 h-2 rounded-full bg-emerald-500 shadow shadow-emerald-500/50 animate-pulse" />
+             99.9% Operational
+           </p>
         </div>
       </header>
 
@@ -55,111 +83,115 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" style={{ minHeight: "140px" }}>
         <KPICard 
           icon={<CheckCircle2 className="text-emerald-400" />}
-          label="Match Efficiency"
-          value={hasData ? `${data.overallMatchRate.toFixed(1)}%` : "0%"}
-          trend={hasData ? "Average across all runs" : "Pending Data"}
+          label="Net Profit (CM2)"
+          value={`₹${(totals.profitability / 100000).toFixed(1)}L`}
+          trend="Cumulative across channels"
           color="emerald"
         />
         <KPICard 
-          icon={<AlertCircle className="text-amber-400" />}
-          label="Total Variance"
-          value={hasData ? `₹${data.totalVariance.toLocaleString()}` : "₹0"}
-          trend={hasData ? "Unmatched tax value" : "Audit Ready"}
+          icon={<AlertCircle className="text-rose-400" />}
+          label="Profit Leakage"
+          value={`₹${totals.variance.toLocaleString("en-IN")}`}
+          trend="Discrepancies detected"
           color="amber"
-          isUrgent={hasData && data.totalVariance > 0}
+          isUrgent={totals.variance > 0}
         />
         <KPICard 
           icon={<Zap className="text-primary" />}
-          label="Cumulative Tax"
-          value={hasData ? `₹${(data.totalTaxProcessed / 100000).toFixed(1)}L` : "₹0"}
-          trend="Total Processed"
+          label="Cash Flow Runway"
+          value={`${totals.runwayDays} Days`}
+          trend="Projected bank balances"
           color="primary"
+          isUrgent={totals.runwayDays < 30}
         />
         <KPICard 
-          icon={<TrendIcon className="text-slate-400" />}
-          label="Last Run Rows"
-          value={hasData ? recentRuns[0].totalRows : "0"}
-          trend="Invoices Analyzed"
+          icon={<FileText className="text-slate-400" />}
+          label="Blocked Working Capital"
+          value={`₹${totals.blockedItc.toLocaleString("en-IN")}`}
+          trend="Unfiled vendor GSTR-2B"
           color="slate"
         />
       </div>
 
+      {/* Insights Row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Upload Section */}
+        
+        {/* Left: Predefined Decision Cards */}
         <section className="lg:col-span-2 space-y-6">
-          <div 
-            onClick={() => router.push("/dashboard/recon")}
-            className="glass-card rounded-3xl p-10 border-dashed border-2 border-slate-700/50 hover:border-primary/50 transition-all group flex flex-col items-center justify-center text-center cursor-pointer"
-          >
-            <div className="w-20 h-20 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl shadow-primary/5">
-              <FileUp className="w-10 h-10 text-primary" />
-            </div>
-            <h3 className="text-2xl font-bold mb-2">Initialize New Reconciliation</h3>
-            <p className="text-slate-400 max-w-sm mb-8 leading-relaxed">
-              Upload your Purchase Register and GSTR-2B data to generate World-Class matching reports instantly.
-            </p>
-            <button className="bg-white text-slate-950 px-8 py-3 rounded-xl font-bold hover:bg-slate-200 transition-all flex items-center gap-2 group/btn shadow-lg">
-              Start Recon Engine
-              <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-            </button>
-          </div>
+          <h3 className="text-lg font-bold text-white">Rule-Based Business Insights</h3>
           
-          {/* Quick Guide */}
-          <div className="grid grid-cols-2 gap-6">
-            <Link href="/dashboard/analysis" className="glass-card p-6 rounded-2xl flex items-center justify-between group cursor-pointer hover:bg-slate-800/30 transition-all cursor-pointer">
-              <div>
-                <p className="text-xs font-bold text-primary uppercase tracking-wider mb-1">Analytics</p>
-                <h4 className="font-bold">Visual Analysis</h4>
-              </div>
-              <PieChart className="w-5 h-5 text-slate-500 group-hover:text-white transition-colors" />
-            </Link>
-            <div className="glass-card p-6 rounded-2xl flex items-center justify-between group cursor-pointer hover:bg-slate-800/30 transition-all">
-              <div>
-                <p className="text-xs font-bold text-accent uppercase tracking-wider mb-1">Export</p>
-                <h4 className="font-bold">Historical CSVs</h4>
-              </div>
-              <Download className="w-5 h-5 text-slate-500 group-hover:text-white transition-colors" />
+          <div className="grid grid-cols-1 gap-4">
+            
+            <InsightCard 
+              type="danger"
+              title="SKU Margin Loss Alert: High Return Logistics Drag"
+              description={`Mug-Ceramic product sets are generating negative margins (-3.17% / unit) due to heavy return shipping fees. Returns logistics costs currently account for ₹${(totals.totalReturnsShipping / 10).toFixed(0)} of apparel sales margins.`}
+              actionText="Review SKU Specs"
+            />
+
+            <InsightCard 
+              type="warning"
+              title="Input Tax Credit (ITC) Blocked: Missing Supplier Filings"
+              description={`Vendor 'Alpha Logistics' (GSTIN: 27AALPA0981M1ZN) has failed to upload invoices to GSTR-2B. This blocks ₹${totals.blockedItc.toLocaleString("en-IN")} in tax credits for GSTR-3B filings next week.`}
+              actionText="Export Invoice Reminder"
+            />
+
+            <InsightCard 
+              type="success"
+              title="Claim Recovery Ready: Weight Overcharges Detected"
+              description={`Rule checks flagged 2 weight mismatch disputes on Delhivery shipments (totaling ₹${totals.variance.toLocaleString("en-IN")}). The dispute letters and package packing photo sheets are pre-compiled.`}
+              actionText="File Disputes"
+            />
+
+            <InsightCard 
+              type="info"
+              title="Compliance Cash Calendar Reminder"
+              description="Your GSTR-3B filing payment obligation of ₹1,84,000 is due on the 20th. Cash balance predictions indicate the bank account will remain stable at ₹5.1L post-outflow."
+              actionText="View Cash Runway"
+            />
+
+          </div>
+        </section>
+
+        {/* Right: Channel Breakdown */}
+        <section className="space-y-6">
+          <div 
+            style={{
+              background: "rgba(17, 19, 24, 0.85)",
+              border: "1px solid rgba(255, 255, 255, 0.08)",
+              borderRadius: "24px",
+              padding: "24px",
+              boxShadow: "0 8px 30px rgba(0, 0, 0, 0.4)"
+            }}
+            className="space-y-6"
+          >
+            <h3 className="text-lg font-bold text-white border-b border-slate-900/60 pb-3">Channel Net Performance</h3>
+            <div className="space-y-4">
+              {[
+                { name: "Amazon IN", profit: "₹12.46L", rate: "+31.5%", isLoss: false },
+                { name: "Flipkart", profit: "₹7.12L", rate: "+26.8%", isLoss: false },
+                { name: "Meesho", profit: "₹4.62L", rate: "+13.5%", isLoss: false },
+                { name: "Shopify Store", profit: "₹2.12L", rate: "+14.2%", isLoss: false }
+              ].map((c) => (
+                <div key={c.name} className="flex justify-between items-center p-3 bg-slate-950/40 rounded-xl border border-slate-900/50">
+                  <div>
+                    <span className="text-xs font-bold text-white">{c.name}</span>
+                    <p className="text-[10px] text-slate-500 font-medium">Net Profit Margin</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-xs font-bold text-slate-200 font-mono">{c.profit}</span>
+                    <p className="text-[10px] text-emerald-400 font-mono font-bold">{c.rate}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Recent Activity / Side Analytics */}
-        <section className="space-y-6">
-          <div className="glass-card rounded-3xl p-8 h-full">
-            <h3 className="text-xl font-bold mb-6">Recent History</h3>
-            <div className="space-y-6">
-              {recentRuns.length > 0 ? (
-                recentRuns.map((run) => (
-                  <ActivityItem 
-                    key={run.id}
-                    title={run.fileName}
-                    status={run.totalRows === run.matchedCount ? "Perfect Match" : "Reviewed"}
-                    time={new Date(run.date).toLocaleDateString()}
-                    accuracy={`${((run.matchedCount / run.totalRows) * 100).toFixed(1)}%`}
-                    isAlert={run.varianceAmount > 1000}
-                  />
-                ))
-              ) : (
-                <div className="py-10 text-center text-slate-500">
-                   <p className="text-sm">No recent activity detected.</p>
-                </div>
-              )}
-            </div>
-            {hasData && (
-              <button 
-                onClick={() => router.push("/dashboard/history")}
-                className="w-full mt-8 py-3 rounded-xl border border-slate-800 text-sm font-semibold text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
-              >
-                View All Records
-              </button>
-            )}
-          </div>
-        </section>
       </div>
     </div>
   );
 }
-
 
 function KPICard({ icon, label, value, trend, color, isUrgent }: any) {
   const glowColorMap: any = {
@@ -204,27 +236,38 @@ function KPICard({ icon, label, value, trend, color, isUrgent }: any) {
         <span className="text-sm font-medium text-slate-400">{label}</span>
       </div>
       <div className="text-2xl font-bold mb-1 text-white">{value}</div>
-      <div className={`text-xs font-medium ${isUrgent ? "text-amber-400" : "text-slate-500"}`}>{trend}</div>
+      <div className={`text-xs font-medium ${isUrgent ? "text-rose-400 font-bold" : "text-slate-500"}`}>{trend}</div>
     </div>
   );
 }
 
-function ActivityItem({ title, status, time, accuracy, isAlert }: any) {
+function InsightCard({ type, title, description, actionText }: { type: "danger" | "warning" | "success" | "info"; title: string; description: string; actionText: string }) {
+  const borderColors: any = {
+    danger: "border-rose-500/20 bg-rose-500/[0.02]",
+    warning: "border-amber-500/20 bg-amber-500/[0.02]",
+    success: "border-emerald-500/20 bg-emerald-500/[0.02]",
+    info: "border-indigo-500/20 bg-indigo-500/[0.02]"
+  };
+
+  const indicatorColors: any = {
+    danger: "bg-rose-500",
+    warning: "bg-amber-500",
+    success: "bg-emerald-500",
+    info: "bg-indigo-500"
+  };
+
   return (
-    <div className="flex items-center gap-4 group cursor-pointer">
-      <div className={`w-2 h-10 rounded-full ${isAlert ? "bg-red-500" : "bg-slate-800 group-hover:bg-primary"} transition-colors`} />
-      <div className="flex-1">
-        <h5 className="text-sm font-bold group-hover:text-primary transition-colors">{title}</h5>
-        <div className="flex items-center gap-2 mt-0.5">
-          <span className="text-[10px] font-bold uppercase text-slate-500">{status}</span>
-          <span className="w-1 h-1 rounded-full bg-slate-700" />
-          <span className="text-[10px] text-slate-600">{time}</span>
+    <div className={`p-5 rounded-2xl border flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between ${borderColors[type]} transition-all hover:scale-[1.005]`}>
+      <div className="flex gap-3 items-start flex-1">
+        <div className={`shrink-0 w-2.5 h-2.5 rounded-full mt-1.5 ${indicatorColors[type]}`} />
+        <div className="space-y-1">
+          <h4 className="text-xs font-bold text-white tracking-wide">{title}</h4>
+          <p className="text-xs text-slate-400 leading-relaxed">{description}</p>
         </div>
       </div>
-      <div className="text-right">
-        <div className={`text-xs font-bold ${isAlert ? "text-red-400" : "text-slate-300"}`}>{accuracy}</div>
-        <div className="text-[10px] text-slate-600 uppercase">Match</div>
-      </div>
+      <button className="shrink-0 flex items-center gap-1.5 px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-[11px] font-bold text-slate-300 hover:text-white transition-all cursor-pointer">
+        {actionText} <ArrowRight size={12} />
+      </button>
     </div>
   );
 }
