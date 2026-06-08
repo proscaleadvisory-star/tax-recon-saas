@@ -733,9 +733,9 @@ async def ask_financial_question(req: ChatbotRequest, db: Session = Depends(get_
 # 11. ERP/GL Integration Connectors (Mock SAP/QuickBooks/Oracle Pull)
 @router.post("/integrations/erp")
 async def trigger_erp_pull(
-    tenant_id: Form(...),
-    company_id: Form(...),
-    erp_system: Form(...), # 'quickbooks', 'sap', 'oracle'
+    tenant_id: str = Form(...),
+    company_id: str = Form(...),
+    erp_system: str = Form(...), # 'quickbooks', 'sap', 'oracle'
     db: Session = Depends(get_db)
 ):
     try:
