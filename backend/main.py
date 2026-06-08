@@ -71,6 +71,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from it_routes import router as it_router
+app.include_router(it_router)
+
+
 # ============================================================================
 # DEPENDENCIES
 # ============================================================================
