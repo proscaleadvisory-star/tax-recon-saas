@@ -74,6 +74,10 @@ app.add_middleware(
 from it_routes import router as it_router
 app.include_router(it_router)
 
+from fpa_routes import router as fpa_router
+app.include_router(fpa_router)
+
+
 
 # ============================================================================
 # DEPENDENCIES

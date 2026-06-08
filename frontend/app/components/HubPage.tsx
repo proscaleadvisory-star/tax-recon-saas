@@ -17,7 +17,7 @@ import {
 
 interface HubPageProps {
   user: User;
-  onSelectTool: (tool: "taxrecon" | "gstrecon" | "itrecon" | "profitability") => void;
+  onSelectTool: (tool: "taxrecon" | "gstrecon" | "itrecon" | "profitability" | "fpa") => void;
 }
 
 export default function HubPage({ user, onSelectTool }: HubPageProps) {
@@ -76,7 +76,7 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
         </div>
 
         {/* Modules Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-[1400px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 w-full max-w-[1600px]">
           {/* Card 1: TaxRecon OS */}
           <div 
             onClick={() => onSelectTool("taxrecon")}
@@ -233,6 +233,48 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
 
             <div className="flex items-center gap-2 text-[10px] font-bold text-purple-400 uppercase tracking-widest group-hover:translate-x-1 transition-transform duration-300">
               Launch Direct Tax
+              <ArrowRight size={12} />
+            </div>
+          </div>
+
+          {/* Card 5: Virtual CFO & FP&A */}
+          <div 
+            onClick={() => onSelectTool("fpa")}
+            className="group relative rounded-3xl border border-slate-800 bg-[#0d0f14]/60 backdrop-blur-xl p-6 cursor-pointer overflow-hidden transition-all hover:border-indigo-500/50 hover:shadow-[0_0_50px_rgba(129,140,248,0.1)] hover:-translate-y-1.5 duration-300 flex flex-col justify-between"
+          >
+            <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-500" />
+            
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Bot size={22} className="text-indigo-400" />
+              </div>
+
+              <h2 className="text-xl font-extrabold text-slate-100 mb-2 group-hover:text-indigo-300 transition-colors">
+                Virtual CFO & FP&A
+              </h2>
+              
+              <p className="text-xs text-slate-400 mb-6 leading-relaxed">
+                Build multi-currency scenario models, run ARIMA forecasts, audit budget anomalies with Isolation Forests, and consult your Virtual CFO.
+              </p>
+
+              <ul className="space-y-2.5 mb-6">
+                <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-indigo-400 flex-shrink-0" />
+                  <span>Multi-currency consolidations</span>
+                </li>
+                <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-indigo-400 flex-shrink-0" />
+                  <span>Linear regression forecasts</span>
+                </li>
+                <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-indigo-400 flex-shrink-0" />
+                  <span>AI Chatbot consulting</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="flex items-center gap-2 text-[10px] font-bold text-indigo-400 uppercase tracking-widest group-hover:translate-x-1 transition-transform duration-300">
+              Launch FP&A OS
               <ArrowRight size={12} />
             </div>
           </div>

@@ -285,3 +285,213 @@ export async function updateDisputeStatus(
   }
   return res.json();
 }
+
+// ============================================================================
+// FP&A / VIRTUAL CFO SERVICES
+// ============================================================================
+export interface FpaMeta {
+  companies: { id: string; name: string; currency: string }[];
+  departments: { id: string; company_id: string; name: string }[];
+  accounts: { id: string; code: string; name: string; type: string; subtype: string }[];
+  periods: { id: string; date: string; label: string; quarter: string; fy: string }[];
+  scenarios: { id: string; name: string; description: string; type: string; is_active: boolean }[];
+}
+
+export interface FpaFact {
+  id: string;
+  company_id: string;
+  department_id: string;
+  account_id: string;
+  period_id: string;
+  amount: number;
+  currency: string;
+  amount_usd: number;
+}
+
+export interface AnomalyItem {
+  fact_id: string;
+  amount: number;
+  currency: string;
+  account_code: string;
+  account_name: string;
+  department: string;
+  period: string;
+  score: number;
+  reason: string;
+}
+
+export interface ForecastItem {
+  period_label: string;
+  amount: number;
+  lower_ci: number;
+  upper_ci: number;
+}
+
+export async function fetchFpaMeta(tenantId: string): Promise<FpaMeta> {
+  const params = new URLSearchParams({ tenant_id: tenantId });
+  const res = await fetch(`${API_URL}/api/v1/fpa/meta?${params}`);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Failed to fetch FPA metadata" }));
+    throw new Error(err.detail || "Failed to fetch FPA metadata");
+  }
+  return res.json();
+}
+
+export async function fetchFpaGridData(tenantId: string, scenarioId: string): Promise<FpaFact[]> {
+  const params = new URLSearchParams({ tenant_id: tenantId, scenario_id: scenarioId });
+  const res = await fetch(`${API_URL}/api/v1/fpa/grid-data?${params}`);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Failed to fetch grid data" }));
+    throw new Error(err.detail || "Failed to fetch grid data");
+  }
+  return res.json();
+}
+
+export async function saveBudgetCell(params: {
+  scenario_id: string;
+  company_id: string;
+  department_id: string;
+  account_id: string;
+  time_period_id: string;
+  amount: number;
+  currency_code: string;
+  tenant_id: string;
+}): Promise<{ status: string; fact_id: string; amount_usd: number }> {
+  const res = await fetch(`${API_URL}/api/v1/fpa/budgets/save`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(params),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Failed to save budget cell" }));
+    throw new Error(err.detail || "Failed to save budget cell");
+  }
+  return res.json();
+}
+
+export async function cloneScenario(params: {
+  scenario_id: string;
+  new_name: string;
+  description?: string | null;
+  growth_rate: number;
+  allocation_rule: string;
+  tenant_id: string;
+}): Promise<{ status: string; scenario_id: string; records_cloned: number; message: string }> {
+  const res = await fetch(`${API_URL}/api/v1/fpa/scenarios/clone`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(params),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Failed to clone scenario" }));
+    throw new Error(err.detail || "Failed to clone scenario");
+  }
+  return res.json();
+}
+
+export async function runConsolidation(params: {
+  scenario_id: string;
+  target_currency: string;
+  tenant_id: string;
+}): Promise<{
+  status: string;
+  eliminated_transactions: number;
+  converted_transactions: number;
+  consolidated_total_usd: number;
+  message: string;
+}> {
+  const res = await fetch(`${API_URL}/api/v1/fpa/consolidation`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(params),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Failed to run consolidation" }));
+    throw new Error(err.detail || "Failed to run consolidation");
+  }
+  return res.json();
+}
+
+export async function runForecast(params: {
+  tenant_id: string;
+  company_id: string;
+  account_id: string;
+  periods_to_forecast: number;
+}): Promise<{
+  status: string;
+  model: string;
+  forecast: ForecastItem[];
+  auto_selected?: boolean;
+  metric_evaluated?: string;
+}> {
+  const formData = new FormData();
+  formData.append("tenant_id", params.tenant_id);
+  formData.append("company_id", params.company_id);
+  formData.append("account_id", params.account_id);
+  formData.append("periods_to_forecast", String(params.periods_to_forecast));
+
+  const res = await fetch(`${API_URL}/api/v1/fpa/forecast/run`, {
+    method: "POST",
+    body: formData,
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Failed to run forecast" }));
+    throw new Error(err.detail || "Failed to run forecast");
+  }
+  return res.json();
+}
+
+export async function detectAnomalies(tenantId: string): Promise<{ status: string; anomalies: AnomalyItem[] }> {
+  const params = new URLSearchParams({ tenant_id: tenantId });
+  const res = await fetch(`${API_URL}/api/v1/fpa/anomaly/detect?${params}`);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Failed to detect anomalies" }));
+    throw new Error(err.detail || "Failed to detect anomalies");
+  }
+  return res.json();
+}
+
+export async function fetchVarianceInsights(tenantId: string, companyId: string): Promise<{ status: string; narrative: string }> {
+  const params = new URLSearchParams({ tenant_id: tenantId, company_id: companyId });
+  const res = await fetch(`${API_URL}/api/v1/fpa/insights/variance?${params}`);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Failed to fetch variance insights" }));
+    throw new Error(err.detail || "Failed to fetch variance insights");
+  }
+  return res.json();
+}
+
+export async function askFinancialChatbot(question: string, tenantId: string): Promise<{ status: string; response: string }> {
+  const res = await fetch(`${API_URL}/api/v1/fpa/ask`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question, tenant_id: tenantId }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Financial chatbot query failed" }));
+    throw new Error(err.detail || "Financial chatbot query failed");
+  }
+  return res.json();
+}
+
+export async function triggerErpIntegration(params: {
+  tenant_id: string;
+  company_id: string;
+  erp_system: string;
+}): Promise<{ status: string; message: string }> {
+  const formData = new FormData();
+  formData.append("tenant_id", params.tenant_id);
+  formData.append("company_id", params.company_id);
+  formData.append("erp_system", params.erp_system);
+
+  const res = await fetch(`${API_URL}/api/v1/fpa/integrations/erp`, {
+    method: "POST",
+    body: formData,
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "ERP integration pull failed" }));
+    throw new Error(err.detail || "ERP integration pull failed");
+  }
+  return res.json();
+}
+
