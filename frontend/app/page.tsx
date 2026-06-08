@@ -8,11 +8,12 @@ import HubPage from "./components/HubPage";
 import Dashboard from "./components/Dashboard";
 import GstDashboard from "./components/GstDashboard";
 import ItDashboard from "./components/ItDashboard";
+import ProfitabilityDashboard from "./components/ProfitabilityDashboard";
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [currentTool, setCurrentTool] = useState<"hub" | "taxrecon" | "gstrecon" | "itrecon">("hub");
+  const [currentTool, setCurrentTool] = useState<"hub" | "taxrecon" | "gstrecon" | "itrecon" | "profitability">("hub");
 
   useEffect(() => {
     // Check initial session
@@ -68,6 +69,10 @@ export default function Home() {
 
   if (currentTool === "itrecon") {
     return <ItDashboard user={user} onBackToHub={() => setCurrentTool("hub")} />;
+  }
+
+  if (currentTool === "profitability") {
+    return <ProfitabilityDashboard onBackToHub={() => setCurrentTool("hub")} />;
   }
 
   return <HubPage user={user} onSelectTool={setCurrentTool} />;

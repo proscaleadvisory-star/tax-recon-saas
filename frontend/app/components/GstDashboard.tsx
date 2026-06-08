@@ -13,17 +13,15 @@ import {
 } from "lucide-react";
 import GstOverview from "./gst/page";
 import GstReconEngine from "./gst/recon/page";
+import GstAnalysis from "./gst/analysis/page";
 import GstHistory from "./gst/history/page";
 import GstSettings from "./gst/settings/page";
-import ProfitabilityTab from "./gst/profitability/page";
-import ForecastTab from "./gst/forecast/page";
-import LeakageTab from "./gst/leakage/page";
 
 interface GstDashboardProps {
   onBackToHub: () => void;
 }
 
-type TabType = "overview" | "recon" | "profitability" | "forecast" | "leakage" | "history" | "settings";
+type TabType = "overview" | "recon" | "analysis" | "history" | "settings";
 
 export default function GstDashboard({ onBackToHub }: GstDashboardProps) {
   const [activeTab, setActiveTab] = useState<TabType>("overview");
@@ -35,7 +33,7 @@ export default function GstDashboard({ onBackToHub }: GstDashboardProps) {
         <div className="flex items-center gap-4">
           <button 
             onClick={onBackToHub}
-            className="flex items-center justify-center w-9 h-9 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 text-slate-400 hover:text-slate-200 transition-all active:scale-95 cursor-pointer"
+            className="flex items-center justify-center w-9 h-9 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 text-slate-400 hover:text-slate-200 transition-all active:scale-95"
             title="Back to Suite Hub"
           >
             <ArrowLeft size={16} />
@@ -54,20 +52,20 @@ export default function GstDashboard({ onBackToHub }: GstDashboardProps) {
         </div>
 
         {/* Tab Controls */}
-        <div className="flex flex-wrap gap-1 bg-slate-950/80 border border-slate-900/60 p-1 rounded-xl">
+        <div className="flex bg-slate-950/80 border border-slate-900/60 p-1 rounded-xl">
           <button
             onClick={() => setActiveTab("overview")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
               activeTab === "overview" 
                 ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"
             }`}
           >
-            <LayoutDashboard size={13} /> Cockpit
+            <LayoutDashboard size={13} /> Overview
           </button>
           <button
             onClick={() => setActiveTab("recon")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
               activeTab === "recon" 
                 ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"
@@ -76,48 +74,28 @@ export default function GstDashboard({ onBackToHub }: GstDashboardProps) {
             <FileCheck2 size={13} /> Recon Engine
           </button>
           <button
-            onClick={() => setActiveTab("profitability")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
-              activeTab === "profitability" 
+            onClick={() => setActiveTab("analysis")}
+            className={`flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
+              activeTab === "analysis" 
                 ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"
             }`}
           >
-            <TrendingUp size={13} /> SKU Margins
-          </button>
-          <button
-            onClick={() => setActiveTab("forecast")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
-              activeTab === "forecast" 
-                ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
-                : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <Zap size={13} /> Cash Forecast
-          </button>
-          <button
-            onClick={() => setActiveTab("leakage")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
-              activeTab === "leakage" 
-                ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
-                : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <BarChart3 size={13} /> Leakage & Claims
+            <BarChart3 size={13} /> Analysis
           </button>
           <button
             onClick={() => setActiveTab("history")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
               activeTab === "history" 
                 ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"
             }`}
           >
-            <History size={13} /> Log History
+            <History size={13} /> History
           </button>
           <button
             onClick={() => setActiveTab("settings")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
               activeTab === "settings" 
                 ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"
@@ -137,9 +115,7 @@ export default function GstDashboard({ onBackToHub }: GstDashboardProps) {
       <main className="flex-1 overflow-y-auto p-8 custom-scrollbar">
         {activeTab === "overview" && <GstOverview />}
         {activeTab === "recon" && <GstReconEngine />}
-        {activeTab === "profitability" && <ProfitabilityTab />}
-        {activeTab === "forecast" && <ForecastTab />}
-        {activeTab === "leakage" && <LeakageTab />}
+        {activeTab === "analysis" && <GstAnalysis />}
         {activeTab === "history" && <GstHistory />}
         {activeTab === "settings" && <GstSettings />}
       </main>

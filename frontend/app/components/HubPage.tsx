@@ -11,12 +11,13 @@ import {
   CheckCircle,
   Zap,
   Bot,
-  Scale
+  Scale,
+  TrendingUp
 } from "lucide-react";
 
 interface HubPageProps {
   user: User;
-  onSelectTool: (tool: "taxrecon" | "gstrecon" | "itrecon") => void;
+  onSelectTool: (tool: "taxrecon" | "gstrecon" | "itrecon" | "profitability") => void;
 }
 
 export default function HubPage({ user, onSelectTool }: HubPageProps) {
@@ -57,7 +58,7 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
       </header>
 
       {/* Main Grid Portal */}
-      <main className="relative z-10 flex-1 max-w-6xl w-full mx-auto px-6 py-12 flex flex-col justify-center items-center">
+      <main className="relative z-10 flex-1 max-w-7xl w-full mx-auto px-6 py-12 flex flex-col justify-center items-center">
         <div className="text-center mb-16 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/5 text-indigo-300 text-xs font-semibold tracking-wider uppercase mb-6 shadow-inner">
             <Bot size={13} className="animate-pulse" />
@@ -70,12 +71,12 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
             </span>
           </h1>
           <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-            Select one of our specialized enterprise modules below to reconcile e-commerce payouts or run general client GSTR-2B audits.
+            Select one of our specialized enterprise modules below to reconcile e-commerce payouts, track SKU margin leakages, or run tax audits.
           </p>
         </div>
 
         {/* Modules Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full max-w-6xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-[1400px]">
           {/* Card 1: TaxRecon OS */}
           <div 
             onClick={() => onSelectTool("taxrecon")}
@@ -156,7 +157,47 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
             </div>
           </div>
 
-          {/* Card 3: Income Tax (26AS) Reconciliation */}
+          {/* Card 3: Profitability & Cash Flow Command Center */}
+          <div 
+            onClick={() => onSelectTool("profitability")}
+            className="group relative rounded-3xl border border-slate-800 bg-[#0d0f14]/60 backdrop-blur-xl p-6 cursor-pointer overflow-hidden transition-all hover:border-emerald-500/50 hover:shadow-[0_0_50px_rgba(52,211,153,0.1)] hover:-translate-y-1.5 duration-300"
+          >
+            <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-500" />
+
+            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <TrendingUp size={22} className="text-emerald-400" />
+            </div>
+
+            <h2 className="text-xl font-extrabold text-slate-100 mb-2 group-hover:text-emerald-300 transition-colors">
+              Profit Cockpit
+            </h2>
+            
+            <p className="text-xs text-slate-400 mb-6 leading-relaxed">
+              Track CM2 SKU profitability, simulate 90-day cash runways with compliance deadlines, and auto-flag weight and return leakages.
+            </p>
+
+            <ul className="space-y-2.5 mb-6">
+              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
+                <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
+                <span>Analyze item-level COGS and returns</span>
+              </li>
+              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
+                <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
+                <span>Deterministic cash runway simulator</span>
+              </li>
+              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
+                <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
+                <span>Generate pre-compiled dispute packets</span>
+              </li>
+            </ul>
+
+            <div className="flex items-center gap-2 text-[10px] font-bold text-emerald-400 uppercase tracking-widest group-hover:translate-x-1 transition-transform duration-300">
+              Launch Cockpit
+              <ArrowRight size={12} />
+            </div>
+          </div>
+
+          {/* Card 4: Income Tax (26AS) Reconciliation */}
           <div 
             onClick={() => onSelectTool("itrecon")}
             className="group relative rounded-3xl border border-slate-800 bg-[#0d0f14]/60 backdrop-blur-xl p-6 cursor-pointer overflow-hidden transition-all hover:border-purple-500/50 hover:shadow-[0_0_50px_rgba(168,85,247,0.1)] hover:-translate-y-1.5 duration-300"
