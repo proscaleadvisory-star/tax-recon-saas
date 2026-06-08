@@ -70,6 +70,7 @@ export default function FpaDashboard({ user, onBackToHub }: FpaDashboardProps) {
   
   // Metadata & selection states
   const [meta, setMeta] = useState<FpaMeta | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [selectedCompanyId, setSelectedCompanyId] = useState<string>("");
   const [selectedScenarioId, setSelectedScenarioId] = useState<string>("");
   const [selectedDepartmentId, setSelectedDepartmentId] = useState<string>("all");
@@ -140,6 +141,7 @@ export default function FpaDashboard({ user, onBackToHub }: FpaDashboardProps) {
   }, [chatMessages, chatOpen]);
 
   const loadMeta = async () => {
+    setErrorMsg(null);
     try {
       const data = await fetchFpaMeta(user.id);
       setMeta(data);
@@ -154,8 +156,9 @@ export default function FpaDashboard({ user, onBackToHub }: FpaDashboardProps) {
       if (data.accounts.length > 0) {
         setForecastAccountId(data.accounts[0].id);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Failed to load meta dimensions", err);
+      setErrorMsg(err.message || "Failed to load multi-tenant dimensional models from the API.");
     }
   };
 
@@ -371,6 +374,28 @@ export default function FpaDashboard({ user, onBackToHub }: FpaDashboardProps) {
       setBotLoading(false);
     }
   };
+
+  if (errorMsg) {
+    return (
+      <div className="min-h-screen bg-[#06070a] flex flex-col items-center justify-center gap-4 text-slate-400 p-6 text-center max-w-sm mx-auto">
+        <AlertTriangle className="text-amber-500 animate-bounce" size={40} />
+        <h3 className="text-sm font-bold text-slate-200">Unable to Connect to CFO API</h3>
+        <p className="text-xs text-slate-400 leading-relaxed">{errorMsg}</p>
+        <button 
+          onClick={() => { setErrorMsg(null); loadMeta(); }}
+          className="mt-4 w-full py-2.5 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-slate-950 font-bold text-xs shadow-md transition-all active:scale-95 cursor-pointer"
+        >
+          Try Again
+        </button>
+        <button 
+          onClick={onBackToHub}
+          className="w-full py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-slate-100 hover:bg-slate-800 transition-all cursor-pointer"
+        >
+          Back to Suite Hub
+        </button>
+      </div>
+    );
+  }
 
   if (!meta) {
     return (
