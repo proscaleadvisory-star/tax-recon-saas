@@ -495,3 +495,94 @@ export async function triggerErpIntegration(params: {
   return res.json();
 }
 
+// ============================================================================
+// PRE-CLOSE LEDGER AUDITOR
+// ============================================================================
+export interface AuditorStatus {
+  is_trained: boolean;
+  trained_at?: string;
+  model_accuracy_metrics?: {
+    ae_initial_loss?: number;
+    ae_final_loss?: number;
+    ae_convergence_ratio?: number;
+    if_n_estimators?: number;
+    num_training_samples?: number;
+  } | null;
+  threshold_tau?: number;
+}
+
+export interface AuditEntry {
+  transaction_id: string;
+  date: string;
+  account_id: string;
+  account_name: string;
+  amount: number;
+  cost_center: string;
+  vendor_id: string;
+  user_id: string;
+}
+
+export interface AuditResult {
+  transaction_id: string;
+  risk_score: number;
+  is_flagged: boolean;
+  flag_reasons: string[];
+  feature_attributions: Record<string, number>;
+}
+
+export async function getAuditorStatus(): Promise<AuditorStatus> {
+  const res = await fetch(`${API_URL}/api/v1/audit/status`);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Failed to get auditor status" }));
+    throw new Error(err.detail || "Failed to get auditor status");
+  }
+  return res.json();
+}
+
+export async function trainAuditorModel(file: File): Promise<{
+  status: string;
+  message: string;
+  metrics: Record<string, any>;
+}> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch(`${API_URL}/api/v1/audit/train`, {
+    method: "POST",
+    body: formData,
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Auditor training failed" }));
+    throw new Error(err.detail || "Auditor training failed");
+  }
+  return res.json();
+}
+
+export async function runLedgerAudit(entries: AuditEntry[]): Promise<{
+  status: string;
+  results: AuditResult[];
+}> {
+  const res = await fetch(`${API_URL}/api/v1/audit/run`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(entries),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Ledger audit execution failed" }));
+    throw new Error(err.detail || "Ledger audit execution failed");
+  }
+  return res.json();
+}
+
+export async function generateSampleCsv(): Promise<Blob> {
+  const res = await fetch(`${API_URL}/api/v1/audit/generate-sample-csv`, {
+    method: "POST",
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: "Failed to generate sample CSV" }));
+    throw new Error(err.detail || "Failed to generate sample CSV");
+  }
+  return res.blob();
+}
+
+

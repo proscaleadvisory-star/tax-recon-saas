@@ -77,6 +77,8 @@ app.include_router(it_router)
 from fpa_routes import router as fpa_router
 app.include_router(fpa_router)
 
+from ledger_api import router as audit_router
+app.include_router(audit_router)
 
 
 # ============================================================================

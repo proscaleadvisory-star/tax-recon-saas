@@ -1,0 +1,22 @@
+{
+  "ae_threshold_tau": 0.0018871979555115104,
+  "ae_loss_min": 6.148884858703241e-05,
+  "ae_loss_max": 0.05671227350831032,
+  "if_score_min": -0.03888627141714096,
+  "if_score_max": 0.23370888829231262,
+  "train_timestamp": "2026-06-09T19:08:05.081773",
+  "training_metrics": {
+    "n_samples": 2000,
+    "n_features": 13,
+    "ae_threshold_tau": 0.0018871979555115104,
+    "ae_loss_min": 6.148884858703241e-05,
+    "ae_loss_max": 0.05671227350831032,
+    "if_score_min": -0.03888627141714096,
+    "if_score_max": 0.23370888829231262,
+    "train_timestamp": "2026-06-09T19:08:05.081773",
+    "ae_initial_loss": 0.14185043703764677,
+    "ae_final_loss": 0.002994666043377947,
+    "ae_convergence_ratio": 0.02111143332313576,
+    "ae_epochs_trained": 20
+  }
+}
