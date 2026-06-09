@@ -84,7 +84,7 @@ FUSION_WEIGHT_AE: float = 0.6
 FUSION_WEIGHT_IF: float = 0.4
 
 # Risk score threshold above which a transaction is flagged for human review
-RISK_THRESHOLD: float = 0.70
+RISK_THRESHOLD: float = 0.65
 
 # Autoencoder dynamic threshold percentile on training losses
 AE_THRESHOLD_PERCENTILE: float = 97.0
