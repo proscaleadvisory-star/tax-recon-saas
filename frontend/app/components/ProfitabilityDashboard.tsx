@@ -62,10 +62,10 @@ export default function ProfitabilityDashboard({ onBackToHub }: ProfitabilityDas
         </div>
 
         {/* Tab Controls */}
-        <div className="flex flex-wrap gap-1 bg-slate-950/80 border border-slate-900/60 p-1 rounded-xl">
+        <div className="flex bg-slate-950/80 border border-slate-900/60 p-1.5 rounded-xl gap-2">
           <button
             onClick={() => setActiveTab("overview")}
-            className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
               activeTab === "overview" 
                 ? "bg-slate-900 text-emerald-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"
@@ -75,7 +75,7 @@ export default function ProfitabilityDashboard({ onBackToHub }: ProfitabilityDas
           </button>
           <button
             onClick={() => setActiveTab("margins")}
-            className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
               activeTab === "margins" 
                 ? "bg-slate-900 text-emerald-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"
@@ -85,7 +85,7 @@ export default function ProfitabilityDashboard({ onBackToHub }: ProfitabilityDas
           </button>
           <button
             onClick={() => setActiveTab("forecast")}
-            className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
               activeTab === "forecast" 
                 ? "bg-slate-900 text-emerald-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"
@@ -95,7 +95,7 @@ export default function ProfitabilityDashboard({ onBackToHub }: ProfitabilityDas
           </button>
           <button
             onClick={() => setActiveTab("leakage")}
-            className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
               activeTab === "leakage" 
                 ? "bg-slate-900 text-emerald-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"

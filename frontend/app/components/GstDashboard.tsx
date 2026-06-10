@@ -52,10 +52,10 @@ export default function GstDashboard({ onBackToHub }: GstDashboardProps) {
         </div>
 
         {/* Tab Controls */}
-        <div className="flex bg-slate-950/80 border border-slate-900/60 p-1 rounded-xl">
+        <div className="flex bg-slate-950/80 border border-slate-900/60 p-1.5 rounded-xl gap-2">
           <button
             onClick={() => setActiveTab("overview")}
-            className={`flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
               activeTab === "overview" 
                 ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"
@@ -65,7 +65,7 @@ export default function GstDashboard({ onBackToHub }: GstDashboardProps) {
           </button>
           <button
             onClick={() => setActiveTab("recon")}
-            className={`flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
               activeTab === "recon" 
                 ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"
@@ -75,7 +75,7 @@ export default function GstDashboard({ onBackToHub }: GstDashboardProps) {
           </button>
           <button
             onClick={() => setActiveTab("analysis")}
-            className={`flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
               activeTab === "analysis" 
                 ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"
@@ -85,7 +85,7 @@ export default function GstDashboard({ onBackToHub }: GstDashboardProps) {
           </button>
           <button
             onClick={() => setActiveTab("history")}
-            className={`flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
               activeTab === "history" 
                 ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"
@@ -95,7 +95,7 @@ export default function GstDashboard({ onBackToHub }: GstDashboardProps) {
           </button>
           <button
             onClick={() => setActiveTab("settings")}
-            className={`flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
               activeTab === "settings" 
                 ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
                 : "text-slate-400 hover:text-slate-200"

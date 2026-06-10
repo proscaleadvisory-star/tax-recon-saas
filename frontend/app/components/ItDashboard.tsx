@@ -410,9 +410,9 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
         </div>
 
         {/* Global Controls */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
           {/* Taxpayer Selector */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3.5">
             <select
               value={selectedTaxpayer?.id || ""}
               onChange={(e) => {
@@ -454,7 +454,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar Navigation */}
         <aside className="w-64 border-r border-slate-900/60 bg-[#07080a]/40 p-6 space-y-6 flex flex-col justify-between">
-          <div className="space-y-1">
+          <div className="space-y-2.5">
             <button
               onClick={() => setActiveTab("cockpit")}
               className={`flex items-center gap-3 w-full px-4 py-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${
