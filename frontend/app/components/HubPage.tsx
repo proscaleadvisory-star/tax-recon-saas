@@ -74,13 +74,13 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
           </p>
         </div>
 
-        {/* Modules Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 xl:gap-8 w-full mt-4">
+        {/* Modules Cards Row: Flex-nowrap with horizontal scroll on mobile/tablet, standard grid on desktop */}
+        <div className="flex flex-row gap-6 w-full mt-4 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory lg:grid lg:grid-cols-5 lg:overflow-x-visible lg:pb-0 lg:gap-5 xl:gap-6 no-scrollbar">
           
           {/* Card 1: Ecommerce Reconciliation & Tracking Tool */}
           <div 
             onClick={() => onSelectTool("taxrecon")}
-            className="group relative rounded-2xl border border-slate-800/80 bg-gradient-to-b from-[#0e1017] to-[#06070a] p-6 cursor-pointer overflow-hidden transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_35px_rgba(52,211,153,0.08)] hover:-translate-y-1.5 flex flex-col justify-between h-full"
+            className="group relative rounded-2xl border border-slate-800/80 bg-gradient-to-b from-[#0e1017] to-[#06070a] p-6 cursor-pointer overflow-hidden transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_35px_rgba(52,211,153,0.08)] hover:-translate-y-1.5 flex flex-col justify-between h-full w-[280px] sm:w-[320px] lg:w-auto flex-shrink-0 snap-start"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-500" />
             
@@ -124,7 +124,7 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
           {/* Card 2: GST Reconciliation Engine */}
           <div 
             onClick={() => onSelectTool("gstrecon")}
-            className="group relative rounded-2xl border border-slate-800/80 bg-gradient-to-b from-[#0e1017] to-[#06070a] p-6 cursor-pointer overflow-hidden transition-all duration-300 hover:border-indigo-500/50 hover:shadow-[0_0_35px_rgba(129,140,248,0.08)] hover:-translate-y-1.5 flex flex-col justify-between h-full"
+            className="group relative rounded-2xl border border-slate-800/80 bg-gradient-to-b from-[#0e1017] to-[#06070a] p-6 cursor-pointer overflow-hidden transition-all duration-300 hover:border-indigo-500/50 hover:shadow-[0_0_35px_rgba(129,140,248,0.08)] hover:-translate-y-1.5 flex flex-col justify-between h-full w-[280px] sm:w-[320px] lg:w-auto flex-shrink-0 snap-start"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-500" />
 
@@ -168,7 +168,7 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
           {/* Card 3: Profitability & Cash Flow Command Center */}
           <div 
             onClick={() => onSelectTool("profitability")}
-            className="group relative rounded-2xl border border-slate-800/80 bg-gradient-to-b from-[#0e1017] to-[#06070a] p-6 cursor-pointer overflow-hidden transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_35px_rgba(52,211,153,0.08)] hover:-translate-y-1.5 flex flex-col justify-between h-full"
+            className="group relative rounded-2xl border border-slate-800/80 bg-gradient-to-b from-[#0e1017] to-[#06070a] p-6 cursor-pointer overflow-hidden transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_35px_rgba(52,211,153,0.08)] hover:-translate-y-1.5 flex flex-col justify-between h-full w-[280px] sm:w-[320px] lg:w-auto flex-shrink-0 snap-start"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-500" />
 
@@ -212,7 +212,7 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
           {/* Card 4: Income Tax (26AS) Reconciliation */}
           <div 
             onClick={() => onSelectTool("itrecon")}
-            className="group relative rounded-2xl border border-slate-800/80 bg-gradient-to-b from-[#0e1017] to-[#06070a] p-6 cursor-pointer overflow-hidden transition-all duration-300 hover:border-purple-500/50 hover:shadow-[0_0_35px_rgba(168,85,247,0.08)] hover:-translate-y-1.5 flex flex-col justify-between h-full"
+            className="group relative rounded-2xl border border-slate-800/80 bg-gradient-to-b from-[#0e1017] to-[#06070a] p-6 cursor-pointer overflow-hidden transition-all duration-300 hover:border-purple-500/50 hover:shadow-[0_0_35px_rgba(168,85,247,0.08)] hover:-translate-y-1.5 flex flex-col justify-between h-full w-[280px] sm:w-[320px] lg:w-auto flex-shrink-0 snap-start"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-500" />
 
@@ -256,7 +256,7 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
           {/* Card 5: Virtual CFO & FP&A */}
           <div 
             onClick={() => onSelectTool("fpa")}
-            className="group relative rounded-2xl border border-slate-800/80 bg-gradient-to-b from-[#0e1017] to-[#06070a] p-6 cursor-pointer overflow-hidden transition-all duration-300 hover:border-indigo-500/50 hover:shadow-[0_0_35px_rgba(129,140,248,0.08)] hover:-translate-y-1.5 flex flex-col justify-between h-full"
+            className="group relative rounded-2xl border border-slate-800/80 bg-gradient-to-b from-[#0e1017] to-[#06070a] p-6 cursor-pointer overflow-hidden transition-all duration-300 hover:border-indigo-500/50 hover:shadow-[0_0_35px_rgba(129,140,248,0.08)] hover:-translate-y-1.5 flex flex-col justify-between h-full w-[280px] sm:w-[320px] lg:w-auto flex-shrink-0 snap-start"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-500" />
             

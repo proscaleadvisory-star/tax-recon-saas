@@ -441,3 +441,12 @@ body::before {
   .metric-card { padding: 1rem; }
   .dropzone { padding: 2rem 1rem; }
 }
+
+/* Utility to hide scrollbar while keeping scroll functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
