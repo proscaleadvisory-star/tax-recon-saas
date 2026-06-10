@@ -128,13 +128,13 @@ export const BudgetGrid: React.FC = () => {
       </div>
 
       {/* Grid Filters */}
-      <div className="flex gap-4 p-4 glass-panel">
-        <div className="flex flex-col gap-1.5 w-44">
-          <label className="text-xs text-gray-400 font-medium">Entity Rollup</label>
+      <div className="flex flex-wrap gap-6 p-5 glass-panel items-end">
+        <div className="flex flex-col gap-1.5 w-52">
+          <label className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Entity Rollup</label>
           <select
             value={selectedEntity}
             onChange={(e) => setSelectedEntity(e.target.value)}
-            className="bg-[#0f0f1b] border border-border text-sm text-white rounded-lg px-3 py-2 focus:outline-none focus:border-primary"
+            className="bg-[#0f0f1b] border border-slate-800/80 text-sm text-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 w-full cursor-pointer transition-all duration-200"
           >
             <option value="All">All Entities</option>
             <option value="US">US Operations</option>
@@ -145,12 +145,12 @@ export const BudgetGrid: React.FC = () => {
           </select>
         </div>
 
-        <div className="flex flex-col gap-1.5 w-44">
-          <label className="text-xs text-gray-400 font-medium">Department Division</label>
+        <div className="flex flex-col gap-1.5 w-52">
+          <label className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Department Division</label>
           <select
             value={selectedDept}
             onChange={(e) => setSelectedDept(e.target.value)}
-            className="bg-[#0f0f1b] border border-border text-sm text-white rounded-lg px-3 py-2 focus:outline-none focus:border-primary"
+            className="bg-[#0f0f1b] border border-slate-800/80 text-sm text-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 w-full cursor-pointer transition-all duration-200"
           >
             <option value="All">All Departments</option>
             <option value="Sales">Sales</option>
@@ -160,7 +160,7 @@ export const BudgetGrid: React.FC = () => {
           </select>
         </div>
 
-        <div className="flex-1 flex items-end justify-end">
+        <div className="flex-1 flex items-center justify-end pb-1.5">
           {savingCell && (
             <div className="flex items-center gap-2 bg-[#121226] border border-border px-4 py-2 rounded-lg text-sm text-gray-300">
               {saveStatus === 'idle' && (

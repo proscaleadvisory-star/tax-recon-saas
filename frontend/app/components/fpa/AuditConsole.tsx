@@ -78,7 +78,7 @@ export const AuditConsole: React.FC = () => {
         <button
           onClick={handleTrainModel}
           disabled={training}
-          className="border border-border bg-card hover:bg-gray-800 text-white px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2 disabled:opacity-50"
+          className="border border-slate-800 hover:border-indigo-500/30 bg-card hover:bg-indigo-500/5 text-slate-200 hover:text-indigo-300 px-4.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2.5 disabled:opacity-50 cursor-pointer active:scale-95 shadow-sm"
         >
           {training ? (
             <>
@@ -87,7 +87,7 @@ export const AuditConsole: React.FC = () => {
             </>
           ) : (
             <>
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <ShieldCheck className="w-4.5 h-4.5 text-emerald-400" />
               <span>Retrain ML Model on DB</span>
             </>
           )}
@@ -103,17 +103,19 @@ export const AuditConsole: React.FC = () => {
 
       {/* Upload zone */}
       <div className="glass-panel p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <h3 className="font-semibold text-white">Upload Pending Ledger Transactions</h3>
-          <p className="text-xs text-gray-400 leading-relaxed">
-            Select or drag and drop a journal entries CSV file. The file must contain the following headers: 
-            <code className="text-primary bg-primary/10 px-1 py-0.5 rounded font-mono ml-1">amount</code>, 
-            <code className="text-primary bg-primary/10 px-1 py-0.5 rounded font-mono ml-1">timestamp</code>, 
-            <code className="text-primary bg-primary/10 px-1 py-0.5 rounded font-mono ml-1">cost_center</code>, 
-            <code className="text-primary bg-primary/10 px-1 py-0.5 rounded font-mono ml-1">account_id</code>.
-          </p>
+        <div className="space-y-6 flex flex-col justify-between h-full">
+          <div className="space-y-3">
+            <h3 className="font-semibold text-white">Upload Pending Ledger Transactions</h3>
+            <p className="text-xs text-gray-400 leading-relaxed">
+              Select or drag and drop a journal entries CSV file. The file must contain the following headers: 
+              <code className="text-primary bg-primary/10 px-1.5 py-0.5 rounded font-mono ml-1">amount</code>, 
+              <code className="text-primary bg-primary/10 px-1.5 py-0.5 rounded font-mono ml-1">timestamp</code>, 
+              <code className="text-primary bg-primary/10 px-1.5 py-0.5 rounded font-mono ml-1">cost_center</code>, 
+              <code className="text-primary bg-primary/10 px-1.5 py-0.5 rounded font-mono ml-1">account_id</code>.
+            </p>
+          </div>
           
-          <div className="border-2 border-dashed border-border hover:border-primary/50 transition-colors rounded-xl p-8 flex flex-col items-center justify-center gap-3 bg-[#0a0a0f]/60 cursor-pointer relative">
+          <div className="border-2 border-dashed border-border hover:border-primary/50 transition-all rounded-xl p-8 flex flex-col items-center justify-center gap-3 bg-[#0a0a0f]/60 cursor-pointer relative shadow-inner">
             <input
               type="file"
               accept=".csv"
@@ -129,7 +131,7 @@ export const AuditConsole: React.FC = () => {
           <button
             onClick={handleRunAudit}
             disabled={!selectedFile || auditing}
-            className="w-full bg-primary hover:bg-primaryHover text-white py-3 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full bg-gradient-to-tr from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white py-3.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:pointer-events-none cursor-pointer shadow-lg shadow-indigo-500/10 hover:shadow-indigo-500/25 hover:scale-[1.01] active:scale-[0.99]"
           >
             {auditing ? (
               <>
@@ -138,7 +140,7 @@ export const AuditConsole: React.FC = () => {
               </>
             ) : (
               <>
-                <CheckCircle className="w-4 h-4 text-emerald-300" />
+                <CheckCircle className="w-4.5 h-4.5 text-emerald-300 animate-pulse" />
                 <span>Perform Ledger Audit Scan</span>
               </>
             )}

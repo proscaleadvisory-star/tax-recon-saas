@@ -124,15 +124,15 @@ export const ForecastDashboard: React.FC = () => {
 
       {/* Selectors and trigger button */}
       <div className="glass-panel p-6 flex flex-wrap gap-6 items-end">
-        <div className="flex flex-col gap-1.5 w-64">
-          <label className="text-xs text-gray-400 font-medium">Select GL Account</label>
+        <div className="flex flex-col gap-1.5 w-72">
+          <label className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Select GL Account</label>
           <select
             value={selectedAccount}
             onChange={(e) => {
               setSelectedAccount(e.target.value);
               setForecastData([]); // Reset forecast line on change
             }}
-            className="bg-[#0f0f1b] border border-border text-sm text-white rounded-lg px-3 py-2.5 focus:outline-none focus:border-primary w-full"
+            className="bg-[#0f0f1b] border border-slate-800/80 text-sm text-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 w-full cursor-pointer transition-all duration-200"
           >
             {accounts.map(a => (
               <option key={a.id} value={a.id}>{a.code} - {a.name}</option>
@@ -140,15 +140,15 @@ export const ForecastDashboard: React.FC = () => {
           </select>
         </div>
 
-        <div className="flex flex-col gap-1.5 w-64">
-          <label className="text-xs text-gray-400 font-medium">Select Department</label>
+        <div className="flex flex-col gap-1.5 w-72">
+          <label className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Select Department</label>
           <select
             value={selectedDept}
             onChange={(e) => {
               setSelectedDept(e.target.value);
               setForecastData([]); // Reset forecast line on change
             }}
-            className="bg-[#0f0f1b] border border-border text-sm text-white rounded-lg px-3 py-2.5 focus:outline-none focus:border-primary w-full"
+            className="bg-[#0f0f1b] border border-slate-800/80 text-sm text-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 w-full cursor-pointer transition-all duration-200"
           >
             {departments.map(d => (
               <option key={d.id} value={d.id}>{d.name}</option>
@@ -159,7 +159,7 @@ export const ForecastDashboard: React.FC = () => {
         <button
           onClick={handleRunForecast}
           disabled={runningForecast}
-          className="bg-primary hover:bg-primaryHover text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2 disabled:opacity-50"
+          className="bg-gradient-to-tr from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2.5 disabled:opacity-50 disabled:pointer-events-none cursor-pointer shadow-lg shadow-indigo-500/10 hover:shadow-indigo-500/25 hover:scale-[1.01] active:scale-[0.99]"
         >
           {runningForecast ? (
             <>
@@ -168,7 +168,7 @@ export const ForecastDashboard: React.FC = () => {
             </>
           ) : (
             <>
-              <Sparkles className="w-4 h-4 text-emerald-300" />
+              <Sparkles className="w-4 h-4 text-emerald-300 animate-pulse" />
               <span>Generate ARIMA Forecast</span>
             </>
           )}

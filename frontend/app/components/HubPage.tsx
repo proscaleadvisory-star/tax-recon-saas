@@ -89,7 +89,7 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
             </div>
 
             <h2 className="text-xl font-extrabold text-slate-100 mb-2 group-hover:text-emerald-300 transition-colors">
-              TaxRecon OS
+              Ecommerce Reconciliation & Tracking Tool
             </h2>
             
             <p className="text-xs text-slate-400 mb-6 leading-relaxed">
@@ -112,7 +112,7 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
             </ul>
 
             <div className="flex items-center gap-2 text-[10px] font-bold text-emerald-400 uppercase tracking-widest group-hover:translate-x-1 transition-transform duration-300">
-              Launch TaxRecon
+              Launch Ecommerce Recon
               <ArrowRight size={12} />
             </div>
           </div>

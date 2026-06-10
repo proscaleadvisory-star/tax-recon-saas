@@ -1,14 +1,15 @@
 "use client";
 
 import React from 'react';
-import { LayoutGrid, TrendingUp, FileText, ShieldAlert, MessageSquare, Database } from 'lucide-react';
+import { LayoutGrid, TrendingUp, FileText, ShieldAlert, MessageSquare, Database, ArrowLeft } from 'lucide-react';
 
 interface SidebarProps {
   currentTab: string;
   setCurrentTab: (tab: string) => void;
+  onBackToHub?: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ currentTab, setCurrentTab }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ currentTab, setCurrentTab, onBackToHub }) => {
   const navItems = [
     { id: 'grid', label: 'Budget Grid', icon: LayoutGrid },
     { id: 'forecast', label: 'ARIMA Forecasting', icon: TrendingUp },
@@ -21,16 +22,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, setCurrentTab }) =
     <aside className="w-64 bg-card border-r border-border flex flex-col justify-between h-screen sticky top-0">
       <div className="p-6">
         <div className="flex items-center gap-3 mb-8">
-          <div className="p-2.5 bg-primary/20 border border-primary/30 rounded-lg">
+          <div className="p-2.5 bg-primary/10 border border-primary/20 rounded-xl">
             <Database className="w-6 h-6 text-primary" />
           </div>
           <div>
             <h1 className="font-bold text-lg leading-none tracking-tight text-white">Local-First</h1>
-            <span className="text-[10px] text-gray-500 uppercase tracking-widest">FP&A Platform</span>
+            <span className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">FP&A Platform</span>
           </div>
         </div>
 
-        <nav className="space-y-1">
+        <nav className="space-y-1.5">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = currentTab === item.id;
@@ -38,13 +39,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, setCurrentTab }) =
               <button
                 key={item.id}
                 onClick={() => setCurrentTab(item.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? 'bg-primary/10 border-l-2 border-primary text-white'
-                    : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                    ? 'bg-primary/10 border-l-4 border-primary text-primary font-bold shadow-inner'
+                    : 'text-gray-400 hover:bg-gray-800/40 hover:text-white border-l-4 border-transparent'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-primary' : 'text-gray-400'}`} />
+                <Icon className={`w-5 h-5 transition-colors ${isActive ? 'text-primary' : 'text-gray-400'}`} />
                 {item.label}
               </button>
             );
@@ -52,8 +53,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, setCurrentTab }) =
         </nav>
       </div>
 
-      <div className="p-6 border-t border-border bg-[#0f0f1b]">
-        <div className="flex items-center gap-2">
+      <div className="p-6 border-t border-border bg-[#0f0f1b] flex flex-col gap-4">
+        {onBackToHub && (
+          <button 
+            onClick={onBackToHub}
+            className="w-full flex items-center justify-center gap-2.5 px-3 py-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 text-xs font-semibold text-slate-300 hover:text-slate-100 hover:bg-slate-800 hover:border-slate-700 transition-all active:scale-95 cursor-pointer shadow-sm"
+          >
+            <ArrowLeft size={13} />
+            Back to Suite Hub
+          </button>
+        )}
+        <div className="flex items-center gap-2.5">
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse-slow"></div>
           <div>
             <p className="text-xs font-semibold text-gray-200">Local Workstation</p>

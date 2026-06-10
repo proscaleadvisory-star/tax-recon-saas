@@ -64,38 +64,44 @@ export const ReportsPanel: React.FC = () => {
       </div>
 
       {/* Control selectors */}
-      <div className="glass-panel p-4 flex flex-wrap gap-6 items-center">
-        <div className="flex gap-2">
+      <div className="glass-panel p-5 flex flex-wrap gap-6 items-center justify-between">
+        <div className="flex flex-wrap gap-3.5 sm:gap-4.5">
           <button
             onClick={() => setReportType('pnl')}
-            className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 ${
-              reportType === 'pnl' ? 'bg-primary text-white' : 'text-gray-400 hover:text-white'
+            className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2.5 border cursor-pointer ${
+              reportType === 'pnl' 
+                ? 'bg-primary/10 text-primary border-primary/30 shadow-[0_0_15px_rgba(129,140,248,0.15)] font-bold' 
+                : 'text-gray-400 hover:text-white hover:bg-gray-800/40 border-transparent'
             }`}
           >
-            <FileSpreadsheet className="w-4 h-4" />
+            <FileSpreadsheet className="w-4.5 h-4.5" />
             Profit & Loss
           </button>
           <button
             onClick={() => setReportType('balancesheet')}
-            className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 ${
-              reportType === 'balancesheet' ? 'bg-primary text-white' : 'text-gray-400 hover:text-white'
+            className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2.5 border cursor-pointer ${
+              reportType === 'balancesheet' 
+                ? 'bg-primary/10 text-primary border-primary/30 shadow-[0_0_15px_rgba(129,140,248,0.15)] font-bold' 
+                : 'text-gray-400 hover:text-white hover:bg-gray-800/40 border-transparent'
             }`}
           >
-            <DollarSign className="w-4 h-4" />
+            <DollarSign className="w-4.5 h-4.5" />
             Balance Sheet
           </button>
           <button
             onClick={() => setReportType('cashflow')}
-            className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 ${
-              reportType === 'cashflow' ? 'bg-primary text-white' : 'text-gray-400 hover:text-white'
+            className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2.5 border cursor-pointer ${
+              reportType === 'cashflow' 
+                ? 'bg-primary/10 text-primary border-primary/30 shadow-[0_0_15px_rgba(129,140,248,0.15)] font-bold' 
+                : 'text-gray-400 hover:text-white hover:bg-gray-800/40 border-transparent'
             }`}
           >
-            <BookOpen className="w-4 h-4" />
+            <BookOpen className="w-4.5 h-4.5" />
             Cash Flow
           </button>
         </div>
 
-        <div className="h-6 w-px bg-border hidden md:block"></div>
+        <div className="h-6 w-px bg-border hidden lg:block"></div>
 
         <div className="flex gap-4">
           <div className="flex items-center gap-2">

@@ -1,6 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #818cf8;
+  --color-primaryHover: #6366f1;
+  --color-primary-hover: #6366f1;
+  --color-card: #111318;
+  --color-card-hover: #161921;
+  --color-border: rgba(255, 255, 255, 0.1);
+}
+
 /* =========================================================================
    DESIGN TOKENS — Premium Dark Theme
    ========================================================================= */
@@ -102,6 +111,21 @@ body::before {
   border-color: var(--border-default);
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
+}
+
+.glass-panel {
+  background: var(--gradient-card);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-sm);
+}
+
+.glass-panel:hover {
+  border-color: var(--border-default);
+  box-shadow: var(--shadow-md);
 }
 
 .metric-card {

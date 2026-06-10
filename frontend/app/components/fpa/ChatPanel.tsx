@@ -145,13 +145,13 @@ export const ChatPanel: React.FC = () => {
       {/* Input zone */}
       <div className="space-y-4">
         {/* Quick prompts */}
-        <div className="flex gap-2.5 overflow-x-auto pb-1">
+        <div className="flex gap-2.5 overflow-x-auto pb-1 scrollbar-thin">
           {quickChips.map((chip, idx) => (
             <button
               key={idx}
               onClick={() => handleSendMessage(chip)}
               disabled={loading}
-              className="text-xs text-gray-400 hover:text-white bg-[#0f0f1b] hover:bg-gray-800 border border-border px-3.5 py-1.5 rounded-full whitespace-nowrap transition-colors"
+              className="text-xs text-slate-300 hover:text-indigo-300 bg-slate-900/60 hover:bg-indigo-500/10 border border-slate-800 hover:border-indigo-500/30 px-4 py-2 rounded-full whitespace-nowrap transition-all duration-200 active:scale-95 cursor-pointer shadow-sm"
             >
               {chip}
             </button>
@@ -159,7 +159,7 @@ export const ChatPanel: React.FC = () => {
         </div>
 
         {/* Input box */}
-        <div className="flex gap-3 bg-[#0a0a0f] border border-border p-2 rounded-xl focus-within:border-primary transition-colors">
+        <div className="flex gap-3 bg-[#0d0f14] border border-slate-800/80 p-2.5 rounded-xl focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500/30 transition-all duration-200 shadow-sm">
           <input
             type="text"
             value={input}
@@ -174,7 +174,7 @@ export const ChatPanel: React.FC = () => {
           <button
             onClick={() => handleSendMessage(input)}
             disabled={loading || !input.trim()}
-            className="bg-primary hover:bg-primaryHover text-white p-2.5 rounded-lg transition-colors flex items-center justify-center disabled:opacity-40"
+            className="bg-primary hover:bg-primaryHover text-white p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center disabled:opacity-40 cursor-pointer active:scale-95"
           >
             <Send className="w-4 h-4" />
           </button>
