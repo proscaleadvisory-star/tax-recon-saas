@@ -174,7 +174,7 @@ export const ChatPanel: React.FC = () => {
           <button
             onClick={() => handleSendMessage(input)}
             disabled={loading || !input.trim()}
-            className="bg-primary hover:bg-primaryHover text-white p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center disabled:opacity-40 cursor-pointer active:scale-95"
+            className="premium-btn p-3 aspect-square rounded-xl cursor-pointer flex items-center justify-center"
           >
             <Send className="w-4 h-4" />
           </button>

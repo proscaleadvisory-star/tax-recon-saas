@@ -18,7 +18,7 @@ import { PersistenceService } from "@/lib/services/persistence-service";
 import { ReconRun } from "@/types/recon";
 import { ExportUtil } from "@/lib/services/export-util";
 
-export default function HistoryPage() {
+export default function HistoryPage({ setActiveTab }: { setActiveTab?: (tab: "overview" | "recon" | "analysis" | "history" | "settings") => void }) {
 
   const [runs, setRuns] = useState<ReconRun[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -72,7 +72,7 @@ export default function HistoryPage() {
           <p className="text-slate-400 mt-1">Manage and export your previous audit engagements.</p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4.5">
            <div className="relative">
              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
              <input 
@@ -86,7 +86,7 @@ export default function HistoryPage() {
            {runs.length > 0 && (
              <button 
                onClick={handleClearAll}
-               className="flex items-center gap-2 px-4 py-2.5 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-400 hover:bg-rose-500/20 transition-all text-sm font-bold"
+               className="premium-btn premium-btn-rose flex items-center gap-2 px-4 py-2.5 cursor-pointer"
              >
                <Trash2 className="h-4 w-4" /> Clear All
              </button>
@@ -186,8 +186,8 @@ export default function HistoryPage() {
             <h3 className="text-xl font-bold text-white">No Reconciliation Logs</h3>
             <p className="text-slate-400 mt-2 max-w-sm">Every time you run a reconciliation, it will be logged here with its audit trail and reports.</p>
             <button 
-               onClick={() => window.location.href = '/dashboard/recon'}
-               className="btn-primary mt-8 px-8 py-3"
+               onClick={() => setActiveTab?.('recon')}
+               className="premium-btn px-8 py-3 cursor-pointer mt-8"
             >
               Start Your First Audit
             </button>

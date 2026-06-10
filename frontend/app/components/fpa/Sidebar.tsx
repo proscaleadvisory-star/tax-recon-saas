@@ -57,7 +57,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, setCurrentTab, onB
         {onBackToHub && (
           <button 
             onClick={onBackToHub}
-            className="w-full flex items-center justify-center gap-2.5 px-3 py-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 text-xs font-semibold text-slate-300 hover:text-slate-100 hover:bg-slate-800 hover:border-slate-700 transition-all active:scale-95 cursor-pointer shadow-sm"
+            className="w-full premium-btn border-slate-800 bg-slate-900/60 text-slate-400 hover:text-white py-2.5 cursor-pointer"
           >
             <ArrowLeft size={13} />
             Back to Suite Hub

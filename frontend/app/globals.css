@@ -555,4 +555,19 @@ body::before {
   box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
 }
 
+/* Rose variant for danger or destructive buttons */
+.premium-btn-rose {
+  border-color: rgba(239, 68, 68, 0.2);
+  background-color: rgba(239, 68, 68, 0.05);
+  color: #fb7185;
+}
+
+.premium-btn-rose:hover:not(:disabled) {
+  border-color: rgba(239, 68, 68, 0.5);
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #fda4af;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
+}
+
+
 

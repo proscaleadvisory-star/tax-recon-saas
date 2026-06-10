@@ -380,7 +380,7 @@ function InsightCard({ type, title, description, actionText, onClick }: { type: 
       </div>
       <button 
         onClick={onClick}
-        className="shrink-0 flex items-center gap-1.5 px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-[11px] font-bold text-slate-300 hover:text-white transition-all cursor-pointer"
+        className="shrink-0 premium-btn py-2 px-4 cursor-pointer"
       >
         {actionText} <ArrowRight size={12} />
       </button>

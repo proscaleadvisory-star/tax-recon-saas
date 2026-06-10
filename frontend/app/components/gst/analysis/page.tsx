@@ -29,7 +29,7 @@ import {
 import { PersistenceService } from "@/lib/services/persistence-service";
 import { AnalyticsSummary } from "@/types/recon";
 
-export default function AnalysisPage() {
+export default function AnalysisPage({ setActiveTab }: { setActiveTab?: (tab: "overview" | "recon" | "analysis" | "history" | "settings") => void }) {
   const [data, setData] = useState<AnalyticsSummary | null>(null);
 
   useEffect(() => {
@@ -47,8 +47,8 @@ export default function AnalysisPage() {
         <h2 className="text-2xl font-bold text-white">No Analysis Data Yet</h2>
         <p className="text-slate-400 mt-2 max-w-md">Run your first reconciliation to unlock powerful financial insights and compliance trends.</p>
         <button 
-          onClick={() => window.location.href = '/dashboard/recon'}
-          className="btn-primary mt-8 px-8 py-3"
+          onClick={() => setActiveTab?.('recon')}
+          className="premium-btn mt-8 px-8 py-3 cursor-pointer"
         >
           Start First Recon
         </button>
@@ -67,11 +67,11 @@ export default function AnalysisPage() {
           <p className="text-slate-500 mt-1">Holistic view of GST compliance and financial accuracy.</p>
         </div>
         
-        <div className="flex items-center gap-3">
-           <button className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-slate-300 hover:bg-white/10 transition-all text-sm font-medium">
+        <div className="flex items-center gap-4.5">
+           <button className="premium-btn border-slate-800 bg-slate-900/40 text-slate-400 hover:text-white px-4 py-2 flex items-center gap-2 text-sm font-medium cursor-pointer">
              <Calendar className="h-4 w-4" /> Last 12 Months
            </button>
-           <button className="flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 rounded-xl text-indigo-400 hover:bg-indigo-500/20 transition-all text-sm font-medium">
+           <button className="premium-btn px-4 py-2 flex items-center gap-2 text-sm font-medium cursor-pointer">
              <Download className="h-4 w-4" /> Export Insights
            </button>
         </div>
@@ -285,7 +285,7 @@ export default function AnalysisPage() {
                 </p>
              </div>
           </div>
-          <button className="w-full mt-6 py-3 bg-white/5 border border-white/10 rounded-xl text-slate-300 text-sm font-bold hover:bg-white/10 hover:text-white transition-all">
+          <button className="w-full mt-6 premium-btn border-slate-800 bg-slate-900/60 text-slate-400 hover:text-white py-3 transition-colors cursor-pointer">
             Download PDF Advisory Report
           </button>
         </div>

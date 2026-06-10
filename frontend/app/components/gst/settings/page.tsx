@@ -104,7 +104,7 @@ export default function SettingsPage() {
               </div>
 
               <div className="pt-4 flex justify-end">
-                <button type="submit" className="btn-primary px-6 py-2.5 flex items-center gap-2 text-sm">
+                <button type="submit" className="premium-btn px-6 py-2.5 flex items-center gap-2 cursor-pointer">
                   <Save className="h-4 w-4" /> Save Changes
                 </button>
               </div>
@@ -139,7 +139,7 @@ export default function SettingsPage() {
               </div>
 
               <div className="pt-4 flex justify-end">
-                <button type="submit" className="btn-primary px-6 py-2.5 flex items-center gap-2 text-sm">
+                <button type="submit" className="premium-btn px-6 py-2.5 flex items-center gap-2 cursor-pointer">
                   <Save className="h-4 w-4" /> Save Changes
                 </button>
               </div>
@@ -179,7 +179,7 @@ export default function SettingsPage() {
               </div>
 
               <div className="pt-4 flex justify-end">
-                <button type="submit" className="btn-primary px-6 py-2.5 flex items-center gap-2 text-sm">
+                <button type="submit" className="premium-btn px-6 py-2.5 flex items-center gap-2 cursor-pointer">
                   <KeyRound className="h-4 w-4" /> Update Credentials
                 </button>
               </div>
@@ -213,7 +213,7 @@ export default function SettingsPage() {
               </div>
 
               <div className="pt-4 flex justify-end">
-                <button type="submit" className="btn-primary px-6 py-2.5 flex items-center gap-2 text-sm">
+                <button type="submit" className="premium-btn px-6 py-2.5 flex items-center gap-2 cursor-pointer">
                   <Save className="h-4 w-4" /> Save Preferences
                 </button>
               </div>
@@ -230,7 +230,7 @@ export default function SettingsPage() {
               </p>
               <button 
                 onClick={handleClearData}
-                className="px-6 py-3 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-400 font-bold hover:bg-rose-500/20 transition-all text-sm active:scale-95 cursor-pointer"
+                className="premium-btn premium-btn-rose px-6 py-3 cursor-pointer"
               >
                 Delete All Workspace Data
               </button>

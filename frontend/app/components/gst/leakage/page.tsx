@@ -268,7 +268,7 @@ export default function LeakageTab() {
                     </button>
                     <button 
                       onClick={() => handleStatusUpdate(selectedLeakage.id, "write_off")}
-                      className="py-2.5 premium-btn border-slate-800 bg-slate-900/40 text-slate-400 cursor-pointer"
+                      className="py-2.5 premium-btn premium-btn-rose cursor-pointer"
                     >
                       Write-off Lost
                     </button>

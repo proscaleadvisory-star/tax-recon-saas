@@ -21,10 +21,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 
-export default function DashboardPage() {
+export default function DashboardPage({ setActiveTab }: { setActiveTab?: (tab: "overview" | "recon" | "analysis" | "history" | "settings") => void }) {
   const [data, setData] = useState<AnalyticsSummary | null>(null);
   const [recentRuns, setRecentRuns] = useState<ReconRun[]>([]);
-  const router = useRouter();
 
   useEffect(() => {
     setData(PersistenceService.getAnalyticsSummary());
@@ -88,7 +87,7 @@ export default function DashboardPage() {
         {/* Upload Section */}
         <section className="lg:col-span-2 space-y-6">
           <div 
-            onClick={() => router.push("/dashboard/recon")}
+            onClick={() => setActiveTab?.("recon")}
             className="glass-card rounded-3xl p-10 border-dashed border-2 border-slate-700/50 hover:border-primary/50 transition-all group flex flex-col items-center justify-center text-center cursor-pointer"
           >
             <div className="w-20 h-20 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-xl shadow-primary/5">
@@ -98,7 +97,7 @@ export default function DashboardPage() {
             <p className="text-slate-400 max-w-sm mb-8 leading-relaxed">
               Upload your Purchase Register and GSTR-2B data to generate World-Class matching reports instantly.
             </p>
-            <button className="bg-white text-slate-950 px-8 py-3 rounded-xl font-bold hover:bg-slate-200 transition-all flex items-center gap-2 group/btn shadow-lg">
+            <button className="premium-btn px-8 py-3 flex items-center gap-2 group/btn cursor-pointer">
               Start Recon Engine
               <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
             </button>
@@ -106,14 +105,20 @@ export default function DashboardPage() {
           
           {/* Quick Guide */}
           <div className="grid grid-cols-2 gap-6">
-            <Link href="/dashboard/analysis" className="glass-card p-6 rounded-2xl flex items-center justify-between group cursor-pointer hover:bg-slate-800/30 transition-all cursor-pointer">
+            <div 
+              onClick={() => setActiveTab?.("analysis")} 
+              className="glass-card p-6 rounded-2xl flex items-center justify-between group cursor-pointer hover:bg-slate-800/30 transition-all"
+            >
               <div>
                 <p className="text-xs font-bold text-primary uppercase tracking-wider mb-1">Analytics</p>
                 <h4 className="font-bold">Visual Analysis</h4>
               </div>
               <PieChart className="w-5 h-5 text-slate-500 group-hover:text-white transition-colors" />
-            </Link>
-            <div className="glass-card p-6 rounded-2xl flex items-center justify-between group cursor-pointer hover:bg-slate-800/30 transition-all">
+            </div>
+            <div 
+              onClick={() => setActiveTab?.("history")}
+              className="glass-card p-6 rounded-2xl flex items-center justify-between group cursor-pointer hover:bg-slate-800/30 transition-all"
+            >
               <div>
                 <p className="text-xs font-bold text-accent uppercase tracking-wider mb-1">Export</p>
                 <h4 className="font-bold">Historical CSVs</h4>
@@ -147,8 +152,8 @@ export default function DashboardPage() {
             </div>
             {hasData && (
               <button 
-                onClick={() => router.push("/dashboard/history")}
-                className="w-full mt-8 py-3 rounded-xl border border-slate-800 text-sm font-semibold text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
+                onClick={() => setActiveTab?.("history")}
+                className="w-full mt-8 premium-btn border-slate-800 bg-slate-900/60 text-slate-400 hover:text-white py-3 transition-colors cursor-pointer"
               >
                 View All Records
               </button>

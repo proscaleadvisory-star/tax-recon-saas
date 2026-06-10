@@ -717,7 +717,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                 <button
                   type="submit"
                   disabled={uploading || !fileToUpload || !selectedTaxpayer}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs font-bold text-white shadow-lg shadow-purple-600/20 transition-all disabled:opacity-50 active:scale-95 cursor-pointer"
+                  className="w-full premium-btn premium-btn-purple py-3.5 cursor-pointer"
                 >
                   {uploading ? (
                     <>
@@ -875,7 +875,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                                 <button
                                   onClick={() => handleResolveTask(task.id)}
                                   disabled={resolvingTaskId === task.id}
-                                  className="flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-[10px] font-bold text-white transition-all active:scale-95 cursor-pointer disabled:opacity-50"
+                                  className="premium-btn premium-btn-emerald py-2 px-4 cursor-pointer"
                                 >
                                   {resolvingTaskId === task.id ? <Loader2 size={10} className="animate-spin" /> : <Check size={10} />}
                                   Mark Resolved & Close
@@ -921,7 +921,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                           <button
                             type="submit"
                             disabled={creatingTask}
-                            className="px-4.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs font-bold text-white transition-all active:scale-95 cursor-pointer disabled:opacity-50 flex items-center justify-center"
+                            className="premium-btn premium-btn-purple py-2.5 px-4.5 cursor-pointer"
                           >
                             {creatingTask ? <Loader2 size={13} className="animate-spin" /> : <Plus size={14} />}
                           </button>

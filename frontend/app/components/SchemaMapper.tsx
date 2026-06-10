@@ -218,8 +218,8 @@ export default function SchemaMapper({
               <button
                 key={tpl.id}
                 onClick={() => handleSelectTemplate(tpl)}
-                className="btn-secondary"
-                style={{ padding: "4px 10px", fontSize: "0.7rem", borderRadius: "var(--radius-sm)" }}
+                className="premium-btn py-1 px-3 cursor-pointer text-[10px]"
+                style={{ borderRadius: "var(--radius-sm)" }}
               >
                 {tpl.name}
               </button>
@@ -353,8 +353,7 @@ export default function SchemaMapper({
             <button
               onClick={handleSaveTemplate}
               disabled={isSavingTemplate || Object.keys(mappings).length === 0}
-              className="btn-secondary"
-              style={{ padding: "6px 14px", fontSize: "0.8rem" }}
+              className="premium-btn border-slate-800 bg-slate-900/60 text-slate-400 hover:text-white cursor-pointer py-1.5 px-3.5 text-xs"
             >
               <Save size={14} /> Save Template
             </button>
@@ -362,14 +361,13 @@ export default function SchemaMapper({
 
           {/* Action trigger */}
           <div style={{ display: "flex", gap: "12px" }}>
-            <button onClick={onClose} className="btn-secondary" style={{ padding: "8px 16px", fontSize: "0.85rem" }}>
+            <button onClick={onClose} className="premium-btn border-slate-800 bg-slate-900/60 text-slate-400 hover:text-white cursor-pointer px-4.5 py-2 text-xs">
               Cancel
             </button>
             <button
               onClick={handleIngest}
               disabled={isProcessing}
-              className="btn-primary"
-              style={{ padding: "8px 20px", fontSize: "0.85rem" }}
+              className="premium-btn premium-btn-purple cursor-pointer px-6 py-2 text-xs"
             >
               {isProcessing ? (
                 "Ingesting..."

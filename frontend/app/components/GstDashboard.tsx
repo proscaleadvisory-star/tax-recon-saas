@@ -113,10 +113,10 @@ export default function GstDashboard({ onBackToHub }: GstDashboardProps) {
 
       {/* Main Workspace Area */}
       <main className="flex-1 overflow-y-auto p-8 custom-scrollbar">
-        {activeTab === "overview" && <GstOverview />}
+        {activeTab === "overview" && <GstOverview setActiveTab={setActiveTab} />}
         {activeTab === "recon" && <GstReconEngine />}
-        {activeTab === "analysis" && <GstAnalysis />}
-        {activeTab === "history" && <GstHistory />}
+        {activeTab === "analysis" && <GstAnalysis setActiveTab={setActiveTab} />}
+        {activeTab === "history" && <GstHistory setActiveTab={setActiveTab} />}
         {activeTab === "settings" && <GstSettings />}
       </main>
 
