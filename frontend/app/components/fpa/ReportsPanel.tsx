@@ -52,7 +52,7 @@ export const ReportsPanel: React.FC = () => {
           <select
             value={currency}
             onChange={(e) => setCurrency(e.target.value)}
-            className="bg-[#0f0f1b] border border-border text-sm text-white rounded-lg px-3 py-1.5 focus:outline-none focus:border-primary"
+            className="premium-select"
           >
             <option value="USD">USD ($)</option>
             <option value="INR">INR (₹)</option>
@@ -109,7 +109,7 @@ export const ReportsPanel: React.FC = () => {
             <select
               value={scenario}
               onChange={(e) => setScenario(e.target.value)}
-              className="bg-[#0f0f1b] border border-border text-xs text-white rounded-lg px-2 py-1.5 focus:outline-none"
+              className="premium-select"
             >
               <option value="Actuals">Actuals</option>
               <option value="Budget">Budget</option>
@@ -121,7 +121,7 @@ export const ReportsPanel: React.FC = () => {
             <select
               value={year}
               onChange={(e) => setYear(parseInt(e.target.value))}
-              className="bg-[#0f0f1b] border border-border text-xs text-white rounded-lg px-2 py-1.5 focus:outline-none"
+              className="premium-select"
             >
               <option value={2023}>2023</option>
               <option value={2024}>2024</option>

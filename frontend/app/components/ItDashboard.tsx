@@ -412,14 +412,14 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
         {/* Global Controls */}
         <div className="flex items-center gap-5">
           {/* Taxpayer Selector */}
-          <div className="flex items-center gap-3.5">
+          <div className="flex items-center gap-3.5 relative">
             <select
               value={selectedTaxpayer?.id || ""}
               onChange={(e) => {
                 const found = taxpayers.find(t => t.id === e.target.value);
                 if (found) setSelectedTaxpayer(found);
               }}
-              className="px-3.5 py-1.5 rounded-xl border border-slate-800 bg-slate-950/80 text-xs font-semibold text-slate-200 focus:outline-none focus:border-purple-500/50 transition-colors"
+              className="premium-select"
             >
               {taxpayers.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -431,7 +431,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
             
             <button
               onClick={() => setShowRegisterModal(true)}
-              className="flex items-center justify-center w-8.5 h-8.5 rounded-xl border border-dashed border-slate-700 hover:border-purple-500/50 bg-slate-900/30 hover:bg-purple-500/5 text-purple-400 hover:text-purple-300 transition-all active:scale-95 cursor-pointer"
+              className="flex items-center justify-center w-9.5 h-9.5 rounded-xl border border-dashed border-slate-700 hover:border-purple-500/50 bg-slate-900/30 hover:bg-purple-500/5 text-purple-400 hover:text-purple-300 transition-all active:scale-95 cursor-pointer"
               title="Register New Taxpayer Profile"
             >
               <UserPlus size={15} />
@@ -442,7 +442,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
           <select
             value={taxYear}
             onChange={(e) => setTaxYear(e.target.value)}
-            className="px-3.5 py-1.5 rounded-xl border border-slate-800 bg-slate-950/80 text-xs font-semibold text-slate-200 focus:outline-none focus:border-purple-500/50 transition-colors"
+            className="premium-select"
           >
             <option value="2025-26">FY 2025-26 (AY 2026-27)</option>
             <option value="2024-25">FY 2024-25 (AY 2025-26)</option>
@@ -534,11 +534,11 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   </p>
                 </div>
                 
-                <div className="flex gap-3.5">
+                <div className="flex gap-4">
                   <button
                     onClick={handleRunReconciliation}
                     disabled={reconciling || !selectedTaxpayer}
-                    className="flex items-center gap-2 px-4.5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs font-bold text-white shadow-lg shadow-purple-600/20 hover:shadow-purple-500/30 transition-all disabled:opacity-50 active:scale-95 cursor-pointer"
+                    className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-xs font-bold text-white shadow-lg shadow-purple-600/20 hover:shadow-purple-500/30 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
                   >
                     {reconciling ? <Loader2 className="animate-spin" size={13} /> : <RefreshCw size={13} />}
                     Run Reconciliation Rules
@@ -547,7 +547,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   <button
                     onClick={handleDownloadAuditPack}
                     disabled={exporting || !selectedTaxpayer || !reconSummary}
-                    className="flex items-center gap-2 px-4.5 py-2.5 rounded-xl border border-slate-800 bg-slate-950 text-xs font-bold text-slate-300 hover:text-slate-100 hover:bg-slate-900/60 transition-all active:scale-95 cursor-pointer disabled:opacity-40"
+                    className="flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-800 bg-slate-950/80 text-xs font-bold text-slate-300 hover:text-slate-100 hover:bg-slate-900/60 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-40 disabled:pointer-events-none"
                   >
                     {exporting ? <Loader2 className="animate-spin" size={13} /> : <FileDown size={13} />}
                     Download Audit Pack
@@ -557,8 +557,8 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
 
               {/* Metric Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
-                <div className="rounded-2xl border border-slate-900 bg-[#0c0d12]/50 backdrop-blur p-6 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/5 rounded-full -mr-10 -mt-10" />
+                <div className="rounded-2xl border border-slate-800/80 bg-[#0c0d12]/60 backdrop-blur-xl p-6 relative overflow-hidden hover:border-purple-500/30 hover:-translate-y-1 transition-all duration-300 shadow-md">
+                  <div className="absolute -top-6 -right-6 w-24 h-24 bg-purple-500/10 rounded-full blur-xl pointer-events-none" />
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Matched groups</div>
                   <div className="text-3xl font-black tracking-tight text-slate-100">{reconSummary?.matched_groups || 0}</div>
                   <div className="text-[10px] text-emerald-400 font-semibold mt-1 flex items-center gap-1">
@@ -566,8 +566,8 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-slate-900 bg-[#0c0d12]/50 backdrop-blur p-6 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-indigo-500/5 rounded-full -mr-10 -mt-10" />
+                <div className="rounded-2xl border border-slate-800/80 bg-[#0c0d12]/60 backdrop-blur-xl p-6 relative overflow-hidden hover:border-indigo-500/30 hover:-translate-y-1 transition-all duration-300 shadow-md">
+                  <div className="absolute -top-6 -right-6 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl pointer-events-none" />
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Partial matches</div>
                   <div className="text-3xl font-black tracking-tight text-slate-100">{reconSummary?.partial_groups || 0}</div>
                   <div className="text-[10px] text-yellow-500 font-semibold mt-1 flex items-center gap-1">
@@ -575,8 +575,8 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-slate-900 bg-[#0c0d12]/50 backdrop-blur p-6 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-red-500/5 rounded-full -mr-10 -mt-10" />
+                <div className="rounded-2xl border border-slate-800/80 bg-[#0c0d12]/60 backdrop-blur-xl p-6 relative overflow-hidden hover:border-rose-500/30 hover:-translate-y-1 transition-all duration-300 shadow-md">
+                  <div className="absolute -top-6 -right-6 w-24 h-24 bg-rose-500/10 rounded-full blur-xl pointer-events-none" />
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Unmatched transactions</div>
                   <div className="text-3xl font-black tracking-tight text-slate-100">{reconSummary?.unmatched_groups || 0}</div>
                   <div className="text-[10px] text-red-400 font-semibold mt-1 flex items-center gap-1">
@@ -584,8 +584,8 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-slate-900 bg-[#0c0d12]/50 backdrop-blur p-6 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/5 rounded-full -mr-10 -mt-10" />
+                <div className="rounded-2xl border border-slate-800/80 bg-[#0c0d12]/60 backdrop-blur-xl p-6 relative overflow-hidden hover:border-blue-500/30 hover:-translate-y-1 transition-all duration-300 shadow-md">
+                  <div className="absolute -top-6 -right-6 w-24 h-24 bg-blue-500/10 rounded-full blur-xl pointer-events-none" />
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Active exceptions</div>
                   <div className="text-3xl font-black tracking-tight text-slate-100">{reconSummary?.exception_count || 0}</div>
                   <div className="text-[10px] text-indigo-400 font-semibold mt-1 flex items-center gap-1">
@@ -646,8 +646,16 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                       ))}
                       {topExceptions.length === 0 && (
                         <tr>
-                          <td colSpan={5} className="px-6 py-12 text-center text-slate-500 text-xs">
-                            No active mismatches found for this Assessment Year. Ensure files are uploaded and matching has run.
+                          <td colSpan={5} className="px-6 py-16 text-center">
+                            <div className="flex flex-col items-center justify-center gap-3.5 max-w-md mx-auto">
+                              <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                                <CheckCircle size={20} className="animate-pulse" />
+                              </div>
+                              <span className="text-sm font-bold text-slate-200">No Mismatches Flagged</span>
+                              <p className="text-xs text-slate-400 leading-relaxed">
+                                No active compliance discrepancies found for this Assessment Year. Ensure files are uploaded and matching has run.
+                              </p>
+                            </div>
                           </td>
                         </tr>
                       )}
@@ -674,7 +682,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   <select
                     value={sourceType}
                     onChange={(e: any) => setSourceType(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/80 text-xs font-semibold text-slate-200 focus:outline-none focus:border-purple-500/50 transition-colors"
+                    className="w-full premium-select"
                   >
                     <option value="ais_json">Official AIS statement (JSON format)</option>
                     <option value="form26as_txt">Official Form 26AS (TXT/HTML format)</option>
@@ -894,7 +902,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                         <select
                           value={newTaskAction}
                           onChange={(e) => setNewTaskAction(e.target.value)}
-                          className="w-full px-3 py-2 rounded-xl border border-slate-800 bg-slate-950 text-xs font-semibold text-slate-200 focus:outline-none"
+                          className="w-full premium-select"
                         >
                           <option value="ask_deductor_revision">Ask deductor to revise TDS return</option>
                           <option value="file_rectification">File income tax rectification request</option>
@@ -1073,7 +1081,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   <select
                     value={newType}
                     onChange={(e) => setNewType(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-950 text-xs font-semibold text-slate-200 focus:outline-none"
+                    className="w-full premium-select"
                   >
                     <option value="Individual">Individual</option>
                     <option value="HUF">HUF</option>

@@ -132,7 +132,7 @@ export const ForecastDashboard: React.FC = () => {
               setSelectedAccount(e.target.value);
               setForecastData([]); // Reset forecast line on change
             }}
-            className="bg-[#0f0f1b] border border-slate-800/80 text-sm text-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 w-full cursor-pointer transition-all duration-200"
+            className="w-full premium-select"
           >
             {accounts.map(a => (
               <option key={a.id} value={a.id}>{a.code} - {a.name}</option>
@@ -148,7 +148,7 @@ export const ForecastDashboard: React.FC = () => {
               setSelectedDept(e.target.value);
               setForecastData([]); // Reset forecast line on change
             }}
-            className="bg-[#0f0f1b] border border-slate-800/80 text-sm text-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 w-full cursor-pointer transition-all duration-200"
+            className="w-full premium-select"
           >
             {departments.map(d => (
               <option key={d.id} value={d.id}>{d.name}</option>

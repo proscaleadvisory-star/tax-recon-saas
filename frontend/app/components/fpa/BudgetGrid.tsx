@@ -106,7 +106,7 @@ export const BudgetGrid: React.FC = () => {
             <select
               value={scenario}
               onChange={(e) => setScenario(e.target.value)}
-              className="bg-[#0f0f1b] border border-border text-sm text-white rounded-lg px-3 py-1.5 focus:outline-none focus:border-primary"
+              className="premium-select"
             >
               <option value="Budget">Budget</option>
               <option value="Forecast">Forecast</option>
@@ -118,7 +118,7 @@ export const BudgetGrid: React.FC = () => {
             <select
               value={year}
               onChange={(e) => setYear(parseInt(e.target.value))}
-              className="bg-[#0f0f1b] border border-border text-sm text-white rounded-lg px-3 py-1.5 focus:outline-none focus:border-primary"
+              className="premium-select"
             >
               <option value={2023}>2023</option>
               <option value={2024}>2024</option>
@@ -134,7 +134,7 @@ export const BudgetGrid: React.FC = () => {
           <select
             value={selectedEntity}
             onChange={(e) => setSelectedEntity(e.target.value)}
-            className="bg-[#0f0f1b] border border-slate-800/80 text-sm text-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 w-full cursor-pointer transition-all duration-200"
+            className="w-full premium-select"
           >
             <option value="All">All Entities</option>
             <option value="US">US Operations</option>
@@ -150,7 +150,7 @@ export const BudgetGrid: React.FC = () => {
           <select
             value={selectedDept}
             onChange={(e) => setSelectedDept(e.target.value)}
-            className="bg-[#0f0f1b] border border-slate-800/80 text-sm text-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 w-full cursor-pointer transition-all duration-200"
+            className="w-full premium-select"
           >
             <option value="All">All Departments</option>
             <option value="Sales">Sales</option>

@@ -126,7 +126,7 @@ export default function LeakageTab() {
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
-              className="bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-300 outline-none cursor-pointer focus:border-indigo-500/50"
+              className="premium-select"
             >
               <option value="All">All Anomalies</option>
               <option value="weight_mismatch">Weight Mismatches</option>
