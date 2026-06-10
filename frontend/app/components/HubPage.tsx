@@ -76,171 +76,187 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
         </div>
 
         {/* Modules Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 w-full max-w-[1600px]">
-          {/* Card 1: TaxRecon OS */}
+        <div className="flex flex-wrap justify-center gap-8 w-full max-w-[1600px] mt-10">
+          {/* Card 1: Ecommerce Reconciliation & Tracking Tool */}
           <div 
             onClick={() => onSelectTool("taxrecon")}
-            className="group relative rounded-3xl border border-slate-800 bg-[#0d0f14]/60 backdrop-blur-xl p-6 cursor-pointer overflow-hidden transition-all hover:border-emerald-500/50 hover:shadow-[0_0_50px_rgba(52,211,153,0.1)] hover:-translate-y-1.5 duration-300"
+            className="group relative rounded-3xl border border-slate-800/80 bg-[#0d0f14]/70 backdrop-blur-xl p-8 cursor-pointer overflow-hidden transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_50px_rgba(52,211,153,0.15)] hover:-translate-y-1.5 flex flex-col justify-between w-full sm:w-[300px] md:w-[325px] min-h-[520px]"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-500" />
             
-            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-              <Shield size={24} className="text-emerald-400" />
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Shield size={24} className="text-emerald-400" />
+              </div>
+
+              <h2 className="text-xl font-extrabold text-slate-100 mb-3 group-hover:text-emerald-300 transition-colors leading-tight">
+                Ecommerce Reconciliation & Tracking Tool
+              </h2>
+              
+              <p className="text-xs text-slate-400 mb-6 leading-relaxed">
+                Match payment settlements against purchase ledgers, track SKU net profit margins, see geographic heatmaps, and claim marketplace recovery disputes.
+              </p>
+
+              <ul className="space-y-2.5">
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
+                  <span>Bulk upload sales registers</span>
+                </li>
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
+                  <span>Auto-detect tax variance</span>
+                </li>
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
+                  <span>State-wise sales heatmaps</span>
+                </li>
+              </ul>
             </div>
 
-            <h2 className="text-xl font-extrabold text-slate-100 mb-2 group-hover:text-emerald-300 transition-colors">
-              Ecommerce Reconciliation & Tracking Tool
-            </h2>
-            
-            <p className="text-xs text-slate-400 mb-6 leading-relaxed">
-              Match payment settlements against purchase ledgers, track SKU net profit margins, see geographic heatmaps, and claim marketplace recovery disputes.
-            </p>
-
-            <ul className="space-y-2.5 mb-6">
-              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-                <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
-                <span>Bulk upload sales registers</span>
-              </li>
-              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-                <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
-                <span>Auto-detect tax variance</span>
-              </li>
-              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-                <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
-                <span>State-wise sales heatmaps</span>
-              </li>
-            </ul>
-
-            <div className="flex items-center gap-2 text-[10px] font-bold text-emerald-400 uppercase tracking-widest group-hover:translate-x-1 transition-transform duration-300">
-              Launch Ecommerce Recon
-              <ArrowRight size={12} />
+            <div className="mt-8 pt-4 border-t border-slate-900/40">
+              <button className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/25 active:scale-95 cursor-pointer">
+                Launch Ecommerce Recon
+                <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
           </div>
 
           {/* Card 2: GST Reconciliation Engine */}
           <div 
             onClick={() => onSelectTool("gstrecon")}
-            className="group relative rounded-3xl border border-slate-800 bg-[#0d0f14]/60 backdrop-blur-xl p-6 cursor-pointer overflow-hidden transition-all hover:border-indigo-500/50 hover:shadow-[0_0_50px_rgba(129,140,248,0.1)] hover:-translate-y-1.5 duration-300"
+            className="group relative rounded-3xl border border-slate-800/80 bg-[#0d0f14]/70 backdrop-blur-xl p-8 cursor-pointer overflow-hidden transition-all duration-300 hover:border-indigo-500/50 hover:shadow-[0_0_50px_rgba(129,140,248,0.15)] hover:-translate-y-1.5 flex flex-col justify-between w-full sm:w-[300px] md:w-[325px] min-h-[520px]"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-500" />
 
-            <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-              <Zap size={22} className="text-indigo-400" />
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Zap size={22} className="text-indigo-400" />
+              </div>
+
+              <h2 className="text-xl font-extrabold text-slate-100 mb-3 group-hover:text-indigo-300 transition-colors leading-tight">
+                GST Recon Engine
+              </h2>
+              
+              <p className="text-xs text-slate-400 mb-6 leading-relaxed">
+                Cross-check Purchase Registers (PR) against GSTR-2B data with fuzzy matching keys, variance audits, and client-side Excel report downloads.
+              </p>
+
+              <ul className="space-y-2.5">
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-indigo-400 flex-shrink-0" />
+                  <span>Local Excel upload in browser</span>
+                </li>
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-indigo-400 flex-shrink-0" />
+                  <span>Run K1 to K6 matching filters</span>
+                </li>
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-indigo-400 flex-shrink-0" />
+                  <span>Export Excel reconciliation audits</span>
+                </li>
+              </ul>
             </div>
 
-            <h2 className="text-xl font-extrabold text-slate-100 mb-2 group-hover:text-indigo-300 transition-colors">
-              GST Recon Engine
-            </h2>
-            
-            <p className="text-xs text-slate-400 mb-6 leading-relaxed">
-              Cross-check Purchase Registers (PR) against GSTR-2B data with fuzzy matching keys, variance audits, and client-side Excel report downloads.
-            </p>
-
-            <ul className="space-y-2.5 mb-6">
-              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-                <CheckCircle size={12} className="text-indigo-400 flex-shrink-0" />
-                <span>Local Excel upload in browser</span>
-              </li>
-              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-                <CheckCircle size={12} className="text-indigo-400 flex-shrink-0" />
-                <span>Run K1 to K6 matching filters</span>
-              </li>
-              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-                <CheckCircle size={12} className="text-indigo-400 flex-shrink-0" />
-                <span>Export Excel reconciliation audits</span>
-              </li>
-            </ul>
-
-            <div className="flex items-center gap-2 text-[10px] font-bold text-indigo-400 uppercase tracking-widest group-hover:translate-x-1 transition-transform duration-300">
-              Launch GST Engine
-              <ArrowRight size={12} />
+            <div className="mt-8 pt-4 border-t border-slate-900/40">
+              <button className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md shadow-indigo-500/10 hover:shadow-indigo-500/25 active:scale-95 cursor-pointer">
+                Launch GST Engine
+                <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
           </div>
 
           {/* Card 3: Profitability & Cash Flow Command Center */}
           <div 
             onClick={() => onSelectTool("profitability")}
-            className="group relative rounded-3xl border border-slate-800 bg-[#0d0f14]/60 backdrop-blur-xl p-6 cursor-pointer overflow-hidden transition-all hover:border-emerald-500/50 hover:shadow-[0_0_50px_rgba(52,211,153,0.1)] hover:-translate-y-1.5 duration-300"
+            className="group relative rounded-3xl border border-slate-800/80 bg-[#0d0f14]/70 backdrop-blur-xl p-8 cursor-pointer overflow-hidden transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_50px_rgba(52,211,153,0.15)] hover:-translate-y-1.5 flex flex-col justify-between w-full sm:w-[300px] md:w-[325px] min-h-[520px]"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-500" />
 
-            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-              <TrendingUp size={22} className="text-emerald-400" />
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <TrendingUp size={22} className="text-emerald-400" />
+              </div>
+
+              <h2 className="text-xl font-extrabold text-slate-100 mb-3 group-hover:text-emerald-300 transition-colors leading-tight">
+                Profit Cockpit
+              </h2>
+              
+              <p className="text-xs text-slate-400 mb-6 leading-relaxed">
+                Track CM2 SKU profitability, simulate 90-day cash runways with compliance deadlines, and auto-flag weight and return leakages.
+              </p>
+
+              <ul className="space-y-2.5">
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
+                  <span>Analyze item-level COGS and returns</span>
+                </li>
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
+                  <span>Deterministic cash runway simulator</span>
+                </li>
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
+                  <span>Generate pre-compiled dispute packets</span>
+                </li>
+              </ul>
             </div>
 
-            <h2 className="text-xl font-extrabold text-slate-100 mb-2 group-hover:text-emerald-300 transition-colors">
-              Profit Cockpit
-            </h2>
-            
-            <p className="text-xs text-slate-400 mb-6 leading-relaxed">
-              Track CM2 SKU profitability, simulate 90-day cash runways with compliance deadlines, and auto-flag weight and return leakages.
-            </p>
-
-            <ul className="space-y-2.5 mb-6">
-              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-                <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
-                <span>Analyze item-level COGS and returns</span>
-              </li>
-              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-                <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
-                <span>Deterministic cash runway simulator</span>
-              </li>
-              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-                <CheckCircle size={12} className="text-emerald-400 flex-shrink-0" />
-                <span>Generate pre-compiled dispute packets</span>
-              </li>
-            </ul>
-
-            <div className="flex items-center gap-2 text-[10px] font-bold text-emerald-400 uppercase tracking-widest group-hover:translate-x-1 transition-transform duration-300">
-              Launch Cockpit
-              <ArrowRight size={12} />
+            <div className="mt-8 pt-4 border-t border-slate-900/40">
+              <button className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/25 active:scale-95 cursor-pointer">
+                Launch Cockpit
+                <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
           </div>
 
           {/* Card 4: Income Tax (26AS) Reconciliation */}
           <div 
             onClick={() => onSelectTool("itrecon")}
-            className="group relative rounded-3xl border border-slate-800 bg-[#0d0f14]/60 backdrop-blur-xl p-6 cursor-pointer overflow-hidden transition-all hover:border-purple-500/50 hover:shadow-[0_0_50px_rgba(168,85,247,0.1)] hover:-translate-y-1.5 duration-300"
+            className="group relative rounded-3xl border border-slate-800/80 bg-[#0d0f14]/70 backdrop-blur-xl p-8 cursor-pointer overflow-hidden transition-all duration-300 hover:border-purple-500/50 hover:shadow-[0_0_50px_rgba(168,85,247,0.15)] hover:-translate-y-1.5 flex flex-col justify-between w-full sm:w-[300px] md:w-[325px] min-h-[520px]"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-500" />
 
-            <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-              <Scale size={22} className="text-purple-400" />
+            <div>
+              <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Scale size={22} className="text-purple-400" />
+              </div>
+
+              <h2 className="text-xl font-extrabold text-slate-100 mb-3 group-hover:text-purple-300 transition-colors leading-tight">
+                Direct Tax Recon
+              </h2>
+              
+              <p className="text-xs text-slate-400 mb-6 leading-relaxed">
+                Reconcile Form 26AS/AIS/TIS tax credits against payroll Form 16, bank statements, and tax return claims with rules-based matching.
+              </p>
+
+              <ul className="space-y-2.5">
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-purple-400 flex-shrink-0" />
+                  <span>Ingest AIS/26AS/Form 16/Bank Statements</span>
+                </li>
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-purple-400 flex-shrink-0" />
+                  <span>Auto-detect timing lags and head mismatches</span>
+                </li>
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
+                  <CheckCircle size={12} className="text-purple-400 flex-shrink-0" />
+                  <span>Export audit evidence packs & ITR prefill</span>
+                </li>
+              </ul>
             </div>
 
-            <h2 className="text-xl font-extrabold text-slate-100 mb-2 group-hover:text-purple-300 transition-colors">
-              Direct Tax Recon
-            </h2>
-            
-            <p className="text-xs text-slate-400 mb-6 leading-relaxed">
-              Reconcile Form 26AS/AIS/TIS tax credits against payroll Form 16, bank statements, and tax return claims with rules-based matching.
-            </p>
-
-            <ul className="space-y-2.5 mb-6">
-              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-                <CheckCircle size={12} className="text-purple-400 flex-shrink-0" />
-                <span>Ingest AIS/26AS/Form 16/Bank Statements</span>
-              </li>
-              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-                <CheckCircle size={12} className="text-purple-400 flex-shrink-0" />
-                <span>Auto-detect timing lags and head mismatches</span>
-              </li>
-              <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-                <CheckCircle size={12} className="text-purple-400 flex-shrink-0" />
-                <span>Export audit evidence packs & ITR prefill</span>
-              </li>
-            </ul>
-
-            <div className="flex items-center gap-2 text-[10px] font-bold text-purple-400 uppercase tracking-widest group-hover:translate-x-1 transition-transform duration-300">
-              Launch Direct Tax
-              <ArrowRight size={12} />
+            <div className="mt-8 pt-4 border-t border-slate-900/40">
+              <button className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-tr from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md shadow-purple-500/10 hover:shadow-purple-500/25 active:scale-95 cursor-pointer">
+                Launch Direct Tax
+                <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
           </div>
 
           {/* Card 5: Virtual CFO & FP&A */}
           <div 
             onClick={() => onSelectTool("fpa")}
-            className="group relative rounded-3xl border border-slate-800 bg-[#0d0f14]/60 backdrop-blur-xl p-6 cursor-pointer overflow-hidden transition-all hover:border-indigo-500/50 hover:shadow-[0_0_50px_rgba(129,140,248,0.1)] hover:-translate-y-1.5 duration-300 flex flex-col justify-between"
+            className="group relative rounded-3xl border border-slate-800/80 bg-[#0d0f14]/70 backdrop-blur-xl p-8 cursor-pointer overflow-hidden transition-all duration-300 hover:border-indigo-500/50 hover:shadow-[0_0_50px_rgba(129,140,248,0.15)] hover:-translate-y-1.5 flex flex-col justify-between w-full sm:w-[300px] md:w-[325px] min-h-[520px]"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-500" />
             
@@ -249,7 +265,7 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
                 <Bot size={22} className="text-indigo-400" />
               </div>
 
-              <h2 className="text-xl font-extrabold text-slate-100 mb-2 group-hover:text-indigo-300 transition-colors">
+              <h2 className="text-xl font-extrabold text-slate-100 mb-3 group-hover:text-indigo-300 transition-colors leading-tight">
                 Virtual CFO & FP&A
               </h2>
               
@@ -257,25 +273,27 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
                 Build multi-currency scenario models, run ARIMA forecasts, audit budget anomalies with Isolation Forests, and consult your Virtual CFO.
               </p>
 
-              <ul className="space-y-2.5 mb-6">
-                <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
+              <ul className="space-y-2.5">
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
                   <CheckCircle size={12} className="text-indigo-400 flex-shrink-0" />
                   <span>Multi-currency consolidations</span>
                 </li>
-                <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
                   <CheckCircle size={12} className="text-indigo-400 flex-shrink-0" />
                   <span>Linear regression forecasts</span>
                 </li>
-                <li className="flex items-center gap-2 text-xs text-slate-300 font-medium">
+                <li className="flex items-center gap-2.5 text-xs text-slate-300 font-medium">
                   <CheckCircle size={12} className="text-indigo-400 flex-shrink-0" />
                   <span>AI Chatbot consulting</span>
                 </li>
               </ul>
             </div>
 
-            <div className="flex items-center gap-2 text-[10px] font-bold text-indigo-400 uppercase tracking-widest group-hover:translate-x-1 transition-transform duration-300">
-              Launch FP&A OS
-              <ArrowRight size={12} />
+            <div className="mt-8 pt-4 border-t border-slate-900/40">
+              <button className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md shadow-indigo-500/10 hover:shadow-indigo-500/25 active:scale-95 cursor-pointer">
+                Launch FP&A OS
+                <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
           </div>
         </div>
