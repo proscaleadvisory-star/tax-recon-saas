@@ -227,13 +227,13 @@ export default function ReconPage() {
               </label>
             </div>
 
-            <div className="md:col-span-2 flex justify-center mt-4">
+            <div className="md:col-span-2 flex justify-center mt-6">
               <button 
                 onClick={startMapping}
                 disabled={!prFile || !g2bFile}
-                className="btn-primary px-10 py-4 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed group"
+                className="premium-btn px-10 py-4 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed group"
               >
-                Continue to Mapping <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                Continue to Mapping <ArrowRight className="h-4.5 w-4.5 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
           </motion.div>
@@ -274,9 +274,9 @@ export default function ReconPage() {
                 </div>
               </div>
 
-              <div className="mt-12 flex justify-center gap-4">
-                <button onClick={() => setStep("upload")} className="px-6 py-3 text-slate-400 hover:text-white transition-colors">Go Back</button>
-                <button onClick={runReconciliation} className="btn-primary px-12 py-3 flex items-center gap-2">
+              <div className="mt-12 flex justify-center gap-6">
+                <button onClick={() => setStep("upload")} className="premium-btn border-slate-800 bg-slate-900/60 text-slate-400 hover:text-white px-8 py-3 transition-colors">Go Back</button>
+                <button onClick={runReconciliation} className="premium-btn px-12 py-3 flex items-center gap-2">
                   <Play className="h-4 w-4" /> Run Reconciliation
                 </button>
               </div>
@@ -327,13 +327,13 @@ export default function ReconPage() {
                     <h3 className="text-lg font-semibold text-white">Detailed Reconciliation Report</h3>
                     <p className="text-xs text-slate-400 mt-1">Data saved to your local cloud history / Analysis tab</p>
                   </div>
-                  <div className="flex gap-3">
-                    <button className="px-4 py-2 border border-white/10 rounded-xl text-slate-300 text-sm hover:bg-white/5 transition-all">
+                  <div className="flex gap-4.5">
+                    <button className="premium-btn px-5 py-2.5">
                       Archive Run
                     </button>
                     <button 
                       onClick={downloadReport}
-                      className="btn-primary py-2 px-6 text-sm flex items-center gap-2 shadow-lg shadow-indigo-500/20"
+                      className="premium-btn px-5 py-2.5 flex items-center gap-2"
                     >
                       <Download className="h-4 w-4" /> Export Report
                     </button>

@@ -65,13 +65,13 @@ export const ReportsPanel: React.FC = () => {
 
       {/* Control selectors */}
       <div className="glass-panel p-5 flex flex-wrap gap-6 items-center justify-between">
-        <div className="flex flex-wrap gap-3.5 sm:gap-4.5">
+        <div className="flex flex-wrap gap-5">
           <button
             onClick={() => setReportType('pnl')}
-            className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2.5 border cursor-pointer ${
+            className={`premium-btn ${
               reportType === 'pnl' 
-                ? 'bg-primary/10 text-primary border-primary/30 shadow-[0_0_15px_rgba(129,140,248,0.15)] font-bold' 
-                : 'text-gray-400 hover:text-white hover:bg-gray-800/40 border-transparent'
+                ? 'border-primary/45 bg-primary/15 text-primary font-bold shadow-md shadow-primary/5' 
+                : 'border-transparent bg-slate-900/30 text-slate-400 hover:border-slate-800 hover:text-slate-200 hover:bg-slate-900/60'
             }`}
           >
             <FileSpreadsheet className="w-4.5 h-4.5" />
@@ -79,10 +79,10 @@ export const ReportsPanel: React.FC = () => {
           </button>
           <button
             onClick={() => setReportType('balancesheet')}
-            className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2.5 border cursor-pointer ${
+            className={`premium-btn ${
               reportType === 'balancesheet' 
-                ? 'bg-primary/10 text-primary border-primary/30 shadow-[0_0_15px_rgba(129,140,248,0.15)] font-bold' 
-                : 'text-gray-400 hover:text-white hover:bg-gray-800/40 border-transparent'
+                ? 'border-primary/45 bg-primary/15 text-primary font-bold shadow-md shadow-primary/5' 
+                : 'border-transparent bg-slate-900/30 text-slate-400 hover:border-slate-800 hover:text-slate-200 hover:bg-slate-900/60'
             }`}
           >
             <DollarSign className="w-4.5 h-4.5" />
@@ -90,10 +90,10 @@ export const ReportsPanel: React.FC = () => {
           </button>
           <button
             onClick={() => setReportType('cashflow')}
-            className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2.5 border cursor-pointer ${
+            className={`premium-btn ${
               reportType === 'cashflow' 
-                ? 'bg-primary/10 text-primary border-primary/30 shadow-[0_0_15px_rgba(129,140,248,0.15)] font-bold' 
-                : 'text-gray-400 hover:text-white hover:bg-gray-800/40 border-transparent'
+                ? 'border-primary/45 bg-primary/15 text-primary font-bold shadow-md shadow-primary/5' 
+                : 'border-transparent bg-slate-900/30 text-slate-400 hover:border-slate-800 hover:text-slate-200 hover:bg-slate-900/60'
             }`}
           >
             <BookOpen className="w-4.5 h-4.5" />

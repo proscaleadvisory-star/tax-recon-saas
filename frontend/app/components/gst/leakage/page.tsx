@@ -250,25 +250,25 @@ export default function LeakageTab() {
               </div>
 
               {/* Action Buttons */}
-              <div className="space-y-2.5 pt-2">
+              <div className="space-y-4 pt-2">
                 <button 
                   onClick={() => handleDownloadPacket(selectedLeakage)}
-                  className="w-full py-3 bg-indigo-500 text-white rounded-xl text-xs font-bold hover:bg-indigo-600 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-indigo-500/10"
+                  className="w-full py-3 premium-btn cursor-pointer"
                 >
                   <Download size={13} /> Download Dispute Packet
                 </button>
 
                 {selectedLeakage.status === "disputed" && (
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-4.5">
                     <button 
                       onClick={() => handleStatusUpdate(selectedLeakage.id, "recovered")}
-                      className="py-2.5 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-[11px] font-bold text-emerald-400 hover:bg-emerald-500/20 transition-all cursor-pointer"
+                      className="py-2.5 premium-btn premium-btn-emerald cursor-pointer"
                     >
                       Mark Recovered
                     </button>
                     <button 
                       onClick={() => handleStatusUpdate(selectedLeakage.id, "write_off")}
-                      className="py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-[11px] font-bold text-slate-400 hover:bg-slate-800 transition-all cursor-pointer"
+                      className="py-2.5 premium-btn border-slate-800 bg-slate-900/40 text-slate-400 cursor-pointer"
                     >
                       Write-off Lost
                     </button>

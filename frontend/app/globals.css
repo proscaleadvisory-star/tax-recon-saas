@@ -453,13 +453,15 @@ body::before {
 
 /* Custom premium select controls */
 .premium-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23818cf8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2724%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27%23818cf8%27%20stroke-width%3D%272.5%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpolyline%20points%3D%276%209%2012%2015%2018%209%27%3E%3C/polyline%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-size: 10px;
+  background-size: 14px;
   background-position: right 14px center;
-  padding-left: 1rem;
-  padding-right: 2.5rem;
+  padding-left: 1.25rem;
+  padding-right: 2.75rem;
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
   border-radius: 0.75rem;
@@ -467,16 +469,17 @@ body::before {
   background-color: var(--color-card);
   color: var(--text-primary);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   outline: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--shadow-sm);
 }
 
 .premium-select:hover:not(:disabled) {
   border-color: rgba(129, 140, 248, 0.4);
   background-color: var(--color-card-hover);
+  box-shadow: 0 0 15px rgba(129, 140, 248, 0.05);
 }
 
 .premium-select:focus {
@@ -488,4 +491,68 @@ body::before {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* Translucent Glowing Premium Button styling */
+.premium-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(129, 140, 248, 0.2);
+  background-color: rgba(129, 140, 248, 0.05);
+  color: #818cf8;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-btn:hover:not(:disabled) {
+  border-color: rgba(129, 140, 248, 0.5);
+  background-color: rgba(129, 140, 248, 0.1);
+  color: #a5b4fc;
+  box-shadow: 0 0 20px rgba(129, 140, 248, 0.1);
+}
+
+.premium-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.premium-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Emerald variant for success buttons */
+.premium-btn-emerald {
+  border-color: rgba(52, 211, 153, 0.2);
+  background-color: rgba(52, 211, 153, 0.05);
+  color: #34d399;
+}
+
+.premium-btn-emerald:hover:not(:disabled) {
+  border-color: rgba(52, 211, 153, 0.5);
+  background-color: rgba(52, 211, 153, 0.1);
+  color: #6ee7b7;
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.1);
+}
+
+/* Purple variant for tax and secondary action buttons */
+.premium-btn-purple {
+  border-color: rgba(168, 85, 247, 0.2);
+  background-color: rgba(168, 85, 247, 0.05);
+  color: #a855f7;
+}
+
+.premium-btn-purple:hover:not(:disabled) {
+  border-color: rgba(168, 85, 247, 0.5);
+  background-color: rgba(168, 85, 247, 0.1);
+  color: #c084fc;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
+}
+
 

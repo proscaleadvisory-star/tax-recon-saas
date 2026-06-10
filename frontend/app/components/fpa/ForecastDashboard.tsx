@@ -159,16 +159,16 @@ export const ForecastDashboard: React.FC = () => {
         <button
           onClick={handleRunForecast}
           disabled={runningForecast}
-          className="bg-gradient-to-tr from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2.5 disabled:opacity-50 disabled:pointer-events-none cursor-pointer shadow-lg shadow-indigo-500/10 hover:shadow-indigo-500/25 hover:scale-[1.01] active:scale-[0.99]"
+          className="premium-btn cursor-pointer"
         >
           {runningForecast ? (
             <>
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <Loader2 className="w-4.5 h-4.5 animate-spin" />
               <span>Fitting ARIMA Order...</span>
             </>
           ) : (
             <>
-              <Sparkles className="w-4 h-4 text-emerald-300 animate-pulse" />
+              <Sparkles className="w-4.5 h-4.5 text-emerald-300 animate-pulse" />
               <span>Generate ARIMA Forecast</span>
             </>
           )}

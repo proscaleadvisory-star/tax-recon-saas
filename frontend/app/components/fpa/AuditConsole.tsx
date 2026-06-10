@@ -78,11 +78,11 @@ export const AuditConsole: React.FC = () => {
         <button
           onClick={handleTrainModel}
           disabled={training}
-          className="border border-slate-800 hover:border-indigo-500/30 bg-card hover:bg-indigo-500/5 text-slate-200 hover:text-indigo-300 px-4.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2.5 disabled:opacity-50 cursor-pointer active:scale-95 shadow-sm"
+          className="premium-btn cursor-pointer"
         >
           {training ? (
             <>
-              <Loader2 className="w-4 h-4 animate-spin text-primary" />
+              <Loader2 className="w-4.5 h-4.5 animate-spin text-primary" />
               <span>Fitting PyTorch Net...</span>
             </>
           ) : (
@@ -131,16 +131,16 @@ export const AuditConsole: React.FC = () => {
           <button
             onClick={handleRunAudit}
             disabled={!selectedFile || auditing}
-            className="w-full bg-gradient-to-tr from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white py-3.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:pointer-events-none cursor-pointer shadow-lg shadow-indigo-500/10 hover:shadow-indigo-500/25 hover:scale-[1.01] active:scale-[0.99]"
+            className="w-full premium-btn premium-btn-emerald py-3.5 cursor-pointer"
           >
             {auditing ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="w-4.5 h-4.5 animate-spin" />
                 <span>Running Reconstruction Fusion...</span>
               </>
             ) : (
               <>
-                <CheckCircle className="w-4.5 h-4.5 text-emerald-300 animate-pulse" />
+                <CheckCircle className="w-4.5 h-4.5 text-emerald-400 animate-pulse" />
                 <span>Perform Ledger Audit Scan</span>
               </>
             )}

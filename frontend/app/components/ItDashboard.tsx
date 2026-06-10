@@ -534,11 +534,11 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   </p>
                 </div>
                 
-                <div className="flex gap-4">
+                <div className="flex gap-6">
                   <button
                     onClick={handleRunReconciliation}
                     disabled={reconciling || !selectedTaxpayer}
-                    className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-xs font-bold text-white shadow-lg shadow-purple-600/20 hover:shadow-purple-500/30 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
+                    className="premium-btn premium-btn-purple flex items-center gap-2 px-5 py-3 cursor-pointer"
                   >
                     {reconciling ? <Loader2 className="animate-spin" size={13} /> : <RefreshCw size={13} />}
                     Run Reconciliation Rules
@@ -547,7 +547,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   <button
                     onClick={handleDownloadAuditPack}
                     disabled={exporting || !selectedTaxpayer || !reconSummary}
-                    className="flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-800 bg-slate-950/80 text-xs font-bold text-slate-300 hover:text-slate-100 hover:bg-slate-900/60 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-40 disabled:pointer-events-none"
+                    className="premium-btn flex items-center gap-2 px-5 py-3 cursor-pointer"
                   >
                     {exporting ? <Loader2 className="animate-spin" size={13} /> : <FileDown size={13} />}
                     Download Audit Pack
@@ -637,7 +637,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                                 fetchTasks(exc);
                                 setActiveTab("exceptions");
                               }}
-                              className="px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900 text-[10px] font-bold text-slate-300 hover:text-slate-100 hover:bg-slate-800 transition-colors cursor-pointer"
+                              className="premium-btn premium-btn-purple px-4 py-2 cursor-pointer"
                             >
                               Launch Playbook
                             </button>
@@ -1097,18 +1097,18 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                 </div>
               )}
 
-              <div className="flex gap-3 pt-3">
+              <div className="flex gap-4 pt-4">
                 <button
                   type="button"
                   onClick={() => setShowRegisterModal(false)}
-                  className="flex-1 py-2.5 rounded-xl border border-slate-850 bg-slate-900 text-xs font-bold text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors cursor-pointer"
+                  className="flex-1 premium-btn cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={registering}
-                  className="flex-1 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs font-bold text-white transition-all active:scale-95 cursor-pointer disabled:opacity-50 flex items-center justify-center gap-1.5"
+                  className="flex-1 premium-btn premium-btn-purple cursor-pointer flex items-center justify-center gap-1.5"
                 >
                   {registering && <Loader2 className="animate-spin" size={13} />}
                   Register Profile
