@@ -21,7 +21,6 @@ import {
   Activity, 
   AlertTriangle, 
   PieChart as PieChartIcon,
-  Filter,
   Download,
   Calendar,
   Zap
@@ -31,6 +30,8 @@ import { AnalyticsSummary } from "@/types/recon";
 
 export default function AnalysisPage({ setActiveTab }: { setActiveTab?: (tab: "overview" | "recon" | "analysis" | "history" | "settings") => void }) {
   const [data, setData] = useState<AnalyticsSummary | null>(null);
+  const [range, setRange] = useState("Last 12 Months");
+  const [exportStatus, setExportStatus] = useState("");
 
   useEffect(() => {
     // Load data from mock persistence
@@ -57,6 +58,42 @@ export default function AnalysisPage({ setActiveTab }: { setActiveTab?: (tab: "o
   }
 
   const COLORS = ['#6366f1', '#f59e0b', '#ef4444'];
+  const ranges = ["Last 12 Months", "FY 2025-26", "Last Quarter"];
+
+  const handleCycleRange = () => {
+    setRange((current) => ranges[(ranges.indexOf(current) + 1) % ranges.length]);
+  };
+
+  const handleExportInsights = (format: "json" | "html" = "json") => {
+    if (!data) return;
+
+    const payload = {
+      generatedAt: new Date().toISOString(),
+      reportRange: range,
+      summary: data,
+      advisoryNotes: [
+        "Compliance has improved compared to the prior month.",
+        "High-volume vendors should be reviewed for invoice-date mismatches.",
+        "Potential unclaimed ITC credits require follow-up with suppliers.",
+      ],
+    };
+
+    const content =
+      format === "html"
+        ? `<!doctype html><html><head><meta charset="utf-8"><title>GST Advisory Report</title><style>body{font-family:Inter,Arial,sans-serif;background:#071016;color:#e5eef8;padding:32px}section{border:1px solid #26384a;border-radius:16px;padding:24px;background:#0d1722}h1{color:#a5b4fc}</style></head><body><section><h1>GST Advisory Report</h1><p>Range: ${range}</p><pre>${JSON.stringify(payload, null, 2)}</pre></section></body></html>`
+        : JSON.stringify(payload, null, 2);
+    const blob = new Blob([content], { type: format === "html" ? "text/html" : "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = format === "html" ? "gst-advisory-report.html" : "gst-insights-report.json";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    setExportStatus(format === "html" ? "Advisory report downloaded" : "Insights exported");
+    window.setTimeout(() => setExportStatus(""), 2600);
+  };
 
   return (
     <div className="space-y-8 max-w-[1600px] mx-auto pb-10">
@@ -67,11 +104,12 @@ export default function AnalysisPage({ setActiveTab }: { setActiveTab?: (tab: "o
           <p className="text-slate-500 mt-1">Holistic view of GST compliance and financial accuracy.</p>
         </div>
         
-        <div className="flex items-center gap-4.5">
-           <button className="premium-btn border-slate-800 bg-slate-900/40 text-slate-400 hover:text-white px-4 py-2 flex items-center gap-2 text-sm font-medium cursor-pointer">
-             <Calendar className="h-4 w-4" /> Last 12 Months
+        <div className="flex flex-wrap items-center gap-3">
+           {exportStatus && <span className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-300">{exportStatus}</span>}
+           <button onClick={handleCycleRange} className="premium-btn border-slate-800 bg-slate-900/40 text-slate-400 hover:text-white px-4 py-2 flex items-center gap-2 text-sm font-medium cursor-pointer">
+             <Calendar className="h-4 w-4" /> {range}
            </button>
-           <button className="premium-btn px-4 py-2 flex items-center gap-2 text-sm font-medium cursor-pointer">
+           <button onClick={() => handleExportInsights("json")} className="premium-btn px-4 py-2 flex items-center gap-2 text-sm font-medium cursor-pointer">
              <Download className="h-4 w-4" /> Export Insights
            </button>
         </div>
@@ -230,7 +268,7 @@ export default function AnalysisPage({ setActiveTab }: { setActiveTab?: (tab: "o
         <div className="glass-card p-8">
           <div className="flex items-center justify-between mb-8">
             <h3 className="text-xl font-bold text-white">Top Vendors by GST Volume</h3>
-            <button className="text-indigo-400 text-xs font-bold uppercase hover:text-indigo-300 transition-colors">View All</button>
+            <button onClick={() => setActiveTab?.("history")} className="text-indigo-400 text-xs font-bold uppercase hover:text-indigo-300 transition-colors">View All</button>
           </div>
           <div className="space-y-6">
             {[
@@ -285,8 +323,8 @@ export default function AnalysisPage({ setActiveTab }: { setActiveTab?: (tab: "o
                 </p>
              </div>
           </div>
-          <button className="w-full mt-6 premium-btn border-slate-800 bg-slate-900/60 text-slate-400 hover:text-white py-3 transition-colors cursor-pointer">
-            Download PDF Advisory Report
+          <button onClick={() => handleExportInsights("html")} className="w-full mt-6 premium-btn border-slate-800 bg-slate-900/60 text-slate-400 hover:text-white py-3 transition-colors cursor-pointer">
+            Download Advisory Report
           </button>
         </div>
 

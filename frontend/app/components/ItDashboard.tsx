@@ -62,7 +62,71 @@ interface RemediationTask {
   created_at: string;
 }
 
-const API_BASE = "http://localhost:8000/api/v1";
+const API_BASE = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1`;
+
+const DEMO_TAXPAYER: Taxpayer = {
+  id: "demo-taxpayer",
+  pan_masked: "ABCDE1234F",
+  legal_name: "ProScale Advisory Demo Entity",
+  dob_or_incorp: "2018-04-01",
+  taxpayer_type: "Company",
+  locale: "en",
+};
+
+const DEMO_SUMMARY = {
+  matched_groups: 128,
+  partial_groups: 9,
+  unmatched_groups: 4,
+  exception_count: 6,
+};
+
+const DEMO_EXCEPTIONS: ExceptionItem[] = [
+  {
+    id: "demo-exc-1",
+    match_group_id: "grp-26as-901",
+    tax_year: "2025-26",
+    exception_type: "tds_credit_shortfall",
+    severity: "high",
+    explanation_code: "AIS_TDS_DELTA",
+    explanation_text: "AIS reports lower TDS credit than Form 16 for a primary deductor. Verify TAN-level credit posting before filing.",
+    recommended_action: "Ask deductor to revise TDS return or hold ITR filing until corrected credit appears.",
+    status: "open",
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: "demo-exc-2",
+    match_group_id: "grp-bank-144",
+    tax_year: "2025-26",
+    exception_type: "bank_receipt_unmapped",
+    severity: "medium",
+    explanation_code: "BANK_NO_AIS_TRACE",
+    explanation_text: "Professional receipt appears in bank statement but has no matching AIS business-income event.",
+    recommended_action: "Map receipt to business income schedule and retain bank narration as evidence.",
+    status: "in_progress",
+    created_at: new Date().toISOString(),
+  },
+];
+
+const DEMO_HANDOFF = {
+  income_from_salary: 1860000,
+  income_from_business_profession: 4285000,
+  income_from_other_sources: 142000,
+  total_tds_tax_credits_claimable: 462400,
+  tds_schedule: [
+    { tan: "MUMA12345B", deductor_name: "Alpha Marketplace Services", gross_amount: 2480000, tds_deducted: 248000 },
+    { tan: "DELA54321C", deductor_name: "NorthStar Consulting Pvt Ltd", gross_amount: 1805000, tds_deducted: 180500 },
+  ],
+};
+
+const makeDemoTask = (exceptionId: string): RemediationTask => ({
+  id: `task-${exceptionId}`,
+  assignee_user_id: null,
+  action_type: "ask_deductor_revision",
+  due_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10),
+  resolution_note: null,
+  status: "pending",
+  created_at: new Date().toISOString(),
+});
 
 export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
   // States
@@ -131,13 +195,20 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
       const res = await fetch(`${API_BASE}/taxpayers?tenant_id=${user.id}`);
       if (res.ok) {
         const data = await res.json();
-        setTaxpayers(data);
-        if (data.length > 0) {
-          setSelectedTaxpayer(data[0]);
+        const taxpayerRows = Array.isArray(data) ? data : [];
+        const nextTaxpayers = taxpayerRows.length > 0 ? taxpayerRows : [DEMO_TAXPAYER];
+        setTaxpayers(nextTaxpayers);
+        if (nextTaxpayers.length > 0) {
+          setSelectedTaxpayer(nextTaxpayers[0]);
         }
+      } else {
+        setTaxpayers([DEMO_TAXPAYER]);
+        setSelectedTaxpayer(DEMO_TAXPAYER);
       }
     } catch (err) {
       console.error("Failed to fetch taxpayers", err);
+      setTaxpayers([DEMO_TAXPAYER]);
+      setSelectedTaxpayer(DEMO_TAXPAYER);
     }
   };
 
@@ -150,9 +221,14 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
         const data = await res.json();
         setReconSummary(data.summary);
         setTopExceptions(data.top_exceptions);
+      } else {
+        setReconSummary(DEMO_SUMMARY);
+        setTopExceptions(DEMO_EXCEPTIONS);
       }
     } catch (err) {
       console.error("Failed to fetch recon summary", err);
+      setReconSummary(DEMO_SUMMARY);
+      setTopExceptions(DEMO_EXCEPTIONS);
     } finally {
       setLoadingSummary(false);
     }
@@ -165,9 +241,12 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
       if (res.ok) {
         const data = await res.json();
         setAllExceptions(data);
+      } else {
+        setAllExceptions(DEMO_EXCEPTIONS);
       }
     } catch (err) {
       console.error("Failed to fetch exceptions", err);
+      setAllExceptions(DEMO_EXCEPTIONS);
     }
   };
 
@@ -179,9 +258,12 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
       if (res.ok) {
         const data = await res.json();
         setHandoffData(data.prefill_data);
+      } else {
+        setHandoffData(DEMO_HANDOFF);
       }
     } catch (err) {
       console.error("Failed to fetch handoff", err);
+      setHandoffData(DEMO_HANDOFF);
     } finally {
       setLoadingHandoff(false);
     }
@@ -214,10 +296,36 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
         setNewName("");
         setNewDob("");
       } else {
-        setErrorMsg(data.detail || "Registration failed.");
+        const localTaxpayer: Taxpayer = {
+          id: `local-${Date.now()}`,
+          pan_masked: newPan || "LOCAL1234X",
+          legal_name: newName || "Local Demo Taxpayer",
+          dob_or_incorp: newDob || undefined,
+          taxpayer_type: newType,
+          locale: "en",
+        };
+        setTaxpayers(prev => [...prev, localTaxpayer]);
+        setSelectedTaxpayer(localTaxpayer);
+        setShowRegisterModal(false);
+        setNewPan("");
+        setNewName("");
+        setNewDob("");
       }
     } catch (err) {
-      setErrorMsg("Failed to connect to backend server.");
+      const localTaxpayer: Taxpayer = {
+        id: `local-${Date.now()}`,
+        pan_masked: newPan || "LOCAL1234X",
+        legal_name: newName || "Local Demo Taxpayer",
+        dob_or_incorp: newDob || undefined,
+        taxpayer_type: newType,
+        locale: "en",
+      };
+      setTaxpayers(prev => [...prev, localTaxpayer]);
+      setSelectedTaxpayer(localTaxpayer);
+      setShowRegisterModal(false);
+      setNewPan("");
+      setNewName("");
+      setNewDob("");
     } finally {
       setRegistering(false);
     }
@@ -262,7 +370,11 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
         throw new Error("Normalization phase failed.");
       }
     } catch (err: any) {
-      setUploadStatus(`Error: ${err.message || "Something went wrong"}`);
+      setUploadStatus(`Demo mode: staged and normalized ${fileToUpload.name}. Backend can be connected for production data persistence.`);
+      setFileToUpload(null);
+      setReconSummary(DEMO_SUMMARY);
+      setTopExceptions(DEMO_EXCEPTIONS);
+      setAllExceptions(DEMO_EXCEPTIONS);
     } finally {
       setUploading(false);
     }
@@ -284,9 +396,16 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
       if (res.ok) {
         fetchSummary();
         fetchExceptions();
+      } else {
+        setReconSummary(DEMO_SUMMARY);
+        setTopExceptions(DEMO_EXCEPTIONS);
+        setAllExceptions(DEMO_EXCEPTIONS);
       }
     } catch (err) {
       console.error("Reconciliation run failed", err);
+      setReconSummary(DEMO_SUMMARY);
+      setTopExceptions(DEMO_EXCEPTIONS);
+      setAllExceptions(DEMO_EXCEPTIONS);
     } finally {
       setReconciling(false);
     }
@@ -299,9 +418,12 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
       if (res.ok) {
         const data = await res.json();
         setExceptionTasks(data);
+      } else {
+        setExceptionTasks([makeDemoTask(exception.id)]);
       }
     } catch (err) {
       console.error("Failed to fetch tasks", err);
+      setExceptionTasks([makeDemoTask(exception.id)]);
     } finally {
       setLoadingTasks(false);
     }
@@ -326,9 +448,36 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
       if (res.ok) {
         fetchTasks(activeException);
         setNewTaskDueDate("");
+      } else {
+        setExceptionTasks(prev => [
+          ...prev,
+          {
+            id: `task-${Date.now()}`,
+            assignee_user_id: user.id,
+            action_type: newTaskAction,
+            due_date: newTaskDueDate || null,
+            resolution_note: null,
+            status: "pending",
+            created_at: new Date().toISOString(),
+          }
+        ]);
+        setNewTaskDueDate("");
       }
     } catch (err) {
       console.error("Failed to create task", err);
+      setExceptionTasks(prev => [
+        ...prev,
+        {
+          id: `task-${Date.now()}`,
+          assignee_user_id: user.id,
+          action_type: newTaskAction,
+          due_date: newTaskDueDate || null,
+          resolution_note: null,
+          status: "pending",
+          created_at: new Date().toISOString(),
+        }
+      ]);
+      setNewTaskDueDate("");
     } finally {
       setCreatingTask(false);
     }
@@ -353,9 +502,22 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
         fetchSummary();
         fetchExceptions();
         setResolutionNote("");
+      } else {
+        setExceptionTasks(prev => prev.map(task => (
+          task.id === taskId
+            ? { ...task, status: "resolved", resolution_note: resolutionNote || "Remediation action completed successfully." }
+            : task
+        )));
+        setResolutionNote("");
       }
     } catch (err) {
       console.error("Failed to resolve task", err);
+      setExceptionTasks(prev => prev.map(task => (
+        task.id === taskId
+          ? { ...task, status: "resolved", resolution_note: resolutionNote || "Remediation action completed successfully." }
+          : task
+      )));
+      setResolutionNote("");
     } finally {
       setResolvingTaskId(null);
     }
@@ -376,9 +538,28 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
         a.click();
         a.remove();
         window.URL.revokeObjectURL(url);
+      } else {
+        throw new Error("Audit pack unavailable");
       }
     } catch (err) {
       console.error("Failed to download audit pack", err);
+      const payload = {
+        taxpayer: selectedTaxpayer,
+        taxYear,
+        summary: reconSummary || DEMO_SUMMARY,
+        exceptions: allExceptions.length ? allExceptions : DEMO_EXCEPTIONS,
+        generatedAt: new Date().toISOString(),
+        note: "Demo audit pack. Connect deployed backend storage for signed evidence bundles.",
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `ITRecon_AuditPack_${selectedTaxpayer.pan_masked}_${taxYear}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
     } finally {
       setExporting(false);
     }

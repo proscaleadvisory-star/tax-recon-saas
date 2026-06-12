@@ -33,6 +33,7 @@ export default function ReconPage() {
   const [mapping, setMapping] = useState<{ pr: any; g2b: any }>({ pr: null, g2b: null });
   const [isProcessing, setIsProcessing] = useState(false);
   const [results, setResults] = useState<any[]>([]);
+  const [archiveStatus, setArchiveStatus] = useState("");
 
   // --------------------------------------------------------------------------
   // Step 1: Upload
@@ -170,6 +171,21 @@ export default function ReconPage() {
       prData.headers,
       g2bData.headers
     );
+  };
+
+  const archiveRun = () => {
+    const archive = {
+      archivedAt: new Date().toISOString(),
+      fileName: prFile?.name || "Manual GST reconciliation",
+      resultCount: results.length,
+      matched: results.filter((r) => r.status === "Matched").length,
+      taxMismatch: results.filter((r) => r.status.includes("Tax")).length,
+      missing: results.filter((r) => r.status.includes("2B")).length,
+    };
+    const existing = JSON.parse(localStorage.getItem("proscale-gst-archives") || "[]");
+    localStorage.setItem("proscale-gst-archives", JSON.stringify([archive, ...existing].slice(0, 25)));
+    setArchiveStatus("Run archived to local history");
+    window.setTimeout(() => setArchiveStatus(""), 2600);
   };
 
 
@@ -325,10 +341,10 @@ export default function ReconPage() {
                <div className="p-6 border-b border-white/10 flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-semibold text-white">Detailed Reconciliation Report</h3>
-                    <p className="text-xs text-slate-400 mt-1">Data saved to your local cloud history / Analysis tab</p>
+                    <p className="text-xs text-slate-400 mt-1">{archiveStatus || "Data saved to your local cloud history / Analysis tab"}</p>
                   </div>
                   <div className="flex gap-4.5">
-                    <button className="premium-btn px-5 py-2.5">
+                    <button onClick={archiveRun} className="premium-btn px-5 py-2.5">
                       Archive Run
                     </button>
                     <button 

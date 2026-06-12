@@ -21,6 +21,10 @@ type SectionType = "profile" | "business" | "security" | "notifications" | "data
 
 export default function SettingsPage() {
   const [activeSection, setActiveSection] = useState<SectionType>("profile");
+  const [publicProfile, setPublicProfile] = useState(true);
+  const [twoFactor, setTwoFactor] = useState(false);
+  const [emailAlerts, setEmailAlerts] = useState(true);
+  const [weeklyDigest, setWeeklyDigest] = useState(false);
   
   const handleClearData = () => {
     if (confirm("CRITICAL: This will permanently wipe all local reconciliation data and settings. Proceed?")) {
@@ -133,7 +137,12 @@ export default function SettingsPage() {
                      <p className="text-xs text-slate-500">Allow clients to find you on the portal</p>
                    </div>
                 </div>
-                <button type="button" className="w-12 h-6 bg-indigo-500 rounded-full relative flex items-center justify-end px-1 cursor-pointer border-none">
+                <button
+                  type="button"
+                  aria-pressed={publicProfile}
+                  onClick={() => setPublicProfile((value) => !value)}
+                  className={`w-12 h-6 rounded-full relative flex items-center px-1 cursor-pointer border-none transition-colors ${publicProfile ? "justify-end bg-indigo-500" : "justify-start bg-slate-800"}`}
+                >
                    <div className="w-4 h-4 bg-white rounded-full" />
                 </button>
               </div>
@@ -173,7 +182,12 @@ export default function SettingsPage() {
                      <p className="text-xs text-slate-500">Secure your account with Google Authenticator</p>
                    </div>
                 </div>
-                <button type="button" className="w-12 h-6 bg-slate-800 rounded-full relative flex items-center justify-start px-1 cursor-pointer border-none">
+                <button
+                  type="button"
+                  aria-pressed={twoFactor}
+                  onClick={() => setTwoFactor((value) => !value)}
+                  className={`w-12 h-6 rounded-full relative flex items-center px-1 cursor-pointer border-none transition-colors ${twoFactor ? "justify-end bg-emerald-500" : "justify-start bg-slate-800"}`}
+                >
                    <div className="w-4 h-4 bg-white rounded-full shadow" />
                 </button>
               </div>
@@ -196,7 +210,12 @@ export default function SettingsPage() {
                     <p className="text-sm font-bold text-white">Email Reconciliation Alerts</p>
                     <p className="text-xs text-slate-500">Receive email notification when local matching finishes</p>
                   </div>
-                  <button type="button" className="w-12 h-6 bg-indigo-500 rounded-full relative flex items-center justify-end px-1 cursor-pointer border-none">
+                  <button
+                    type="button"
+                    aria-pressed={emailAlerts}
+                    onClick={() => setEmailAlerts((value) => !value)}
+                    className={`w-12 h-6 rounded-full relative flex items-center px-1 cursor-pointer border-none transition-colors ${emailAlerts ? "justify-end bg-indigo-500" : "justify-start bg-slate-800"}`}
+                  >
                      <div className="w-4 h-4 bg-white rounded-full" />
                   </button>
                 </div>
@@ -206,7 +225,12 @@ export default function SettingsPage() {
                     <p className="text-sm font-bold text-white">Weekly Summary Digests</p>
                     <p className="text-xs text-slate-500">Receive a weekly PDF dashboard containing compiled GST logs</p>
                   </div>
-                  <button type="button" className="w-12 h-6 bg-slate-800 rounded-full relative flex items-center justify-start px-1 cursor-pointer border-none">
+                  <button
+                    type="button"
+                    aria-pressed={weeklyDigest}
+                    onClick={() => setWeeklyDigest((value) => !value)}
+                    className={`w-12 h-6 rounded-full relative flex items-center px-1 cursor-pointer border-none transition-colors ${weeklyDigest ? "justify-end bg-indigo-500" : "justify-start bg-slate-800"}`}
+                  >
                      <div className="w-4 h-4 bg-white rounded-full shadow" />
                   </button>
                 </div>
