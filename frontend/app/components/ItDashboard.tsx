@@ -130,8 +130,8 @@ const makeDemoTask = (exceptionId: string): RemediationTask => ({
 
 export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
   // States
-  const [taxpayers, setTaxpayers] = useState<Taxpayer[]>([]);
-  const [selectedTaxpayer, setSelectedTaxpayer] = useState<Taxpayer | null>(null);
+  const [taxpayers, setTaxpayers] = useState<Taxpayer[]>([DEMO_TAXPAYER]);
+  const [selectedTaxpayer, setSelectedTaxpayer] = useState<Taxpayer | null>(DEMO_TAXPAYER);
   const [taxYear, setTaxYear] = useState<string>("2025-26");
   const [activeTab, setActiveTab] = useState<"cockpit" | "upload" | "exceptions" | "handoff">("cockpit");
   
@@ -151,9 +151,9 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
   const [uploadStatus, setUploadStatus] = useState<string | null>(null);
 
   // Reconciliation summary states
-  const [reconSummary, setReconSummary] = useState<any>(null);
-  const [topExceptions, setTopExceptions] = useState<ExceptionItem[]>([]);
-  const [allExceptions, setAllExceptions] = useState<ExceptionItem[]>([]);
+  const [reconSummary, setReconSummary] = useState<any>(DEMO_SUMMARY);
+  const [topExceptions, setTopExceptions] = useState<ExceptionItem[]>(DEMO_EXCEPTIONS);
+  const [allExceptions, setAllExceptions] = useState<ExceptionItem[]>(DEMO_EXCEPTIONS);
   const [loadingSummary, setLoadingSummary] = useState(false);
   const [reconciling, setReconciling] = useState(false);
 
@@ -168,7 +168,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
   const [resolvingTaskId, setResolvingTaskId] = useState<string | null>(null);
 
   // Handoff state
-  const [handoffData, setHandoffData] = useState<any>(null);
+  const [handoffData, setHandoffData] = useState<any>(DEMO_HANDOFF);
   const [loadingHandoff, setLoadingHandoff] = useState(false);
 
   // Download export state
