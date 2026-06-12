@@ -1,18 +1,31 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useMotionTemplate, useMotionValue, useScroll, useTransform, type Variants } from "framer-motion";
 import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+  type Variants,
+} from "framer-motion";
+import {
+  Activity,
   ArrowRight,
   BadgeCheck,
   Bot,
   ChevronRight,
   CircleDollarSign,
+  ClipboardCheck,
   DatabaseZap,
   FileSpreadsheet,
   Gauge,
+  Landmark,
+  Layers3,
   LineChart,
   Scale,
+  ScanLine,
   ShieldCheck,
   Sparkles,
   TimerReset,
@@ -137,6 +150,41 @@ const streamRows = [
   ["AIS", "TDS delta isolated", "High"],
   ["Payout", "Marketplace variance closed", "Rs 8.4L"],
   ["FP&A", "Runway forecast refreshed", "Live"],
+];
+
+const storyChapters = [
+  {
+    eyebrow: "Scene 01 / Intake",
+    title: "Files enter like signal, not paperwork.",
+    copy: "Marketplace statements, bank files, GST portal exports, AIS, 26AS, Form 16, ledgers, and FP&A workbooks converge into one client-ready operations layer.",
+    stat: "12 data streams",
+    icon: Layers3,
+    accent: "text-cyan-100",
+  },
+  {
+    eyebrow: "Scene 02 / Matching",
+    title: "The engine finds the invisible variance.",
+    copy: "Fuzzy keys, date tolerance, tax-credit logic, payout matching, and ledger intelligence turn messy finance data into a clean exception narrative.",
+    stat: "96.8% auto-match",
+    icon: ScanLine,
+    accent: "text-emerald-100",
+  },
+  {
+    eyebrow: "Scene 03 / Evidence",
+    title: "Every decision leaves an audit trail.",
+    copy: "The system packages disputes, GST mismatches, AIS deltas, remediation tasks, and CFO reports into evidence clients can actually understand.",
+    stat: "317 audit packets",
+    icon: ClipboardCheck,
+    accent: "text-violet-100",
+  },
+  {
+    eyebrow: "Scene 04 / Launch",
+    title: "Hand over a command room, not a dashboard.",
+    copy: "A cinematic, responsive client console with live modules, animated KPIs, demo-ready fallbacks, and workflows that feel built for serious finance teams.",
+    stat: "5 launch modules",
+    icon: Landmark,
+    accent: "text-amber-100",
+  },
 ];
 
 function useGsapReveal(scopeRef: React.RefObject<HTMLElement | null>) {
@@ -336,6 +384,183 @@ export function HeroSection({ onSelectTool }: LandingSectionProps) {
           );
         })}
       </motion.div>
+    </section>
+  );
+}
+
+export function CinematicScrollStory({ onSelectTool }: LandingSectionProps) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [activeChapter, setActiveChapter] = useState(0);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
+  const sceneRotate = useTransform(scrollYProgress, [0, 1], [-10, 10]);
+  const sceneScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.92, 1.04, 0.96]);
+  const gridY = useTransform(scrollYProgress, [0, 1], [0, -180]);
+  const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const next = Math.min(storyChapters.length - 1, Math.max(0, Math.floor(latest * storyChapters.length)));
+    setActiveChapter(next);
+  });
+
+  const ActiveIcon = storyChapters[activeChapter].icon;
+
+  return (
+    <section ref={sectionRef} className="relative min-h-[430vh]">
+      <div className="sticky top-0 flex min-h-screen items-center overflow-hidden py-8">
+        <motion.div style={{ y: gridY }} className="pointer-events-none absolute inset-[-20%] opacity-70">
+          <div className="absolute left-[8%] top-[12%] h-[28rem] w-[28rem] rounded-full border border-cyan-200/12 bg-cyan-300/[0.045] blur-[1px]" />
+          <div className="absolute bottom-[8%] right-[2%] h-[34rem] w-[34rem] rounded-full border border-violet-200/12 bg-violet-300/[0.04] blur-[1px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_0%,rgba(255,255,255,0.045)_48%,transparent_50%),repeating-linear-gradient(90deg,rgba(255,255,255,0.035)_0_1px,transparent_1px_96px),repeating-linear-gradient(0deg,rgba(255,255,255,0.025)_0_1px,transparent_1px_96px)]" />
+        </motion.div>
+
+        <div className="relative z-10 grid w-full gap-8 lg:grid-cols-[0.78fr_1.22fr]">
+          <div className="flex min-h-[70vh] flex-col justify-between">
+            <div>
+              <div className="mb-7 flex items-center gap-4">
+                <span className="h-px w-16 bg-gradient-to-r from-cyan-100 to-transparent" />
+                <span className="font-mono text-[10px] font-black uppercase tracking-[0.32em] text-cyan-100">
+                  Scroll cinematic system
+                </span>
+              </div>
+
+              <motion.div
+                key={storyChapters[activeChapter].title}
+                initial={{ opacity: 0, y: 40, filter: "blur(16px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={spring}
+                className="max-w-2xl"
+              >
+                <p className="mb-5 font-mono text-[11px] font-black uppercase tracking-[0.28em] text-slate-500">
+                  {storyChapters[activeChapter].eyebrow}
+                </p>
+                <h2 className="font-display text-[clamp(2.75rem,6vw,6.8rem)] font-black uppercase leading-[0.82] tracking-[-0.04em] text-white">
+                  {storyChapters[activeChapter].title}
+                </h2>
+                <p className="mt-7 text-base leading-8 text-slate-300/75">
+                  {storyChapters[activeChapter].copy}
+                </p>
+              </motion.div>
+            </div>
+
+            <div className="mt-10 space-y-5">
+              <div className="h-1 overflow-hidden rounded-full bg-white/8">
+                <motion.div style={{ width: progressWidth }} className="h-full rounded-full bg-gradient-to-r from-cyan-200 via-violet-200 to-emerald-200" />
+              </div>
+              <div className="grid gap-2 sm:grid-cols-4">
+                {storyChapters.map((chapter, index) => (
+                  <button
+                    key={chapter.eyebrow}
+                    onClick={() => setActiveChapter(index)}
+                    className={`rounded-2xl border p-3 text-left transition-all duration-300 ${
+                      activeChapter === index
+                        ? "border-cyan-200/35 bg-cyan-200/[0.07] text-white"
+                        : "border-white/8 bg-white/[0.025] text-slate-500 hover:border-white/18 hover:text-slate-200"
+                    }`}
+                  >
+                    <span className="font-mono text-[10px] font-black uppercase tracking-[0.18em]">0{index + 1}</span>
+                    <span className="mt-2 block text-xs font-bold leading-4">{chapter.stat}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <motion.div style={{ rotate: sceneRotate, scale: sceneScale }} className="relative min-h-[72vh]">
+            <div className="absolute inset-0 rounded-[3rem] border border-white/10 bg-[radial-gradient(circle_at_28%_16%,rgba(103,232,249,0.24),transparent_34%),linear-gradient(135deg,rgba(15,23,42,0.9),rgba(2,6,23,0.56))] shadow-[0_36px_160px_rgba(0,0,0,0.58),inset_0_1px_0_rgba(255,255,255,0.16)]" />
+            <div className="absolute inset-5 rounded-[2.4rem] border border-white/10 bg-black/22 backdrop-blur-2xl" />
+
+            <motion.div
+              key={activeChapter}
+              initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={spring}
+              className="absolute left-8 top-8 flex h-24 w-24 items-center justify-center rounded-[2rem] border border-white/14 bg-white/[0.055] shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
+            >
+              <ActiveIcon className={`h-10 w-10 ${storyChapters[activeChapter].accent}`} />
+            </motion.div>
+
+            <div className="absolute right-8 top-8 rounded-full border border-white/10 bg-black/30 px-5 py-3 font-mono text-[10px] font-black uppercase tracking-[0.22em] text-slate-300">
+              {storyChapters[activeChapter].stat}
+            </div>
+
+            <div className="absolute inset-x-8 bottom-8 grid gap-4 md:grid-cols-3">
+              {[
+                ["Signal", activeChapter === 0 ? "Imported" : activeChapter === 1 ? "Matched" : activeChapter === 2 ? "Packaged" : "Ready"],
+                ["Confidence", ["82%", "96.8%", "99.1%", "Live"][activeChapter]],
+                ["Output", ["Normalize", "Resolve", "Evidence", "Launch"][activeChapter]],
+              ].map(([label, value], index) => (
+                <motion.div
+                  key={`${label}-${activeChapter}`}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ ...spring, delay: index * 0.06 }}
+                  className="rounded-2xl border border-white/10 bg-black/28 p-5"
+                >
+                  <p className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{label}</p>
+                  <p className="mt-2 font-display text-2xl font-black text-white">{value}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="absolute left-1/2 top-1/2 h-[21rem] w-[21rem] -translate-x-1/2 -translate-y-1/2">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 rounded-full border border-dashed border-cyan-100/24"
+              />
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-10 rounded-full border border-violet-100/20"
+              />
+              <div className="absolute inset-20 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.2),rgba(103,232,249,0.11)_36%,transparent_68%)] shadow-[0_0_80px_rgba(103,232,249,0.22)]" />
+              {[0, 1, 2, 3, 4, 5].map((item) => (
+                <motion.span
+                  key={item}
+                  animate={{
+                    x: Math.cos((item / 6) * Math.PI * 2 + activeChapter) * 138,
+                    y: Math.sin((item / 6) * Math.PI * 2 + activeChapter) * 138,
+                    opacity: item <= activeChapter + 2 ? 1 : 0.36,
+                  }}
+                  transition={spring}
+                  className="absolute left-1/2 top-1/2 h-3 w-3 rounded-full bg-cyan-100 shadow-[0_0_24px_rgba(103,232,249,0.75)]"
+                />
+              ))}
+            </div>
+
+            <div className="absolute bottom-32 left-8 right-8 hidden rounded-2xl border border-white/10 bg-black/24 p-4 md:block">
+              <div className="mb-4 flex items-center justify-between">
+                <span className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-cyan-100">Reconciliation waveform</span>
+                <Activity className="h-4 w-4 text-cyan-100" />
+              </div>
+              <div className="flex h-20 items-end gap-1.5">
+                {[42, 68, 35, 76, 58, 92, 48, 84, 62, 97, 73, 88, 54, 79, 66, 94].map((height, index) => (
+                  <motion.div
+                    key={`${activeChapter}-${index}`}
+                    initial={{ height: 6 }}
+                    animate={{ height: `${Math.max(12, height - activeChapter * 4 + (index % 3) * 6)}%` }}
+                    transition={{ ...spring, delay: index * 0.012 }}
+                    className="flex-1 rounded-full bg-gradient-to-t from-cyan-400/24 via-cyan-100/68 to-white"
+                  />
+                ))}
+              </div>
+            </div>
+
+            <motion.button
+              onClick={() => onSelectTool(activeChapter === 1 ? "gstrecon" : activeChapter === 2 ? "itrecon" : activeChapter === 3 ? "fpa" : "taxrecon")}
+              whileHover={{ scale: 1.04, y: -3 }}
+              whileTap={{ scale: 0.97 }}
+              transition={spring}
+              className="metal-button absolute bottom-8 right-8 h-12 rounded-full px-5 text-xs font-black uppercase tracking-[0.18em]"
+            >
+              Open scene module
+              <ArrowRight size={14} />
+            </motion.button>
+
+            <div className="pointer-events-none absolute inset-0 rounded-[3rem] bg-[linear-gradient(115deg,transparent,rgba(255,255,255,0.08)_46%,transparent_48%)]" />
+          </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

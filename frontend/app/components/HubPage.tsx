@@ -7,7 +7,7 @@ import {
   Braces,
   LogOut,
 } from "lucide-react";
-import { HeroSection, InteractiveDashboardSection } from "./landing/CinematicLandingSections";
+import { CinematicScrollStory, HeroSection, InteractiveDashboardSection } from "./landing/CinematicLandingSections";
 
 interface HubPageProps {
   user: User;
@@ -63,6 +63,7 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
 
       <main className="relative z-10 mx-auto flex min-h-[calc(100vh-92px)] w-full max-w-[1680px] flex-col px-6 pb-14 sm:px-10 lg:px-14">
         <HeroSection onSelectTool={onSelectTool} />
+        <CinematicScrollStory onSelectTool={onSelectTool} />
         <InteractiveDashboardSection onSelectTool={onSelectTool} />
 
         <section
