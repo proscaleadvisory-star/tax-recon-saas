@@ -385,41 +385,42 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col relative z-10 bg-[#07080a] text-slate-100 font-sans">
+    <div className="relative z-10 flex min-h-screen flex-col bg-[radial-gradient(circle_at_80%_12%,rgba(168,85,247,0.13),transparent_30%),linear-gradient(135deg,#050508_0%,#080a10_55%,#030405_100%)] text-slate-100">
       {/* Header */}
-      <header className="flex items-center justify-between px-6 py-4 border-b border-slate-900/60 bg-[#07080a]/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="flex items-center gap-4">
+      <header className="sticky top-0 z-50 flex flex-wrap items-center justify-between gap-5 border-b border-white/10 bg-black/34 px-5 py-4 backdrop-blur-2xl lg:px-8">
+        <div className="flex min-w-0 items-center gap-4">
           <button 
             onClick={onBackToHub}
-            className="flex items-center justify-center w-9 h-9 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 text-slate-400 hover:text-slate-200 transition-all active:scale-95 cursor-pointer"
+            className="metal-button flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-slate-200"
             title="Back to Suite Hub"
           >
             <ArrowLeft size={16} />
           </button>
           
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-              <Scale size={16} className="text-purple-400" />
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-violet-200/24 bg-violet-300/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+              <Scale size={18} className="text-violet-100" />
             </div>
-            <div>
-              <span className="text-sm font-extrabold tracking-tight bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
+            <div className="min-w-0">
+              <span className="font-display block truncate text-lg font-black uppercase tracking-[0.12em] text-slate-100">
                 Direct Tax Recon Cockpit
               </span>
+              <span className="mt-1 block text-xs text-slate-500">AIS, 26AS, Form 16, bank receipts, and ITR handoff.</span>
             </div>
           </div>
         </div>
 
         {/* Global Controls */}
-        <div className="flex items-center gap-5">
+        <div className="flex min-w-0 flex-wrap items-center justify-end gap-3">
           {/* Taxpayer Selector */}
-          <div className="flex items-center gap-3.5 relative">
+          <div className="relative flex min-w-0 items-center gap-3">
             <select
               value={selectedTaxpayer?.id || ""}
               onChange={(e) => {
                 const found = taxpayers.find(t => t.id === e.target.value);
                 if (found) setSelectedTaxpayer(found);
               }}
-              className="premium-select"
+              className="premium-select max-w-[22rem]"
             >
               {taxpayers.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -431,7 +432,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
             
             <button
               onClick={() => setShowRegisterModal(true)}
-              className="flex items-center justify-center w-9.5 h-9.5 rounded-xl border border-dashed border-slate-700 hover:border-purple-500/50 bg-slate-900/30 hover:bg-purple-500/5 text-purple-400 hover:text-purple-300 transition-all active:scale-95 cursor-pointer"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-dashed border-violet-300/24 bg-violet-300/8 text-violet-100 transition-all hover:border-violet-200/55 hover:bg-violet-300/14 active:scale-95"
               title="Register New Taxpayer Profile"
             >
               <UserPlus size={15} />
@@ -453,14 +454,14 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
       {/* Main Container */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar Navigation */}
-        <aside className="w-64 border-r border-slate-900/60 bg-[#07080a]/40 p-6 space-y-6 flex flex-col justify-between">
+        <aside className="hidden w-80 shrink-0 flex-col justify-between border-r border-white/10 bg-[#070911]/88 p-5 shadow-[18px_0_70px_rgba(0,0,0,0.28)] backdrop-blur-2xl lg:flex">
           <div className="space-y-2.5">
             <button
               onClick={() => setActiveTab("cockpit")}
-              className={`flex items-center gap-3 w-full px-4 py-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+              className={`flex min-h-12 w-full items-center gap-3 rounded-2xl border px-4 py-3 text-xs font-bold uppercase tracking-[0.08em] transition-all cursor-pointer ${
                 activeTab === "cockpit" 
-                  ? "bg-purple-500/10 text-purple-300 border border-purple-500/20 shadow-[0_0_15px_rgba(168,85,247,0.05)]" 
-                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/30"
+                  ? "border-violet-200/24 bg-violet-300/10 text-violet-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]" 
+                  : "border-transparent text-slate-400 hover:bg-white/[0.04] hover:text-slate-200"
               }`}
             >
               <Activity size={15} />
@@ -468,10 +469,10 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
             </button>
             <button
               onClick={() => setActiveTab("upload")}
-              className={`flex items-center gap-3 w-full px-4 py-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+              className={`flex min-h-12 w-full items-center gap-3 rounded-2xl border px-4 py-3 text-xs font-bold uppercase tracking-[0.08em] transition-all cursor-pointer ${
                 activeTab === "upload" 
-                  ? "bg-purple-500/10 text-purple-300 border border-purple-500/20 shadow-[0_0_15px_rgba(168,85,247,0.05)]" 
-                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/30"
+                  ? "border-violet-200/24 bg-violet-300/10 text-violet-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]" 
+                  : "border-transparent text-slate-400 hover:bg-white/[0.04] hover:text-slate-200"
               }`}
             >
               <UploadCloud size={15} />
@@ -479,10 +480,10 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
             </button>
             <button
               onClick={() => setActiveTab("exceptions")}
-              className={`flex items-center gap-3 w-full px-4 py-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+              className={`flex min-h-12 w-full items-center gap-3 rounded-2xl border px-4 py-3 text-xs font-bold uppercase tracking-[0.08em] transition-all cursor-pointer ${
                 activeTab === "exceptions" 
-                  ? "bg-purple-500/10 text-purple-300 border border-purple-500/20 shadow-[0_0_15px_rgba(168,85,247,0.05)]" 
-                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/30"
+                  ? "border-violet-200/24 bg-violet-300/10 text-violet-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]" 
+                  : "border-transparent text-slate-400 hover:bg-white/[0.04] hover:text-slate-200"
               }`}
             >
               <AlertTriangle size={15} />
@@ -490,10 +491,10 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
             </button>
             <button
               onClick={() => setActiveTab("handoff")}
-              className={`flex items-center gap-3 w-full px-4 py-3 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+              className={`flex min-h-12 w-full items-center gap-3 rounded-2xl border px-4 py-3 text-xs font-bold uppercase tracking-[0.08em] transition-all cursor-pointer ${
                 activeTab === "handoff" 
-                  ? "bg-purple-500/10 text-purple-300 border border-purple-500/20 shadow-[0_0_15px_rgba(168,85,247,0.05)]" 
-                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/30"
+                  ? "border-violet-200/24 bg-violet-300/10 text-violet-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]" 
+                  : "border-transparent text-slate-400 hover:bg-white/[0.04] hover:text-slate-200"
               }`}
             >
               <FileCheck2 size={15} />
@@ -502,8 +503,8 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
           </div>
 
           {/* User consent card info */}
-          <div className="rounded-2xl border border-slate-900 bg-[#090b10] p-4.5 text-[11px] text-slate-400 leading-relaxed shadow-inner">
-            <div className="flex items-center gap-2 text-purple-400 font-bold uppercase tracking-wider mb-2">
+          <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-4 text-[11px] leading-relaxed text-slate-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+            <div className="mb-2 flex items-center gap-2 font-bold uppercase tracking-wider text-violet-100">
               <FolderLock size={12} />
               Consent-Aware
             </div>
@@ -512,7 +513,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
         </aside>
 
         {/* Dashboard Workspace */}
-        <main className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+        <main className="custom-scrollbar min-w-0 flex-1 overflow-y-auto p-5 lg:p-8">
           {/* Dashboard Loader */}
           {loadingSummary && (
             <div className="flex items-center justify-center h-full gap-2">
@@ -522,23 +523,26 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
           )}
 
           {!loadingSummary && activeTab === "cockpit" && (
-            <div className="space-y-8">
+            <div className="mx-auto max-w-[1520px] space-y-7">
               {/* Cockpit Intro Banner */}
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-[#0d0f14]/50 border border-slate-900 rounded-2xl p-6">
-                <div>
-                  <h1 className="text-xl font-extrabold text-slate-100 mb-1.5 flex items-center gap-2">
+              <div className="relative overflow-hidden rounded-[1.7rem] border border-white/10 bg-gradient-to-br from-[#171120] via-[#0d0f14] to-[#07080b] p-6 shadow-[0_22px_90px_rgba(0,0,0,0.34)] lg:p-8">
+                <div className="absolute right-[-5rem] top-[-7rem] h-64 w-64 rounded-full bg-violet-300/12 blur-[90px]" />
+                <div className="relative flex flex-col items-start justify-between gap-6 xl:flex-row">
+                <div className="max-w-4xl">
+                  <p className="mb-3 font-mono text-[10px] font-black uppercase tracking-[0.28em] text-violet-100/80">Government statement control</p>
+                  <h1 className="font-display mb-3 flex items-center gap-2 text-3xl font-black uppercase tracking-[-0.03em] text-slate-100">
                     Cockpit Control Desk
                   </h1>
-                  <p className="text-xs text-slate-400 leading-relaxed">
+                  <p className="max-w-3xl text-sm leading-6 text-slate-400">
                     Compare official government statement records (26AS, AIS, TIS) against corporate Form 16 certificates, bank receipts, and manual workbook filing claims.
                   </p>
                 </div>
                 
-                <div className="flex gap-6">
+                <div className="flex w-full flex-wrap gap-3 xl:w-auto xl:justify-end">
                   <button
                     onClick={handleRunReconciliation}
                     disabled={reconciling || !selectedTaxpayer}
-                    className="premium-btn premium-btn-purple flex items-center gap-2 px-5 py-3 cursor-pointer"
+                    className="premium-btn premium-btn-purple min-h-11 flex-1 xl:flex-none px-4 py-3 cursor-pointer whitespace-nowrap"
                   >
                     {reconciling ? <Loader2 className="animate-spin" size={13} /> : <RefreshCw size={13} />}
                     Run Reconciliation Rules
@@ -547,17 +551,18 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   <button
                     onClick={handleDownloadAuditPack}
                     disabled={exporting || !selectedTaxpayer || !reconSummary}
-                    className="premium-btn flex items-center gap-2 px-5 py-3 cursor-pointer"
+                    className="premium-btn min-h-11 flex-1 xl:flex-none px-4 py-3 cursor-pointer whitespace-nowrap"
                   >
                     {exporting ? <Loader2 className="animate-spin" size={13} /> : <FileDown size={13} />}
                     Download Audit Pack
                   </button>
                 </div>
+                </div>
               </div>
 
               {/* Metric Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
-                <div className="rounded-2xl border border-slate-800/80 bg-[#0c0d12]/60 backdrop-blur-xl p-6 relative overflow-hidden hover:border-purple-500/30 hover:-translate-y-1 transition-all duration-300 shadow-md">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+                <div className="min-h-[145px] rounded-2xl border border-slate-800/80 bg-[#0c0d12]/70 backdrop-blur-xl p-6 relative overflow-hidden hover:border-purple-500/30 hover:-translate-y-1 transition-all duration-300 shadow-md">
                   <div className="absolute -top-6 -right-6 w-24 h-24 bg-purple-500/10 rounded-full blur-xl pointer-events-none" />
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Matched groups</div>
                   <div className="text-3xl font-black tracking-tight text-slate-100">{reconSummary?.matched_groups || 0}</div>
@@ -566,7 +571,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-slate-800/80 bg-[#0c0d12]/60 backdrop-blur-xl p-6 relative overflow-hidden hover:border-indigo-500/30 hover:-translate-y-1 transition-all duration-300 shadow-md">
+                <div className="min-h-[145px] rounded-2xl border border-slate-800/80 bg-[#0c0d12]/70 backdrop-blur-xl p-6 relative overflow-hidden hover:border-indigo-500/30 hover:-translate-y-1 transition-all duration-300 shadow-md">
                   <div className="absolute -top-6 -right-6 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl pointer-events-none" />
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Partial matches</div>
                   <div className="text-3xl font-black tracking-tight text-slate-100">{reconSummary?.partial_groups || 0}</div>
@@ -575,7 +580,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-slate-800/80 bg-[#0c0d12]/60 backdrop-blur-xl p-6 relative overflow-hidden hover:border-rose-500/30 hover:-translate-y-1 transition-all duration-300 shadow-md">
+                <div className="min-h-[145px] rounded-2xl border border-slate-800/80 bg-[#0c0d12]/70 backdrop-blur-xl p-6 relative overflow-hidden hover:border-rose-500/30 hover:-translate-y-1 transition-all duration-300 shadow-md">
                   <div className="absolute -top-6 -right-6 w-24 h-24 bg-rose-500/10 rounded-full blur-xl pointer-events-none" />
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Unmatched transactions</div>
                   <div className="text-3xl font-black tracking-tight text-slate-100">{reconSummary?.unmatched_groups || 0}</div>
@@ -584,7 +589,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-slate-800/80 bg-[#0c0d12]/60 backdrop-blur-xl p-6 relative overflow-hidden hover:border-blue-500/30 hover:-translate-y-1 transition-all duration-300 shadow-md">
+                <div className="min-h-[145px] rounded-2xl border border-slate-800/80 bg-[#0c0d12]/70 backdrop-blur-xl p-6 relative overflow-hidden hover:border-blue-500/30 hover:-translate-y-1 transition-all duration-300 shadow-md">
                   <div className="absolute -top-6 -right-6 w-24 h-24 bg-blue-500/10 rounded-full blur-xl pointer-events-none" />
                   <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Active exceptions</div>
                   <div className="text-3xl font-black tracking-tight text-slate-100">{reconSummary?.exception_count || 0}</div>
@@ -597,8 +602,8 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
               {/* Exception Summary Panel */}
               <div className="space-y-4">
                 <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider">Top Priority Mismatches</h3>
-                <div className="border border-slate-900 rounded-2xl bg-[#090b10]/40 overflow-hidden">
-                  <table className="w-full border-collapse text-left">
+                <div className="border border-slate-800/80 rounded-3xl bg-[#090b10]/60 overflow-x-auto shadow-[0_18px_70px_rgba(0,0,0,0.22)]">
+                  <table className="w-full min-w-[1040px] border-collapse text-left">
                     <thead>
                       <tr className="border-b border-slate-900 bg-[#0c0e14]/50">
                         <th className="px-6 py-4.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Type / Head</th>
@@ -637,7 +642,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                                 fetchTasks(exc);
                                 setActiveTab("exceptions");
                               }}
-                              className="premium-btn premium-btn-purple px-4 py-2 cursor-pointer"
+                              className="premium-btn premium-btn-purple min-h-10 px-4 py-2 cursor-pointer whitespace-nowrap"
                             >
                               Launch Playbook
                             </button>
@@ -646,7 +651,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                       ))}
                       {topExceptions.length === 0 && (
                         <tr>
-                          <td colSpan={5} className="px-6 py-16 text-center">
+                          <td colSpan={5} className="px-6 py-24 text-center">
                             <div className="flex flex-col items-center justify-center gap-3.5 max-w-md mx-auto">
                               <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
                                 <CheckCircle size={20} className="animate-pulse" />

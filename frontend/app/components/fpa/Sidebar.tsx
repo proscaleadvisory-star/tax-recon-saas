@@ -19,15 +19,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, setCurrentTab, onB
   ];
 
   return (
-    <aside className="w-64 bg-card border-r border-border flex flex-col justify-between h-screen sticky top-0">
-      <div className="p-6">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="p-2.5 bg-primary/10 border border-primary/20 rounded-xl">
-            <Database className="w-6 h-6 text-primary" />
+    <aside className="hidden h-screen w-[18.5rem] shrink-0 flex-col justify-between border-r border-white/10 bg-[#070911]/88 shadow-[18px_0_70px_rgba(0,0,0,0.28)] backdrop-blur-2xl lg:flex">
+      <div className="p-5">
+        <div className="mb-8 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.035] p-3">
+          <div className="rounded-2xl border border-cyan-200/20 bg-cyan-200/8 p-2.5">
+            <Database className="h-6 w-6 text-cyan-100" />
           </div>
-          <div>
-            <h1 className="font-bold text-lg leading-none tracking-tight text-white">Local-First</h1>
-            <span className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">FP&A Platform</span>
+          <div className="min-w-0">
+            <h1 className="font-display text-lg font-black uppercase leading-none tracking-[0.08em] text-white">Local-First</h1>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">FP&A Platform</span>
           </div>
         </div>
 
@@ -39,35 +39,35 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, setCurrentTab, onB
               <button
                 key={item.id}
                 onClick={() => setCurrentTab(item.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${
+                className={`w-full min-h-12 flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? 'bg-primary/10 border-l-4 border-primary text-primary font-bold shadow-inner'
-                    : 'text-gray-400 hover:bg-gray-800/40 hover:text-white border-l-4 border-transparent'
+                    ? 'bg-cyan-200/10 border border-cyan-200/24 text-cyan-100 font-bold shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]'
+                    : 'border border-transparent text-slate-400 hover:bg-white/[0.04] hover:text-white'
                 }`}
               >
-                <Icon className={`w-5 h-5 transition-colors ${isActive ? 'text-primary' : 'text-gray-400'}`} />
-                {item.label}
+                <Icon className={`h-5 w-5 shrink-0 transition-colors ${isActive ? 'text-cyan-100' : 'text-slate-500'}`} />
+                <span className="truncate">{item.label}</span>
               </button>
             );
           })}
         </nav>
       </div>
 
-      <div className="p-6 border-t border-border bg-[#0f0f1b] flex flex-col gap-4">
+      <div className="flex flex-col gap-4 border-t border-white/10 bg-black/18 p-5">
         {onBackToHub && (
           <button 
             onClick={onBackToHub}
-            className="w-full premium-btn border-slate-800 bg-slate-900/60 text-slate-400 hover:text-white py-2.5 cursor-pointer"
+            className="metal-button w-full rounded-full px-4 py-3 text-xs font-black uppercase tracking-[0.16em] text-slate-200"
           >
             <ArrowLeft size={13} />
             Back to Suite Hub
           </button>
         )}
         <div className="flex items-center gap-2.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse-slow"></div>
+          <div className="h-2.5 w-2.5 rounded-full bg-emerald-300 shadow-[0_0_15px_rgba(110,231,183,0.75)]"></div>
           <div>
-            <p className="text-xs font-semibold text-gray-200">Local Workstation</p>
-            <p className="text-[10px] text-gray-500">Zero Cloud Operational Cost</p>
+            <p className="text-xs font-semibold text-slate-200">Local Workstation</p>
+            <p className="text-[10px] text-slate-500">Zero Cloud Operational Cost</p>
           </div>
         </div>
       </div>
