@@ -7,18 +7,12 @@ import {
   Braces,
   LogOut,
 } from "lucide-react";
-import { CinematicScrollStory, HeroSection, InteractiveDashboardSection } from "./landing/CinematicLandingSections";
+import ReelCinematicExperience from "./landing/ReelCinematicExperience";
 
 interface HubPageProps {
   user: User;
   onSelectTool: (tool: "taxrecon" | "gstrecon" | "itrecon" | "profitability" | "fpa") => void;
 }
-
-const readiness = [
-  "Marketplace payout imports, GST portal exports, AIS/26AS statements, Form 16, ledgers, and bank workbooks.",
-  "Evidence-grade outputs: dispute packs, ITC variance trails, audit reports, CFO budgets, forecasts, and anomaly logs.",
-  "Client controls for taxpayer registration, local archives, workspace settings, downloads, and remediation tasks.",
-];
 
 export default function HubPage({ user, onSelectTool }: HubPageProps) {
   const handleSignOut = async () => {
@@ -61,29 +55,8 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
         </div>
       </header>
 
-      <main className="relative z-10 mx-auto flex min-h-[calc(100vh-92px)] w-full max-w-[1680px] flex-col px-6 pb-14 sm:px-10 lg:px-14">
-        <HeroSection onSelectTool={onSelectTool} />
-        <CinematicScrollStory onSelectTool={onSelectTool} />
-        <InteractiveDashboardSection onSelectTool={onSelectTool} />
-
-        <section
-          className="mb-2 grid gap-5 rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(15,23,42,0.76),rgba(2,6,23,0.42))] p-5 shadow-[0_26px_100px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl lg:grid-cols-[0.75fr_1.25fr]"
-        >
-          <div className="rounded-[1.5rem] border border-cyan-200/15 bg-cyan-200/[0.035] p-6">
-            <p className="font-mono text-[11px] font-black uppercase tracking-[0.28em] text-cyan-100">Launch readiness</p>
-            <h2 className="mt-4 font-display text-3xl font-black uppercase leading-none tracking-[-0.03em] text-white">
-              Client handoff details are built into the suite.
-            </h2>
-          </div>
-          <div className="grid gap-3 md:grid-cols-3">
-            {readiness.map((item, index) => (
-              <div key={item} className="rounded-[1.35rem] border border-white/10 bg-black/24 p-5">
-                <p className="mb-4 font-mono text-[10px] font-black uppercase tracking-[0.24em] text-slate-500">0{index + 1}</p>
-                <p className="text-sm leading-6 text-slate-300">{item}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+      <main className="relative z-10">
+        <ReelCinematicExperience onSelectTool={onSelectTool} />
       </main>
     </div>
   );
