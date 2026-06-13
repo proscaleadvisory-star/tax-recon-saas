@@ -5,16 +5,10 @@ import { supabase } from "./lib/supabase";
 import type { User } from "@supabase/supabase-js";
 import AuthPage from "./components/AuthPage";
 import HubPage from "./components/HubPage";
-import Dashboard from "./components/Dashboard";
-import GstDashboard from "./components/GstDashboard";
-import ItDashboard from "./components/ItDashboard";
-import ProfitabilityDashboard from "./components/ProfitabilityDashboard";
-import FpaDashboard from "./components/FpaDashboard";
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [currentTool, setCurrentTool] = useState<"hub" | "taxrecon" | "gstrecon" | "itrecon" | "profitability" | "fpa">("hub");
 
   useEffect(() => {
     // Check initial session
@@ -28,9 +22,6 @@ export default function Home() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
-      if (!session) {
-        setCurrentTool("hub"); // reset tool choice on logout
-      }
     });
 
     return () => subscription.unsubscribe();
@@ -50,7 +41,7 @@ export default function Home() {
       >
         <div className="spinner" />
         <p style={{ color: "var(--text-secondary)", fontSize: "0.875rem" }}>
-          Loading TaxRecon...
+          Loading CLIENT Suite...
         </p>
       </div>
     );
@@ -60,25 +51,5 @@ export default function Home() {
     return <AuthPage />;
   }
 
-  if (currentTool === "taxrecon") {
-    return <Dashboard user={user} onBackToHub={() => setCurrentTool("hub")} />;
-  }
-
-  if (currentTool === "gstrecon") {
-    return <GstDashboard onBackToHub={() => setCurrentTool("hub")} />;
-  }
-
-  if (currentTool === "itrecon") {
-    return <ItDashboard user={user} onBackToHub={() => setCurrentTool("hub")} />;
-  }
-
-  if (currentTool === "profitability") {
-    return <ProfitabilityDashboard onBackToHub={() => setCurrentTool("hub")} />;
-  }
-
-  if (currentTool === "fpa" && user) {
-    return <FpaDashboard user={user} onBackToHub={() => setCurrentTool("hub")} />;
-  }
-
-  return <HubPage user={user} onSelectTool={setCurrentTool} />;
+  return <HubPage user={user} />;
 }
