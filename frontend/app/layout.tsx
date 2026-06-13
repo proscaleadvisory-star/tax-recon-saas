@@ -2,25 +2,23 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CLIENT Suite - Finance, Tax and Reconciliation Command Layer",
+  title: "TaxRecon — E-Commerce Tax Reconciliation",
   description:
-    "An audit-ready finance suite for GST credits, marketplace payouts, tax evidence, SKU margins and cash flow reconciliation.",
+    "Reconcile GST sales and payment data with intelligent matching, variance detection, and audit-ready reporting for Indian e-commerce sellers.",
   keywords: [
     "GST reconciliation",
     "e-commerce tax",
-    "finance command layer",
-    "marketplace reconciliation",
-    "audit evidence",
-    "direct tax reconciliation",
-    "virtual CFO",
+    "GSTR-1",
+    "TCS reconciliation",
+    "Amazon seller tax",
+    "Flipkart seller tax",
     "tax audit",
     "India GST",
   ],
-  authors: [{ name: "CLIENT Suite" }],
+  authors: [{ name: "TaxRecon" }],
   openGraph: {
-    title: "CLIENT Suite - Finance, Tax and Reconciliation Command Layer",
-    description:
-      "Audit-ready finance operations for reconciliation, tax evidence and compliance review.",
+    title: "TaxRecon — E-Commerce Tax Reconciliation",
+    description: "Intelligent GST reconciliation for e-commerce sellers",
     type: "website",
   },
 };
