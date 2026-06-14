@@ -11,23 +11,33 @@ import ItDashboard from "./components/ItDashboard";
 import ProfitabilityDashboard from "./components/ProfitabilityDashboard";
 import FpaDashboard from "./components/FpaDashboard";
 
+type ToolKey = "taxrecon" | "gstrecon" | "itrecon" | "profitability" | "fpa";
+
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [currentTool, setCurrentTool] = useState<"hub" | "taxrecon" | "gstrecon" | "itrecon" | "profitability" | "fpa">("hub");
+  const [currentTool, setCurrentTool] = useState<"hub" | ToolKey>("hub");
 
   useEffect(() => {
     // Check initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        setCurrentTool("hub");
+      }
+      window.localStorage.removeItem("client-suite-pending-tool");
       setLoading(false);
     });
 
     // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user && (event === "SIGNED_IN" || event === "INITIAL_SESSION")) {
+        window.localStorage.removeItem("client-suite-pending-tool");
+        setCurrentTool("hub");
+      }
       if (!session) {
         setCurrentTool("hub"); // reset tool choice on logout
       }
@@ -46,6 +56,8 @@ export default function Home() {
           minHeight: "100vh",
           gap: "16px",
           flexDirection: "column",
+          background: "#05070B",
+          color: "#F8FAFC",
         }}
       >
         <div className="spinner" />
