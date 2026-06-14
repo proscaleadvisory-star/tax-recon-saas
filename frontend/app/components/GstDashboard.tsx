@@ -25,94 +25,65 @@ type TabType = "overview" | "recon" | "analysis" | "history" | "settings";
 
 export default function GstDashboard({ onBackToHub }: GstDashboardProps) {
   const [activeTab, setActiveTab] = useState<TabType>("overview");
+  const tabs = [
+    { id: "overview" as const, label: "Overview", icon: LayoutDashboard },
+    { id: "recon" as const, label: "Recon Engine", icon: FileCheck2 },
+    { id: "analysis" as const, label: "Analysis", icon: BarChart3 },
+    { id: "history" as const, label: "History", icon: History },
+    { id: "settings" as const, label: "Settings", icon: Settings },
+  ];
 
   return (
-    <div className="min-h-screen flex flex-col relative z-10 bg-[#07080a] text-slate-100 font-sans">
+    <div className="enterprise-shell flex flex-col relative z-10 font-sans">
       {/* Header / Nav */}
-      <header className="flex items-center justify-between px-6 py-4 border-b border-slate-900/60 bg-[#07080a]/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="enterprise-topbar">
         <div className="flex items-center gap-4">
           <button 
             onClick={onBackToHub}
-            className="flex items-center justify-center w-9 h-9 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 text-slate-400 hover:text-slate-200 transition-all active:scale-95"
+            className="enterprise-icon-btn"
             title="Back to Suite Hub"
           >
             <ArrowLeft size={16} />
           </button>
           
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+            <div className="enterprise-module-mark">
               <Zap size={16} className="text-indigo-400" />
             </div>
             <div>
-              <span className="text-sm font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="text-base font-extrabold tracking-tight text-slate-100">
                 GST Reconciliation
               </span>
+              <p className="mt-1 text-sm text-slate-400">Purchase register matching, ITC evidence and filing history.</p>
             </div>
           </div>
         </div>
 
         {/* Tab Controls */}
-        <div className="flex bg-slate-950/80 border border-slate-900/60 p-1.5 rounded-xl gap-2">
-          <button
-            onClick={() => setActiveTab("overview")}
-            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
-              activeTab === "overview" 
-                ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
-                : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <LayoutDashboard size={13} /> Overview
-          </button>
-          <button
-            onClick={() => setActiveTab("recon")}
-            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
-              activeTab === "recon" 
-                ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
-                : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <FileCheck2 size={13} /> Recon Engine
-          </button>
-          <button
-            onClick={() => setActiveTab("analysis")}
-            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
-              activeTab === "analysis" 
-                ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
-                : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <BarChart3 size={13} /> Analysis
-          </button>
-          <button
-            onClick={() => setActiveTab("history")}
-            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
-              activeTab === "history" 
-                ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
-                : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <History size={13} /> History
-          </button>
-          <button
-            onClick={() => setActiveTab("settings")}
-            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
-              activeTab === "settings" 
-                ? "bg-slate-900 text-indigo-400 border border-slate-800 shadow" 
-                : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <Settings size={13} /> Settings
-          </button>
+        <div className="enterprise-tabbar">
+          {tabs.map((tab) => {
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className="enterprise-tab"
+                data-active={activeTab === tab.id}
+              >
+                <Icon size={14} /> {tab.label}
+              </button>
+            );
+          })}
         </div>
 
-        <div className="flex items-center gap-3 px-3 py-1.5 rounded-xl bg-slate-900/50 border border-slate-800">
+        <div className="enterprise-status-pill">
           <div className="w-2 h-2 rounded-full bg-emerald-500 shadow shadow-emerald-500/50 animate-pulse" />
-          <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Local Processor</span>
+          <span>Local Processor</span>
         </div>
       </header>
 
       {/* Main Workspace Area */}
-      <main className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+      <main className="enterprise-content flex-1 overflow-y-auto custom-scrollbar">
         {activeTab === "overview" && <GstOverview setActiveTab={setActiveTab} />}
         {activeTab === "recon" && <GstReconEngine />}
         {activeTab === "analysis" && <GstAnalysis setActiveTab={setActiveTab} />}

@@ -19,21 +19,21 @@ export default function FpaDashboard({ onBackToHub }: FpaDashboardProps) {
   const [currentTab, setCurrentTab] = useState("grid");
 
   return (
-    <div className="flex min-h-screen overflow-hidden bg-[radial-gradient(circle_at_72%_18%,rgba(103,232,249,0.08),transparent_28%),linear-gradient(135deg,#05070a_0%,#090b11_52%,#030405_100%)] text-slate-100">
+    <div className="enterprise-shell flex min-h-screen overflow-hidden">
       {/* Sidebar Navigation */}
       <Sidebar currentTab={currentTab} setCurrentTab={setCurrentTab} onBackToHub={onBackToHub} />
 
       {/* Main Panel Content Area */}
       <main className="flex max-h-screen min-w-0 flex-1 flex-col overflow-y-auto">
-        <header className="min-h-20 border-b border-white/10 bg-black/24 px-5 py-4 backdrop-blur-2xl lg:px-7">
+        <header className="border-b border-white/10 bg-[#05070b]/88 px-5 py-4 backdrop-blur-2xl lg:px-7">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex min-w-0 items-center gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-cyan-200/20 bg-cyan-200/8 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+              <div className="enterprise-module-mark">
                 <Bot className="text-cyan-100" size={19} />
               </div>
               <div className="min-w-0">
-                <h1 className="font-display truncate text-lg font-black uppercase tracking-[0.14em] text-slate-100">
-              ProScale CFO Console
+                <h1 className="truncate text-lg font-extrabold tracking-tight text-slate-100">
+                  Virtual CFO OS
                 </h1>
                 <p className="mt-1 text-xs font-medium text-slate-500">Budget grid, forecasts, reports, audit trails, and CFO chat.</p>
               </div>

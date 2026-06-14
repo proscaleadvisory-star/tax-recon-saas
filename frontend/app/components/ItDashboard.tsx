@@ -566,33 +566,33 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
   };
 
   return (
-    <div className="relative z-10 flex min-h-screen flex-col bg-[radial-gradient(circle_at_80%_12%,rgba(168,85,247,0.13),transparent_30%),linear-gradient(135deg,#050508_0%,#080a10_55%,#030405_100%)] text-slate-100">
+    <div className="enterprise-shell relative z-10 flex min-h-screen flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-50 flex flex-wrap items-center justify-between gap-5 border-b border-white/10 bg-black/34 px-5 py-4 backdrop-blur-2xl lg:px-8">
+      <header className="enterprise-topbar">
         <div className="flex min-w-0 items-center gap-4">
           <button 
             onClick={onBackToHub}
-            className="metal-button flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-slate-200"
+            className="enterprise-icon-btn"
             title="Back to Suite Hub"
           >
             <ArrowLeft size={16} />
           </button>
           
           <div className="flex min-w-0 items-center gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-violet-200/24 bg-violet-300/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+            <div className="enterprise-module-mark border-violet-300/24 bg-violet-300/10 text-violet-200">
               <Scale size={18} className="text-violet-100" />
             </div>
             <div className="min-w-0">
-              <span className="font-display block truncate text-lg font-black uppercase tracking-[0.12em] text-slate-100">
+              <span className="block truncate text-base font-extrabold tracking-tight text-slate-100">
                 Direct Tax Recon Cockpit
               </span>
-              <span className="mt-1 block text-xs text-slate-500">AIS, 26AS, Form 16, bank receipts, and ITR handoff.</span>
+              <span className="mt-1 block text-sm text-slate-400">AIS, 26AS, Form 16, bank receipts, and ITR handoff.</span>
             </div>
           </div>
         </div>
 
         {/* Global Controls */}
-        <div className="flex min-w-0 flex-wrap items-center justify-end gap-3">
+        <div className="flex min-w-0 flex-wrap items-center justify-end gap-3 lg:max-w-[50%]">
           {/* Taxpayer Selector */}
           <div className="relative flex min-w-0 items-center gap-3">
             <select
@@ -635,48 +635,36 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
       {/* Main Container */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar Navigation */}
-        <aside className="hidden w-80 shrink-0 flex-col justify-between border-r border-white/10 bg-[#070911]/88 p-5 shadow-[18px_0_70px_rgba(0,0,0,0.28)] backdrop-blur-2xl lg:flex">
+        <aside className="enterprise-sidebar hidden w-80 shrink-0 flex-col justify-between p-5 shadow-[18px_0_70px_rgba(0,0,0,0.2)] lg:flex">
           <div className="space-y-2.5">
             <button
               onClick={() => setActiveTab("cockpit")}
-              className={`flex min-h-12 w-full items-center gap-3 rounded-2xl border px-4 py-3 text-xs font-bold uppercase tracking-[0.08em] transition-all cursor-pointer ${
-                activeTab === "cockpit" 
-                  ? "border-violet-200/24 bg-violet-300/10 text-violet-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]" 
-                  : "border-transparent text-slate-400 hover:bg-white/[0.04] hover:text-slate-200"
-              }`}
+              className="enterprise-nav-btn"
+              data-active={activeTab === "cockpit"}
             >
               <Activity size={15} />
               Reconciliation Cockpit
             </button>
             <button
               onClick={() => setActiveTab("upload")}
-              className={`flex min-h-12 w-full items-center gap-3 rounded-2xl border px-4 py-3 text-xs font-bold uppercase tracking-[0.08em] transition-all cursor-pointer ${
-                activeTab === "upload" 
-                  ? "border-violet-200/24 bg-violet-300/10 text-violet-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]" 
-                  : "border-transparent text-slate-400 hover:bg-white/[0.04] hover:text-slate-200"
-              }`}
+              className="enterprise-nav-btn"
+              data-active={activeTab === "upload"}
             >
               <UploadCloud size={15} />
               Ingest & Normalize
             </button>
             <button
               onClick={() => setActiveTab("exceptions")}
-              className={`flex min-h-12 w-full items-center gap-3 rounded-2xl border px-4 py-3 text-xs font-bold uppercase tracking-[0.08em] transition-all cursor-pointer ${
-                activeTab === "exceptions" 
-                  ? "border-violet-200/24 bg-violet-300/10 text-violet-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]" 
-                  : "border-transparent text-slate-400 hover:bg-white/[0.04] hover:text-slate-200"
-              }`}
+              className="enterprise-nav-btn"
+              data-active={activeTab === "exceptions"}
             >
               <AlertTriangle size={15} />
               Mismatch Exceptions ({allExceptions.length})
             </button>
             <button
               onClick={() => setActiveTab("handoff")}
-              className={`flex min-h-12 w-full items-center gap-3 rounded-2xl border px-4 py-3 text-xs font-bold uppercase tracking-[0.08em] transition-all cursor-pointer ${
-                activeTab === "handoff" 
-                  ? "border-violet-200/24 bg-violet-300/10 text-violet-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]" 
-                  : "border-transparent text-slate-400 hover:bg-white/[0.04] hover:text-slate-200"
-              }`}
+              className="enterprise-nav-btn"
+              data-active={activeTab === "handoff"}
             >
               <FileCheck2 size={15} />
               ITR filing Prefill Handoff
@@ -706,7 +694,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
           {!loadingSummary && activeTab === "cockpit" && (
             <div className="mx-auto max-w-[1520px] space-y-7">
               {/* Cockpit Intro Banner */}
-              <div className="relative overflow-hidden rounded-[1.7rem] border border-white/10 bg-gradient-to-br from-[#171120] via-[#0d0f14] to-[#07080b] p-6 shadow-[0_22px_90px_rgba(0,0,0,0.34)] lg:p-8">
+              <div className="enterprise-card relative overflow-hidden p-6 lg:p-8">
                 <div className="absolute right-[-5rem] top-[-7rem] h-64 w-64 rounded-full bg-violet-300/12 blur-[90px]" />
                 <div className="relative flex flex-col items-start justify-between gap-6 xl:flex-row">
                 <div className="max-w-4xl">
@@ -719,11 +707,11 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   </p>
                 </div>
                 
-                <div className="flex w-full flex-wrap gap-3 xl:w-auto xl:justify-end">
+                <div className="grid w-full gap-3 sm:grid-cols-2 xl:w-auto xl:min-w-[470px]">
                   <button
                     onClick={handleRunReconciliation}
                     disabled={reconciling || !selectedTaxpayer}
-                    className="premium-btn premium-btn-purple min-h-11 flex-1 xl:flex-none px-4 py-3 cursor-pointer whitespace-nowrap"
+                    className="premium-btn premium-btn-purple cursor-pointer"
                   >
                     {reconciling ? <Loader2 className="animate-spin" size={13} /> : <RefreshCw size={13} />}
                     Run Reconciliation Rules
@@ -732,7 +720,7 @@ export default function ItDashboard({ user, onBackToHub }: ItDashboardProps) {
                   <button
                     onClick={handleDownloadAuditPack}
                     disabled={exporting || !selectedTaxpayer || !reconSummary}
-                    className="premium-btn min-h-11 flex-1 xl:flex-none px-4 py-3 cursor-pointer whitespace-nowrap"
+                    className="premium-btn cursor-pointer"
                   >
                     {exporting ? <Loader2 className="animate-spin" size={13} /> : <FileDown size={13} />}
                     Download Audit Pack

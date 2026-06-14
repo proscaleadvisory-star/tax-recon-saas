@@ -94,7 +94,7 @@ export const BudgetGrid: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="relative overflow-hidden rounded-[1.7rem] border border-white/10 bg-gradient-to-br from-[#111723] via-[#0b0e14] to-[#050609] p-6 shadow-[0_22px_90px_rgba(0,0,0,0.34)]">
+      <div className="enterprise-card relative overflow-hidden p-6">
         <div className="absolute right-[-6rem] top-[-7rem] h-64 w-64 rounded-full bg-cyan-300/10 blur-[90px]" />
         <div className="absolute left-[28%] top-0 h-px w-1/2 bg-gradient-to-r from-transparent via-white/35 to-transparent" />
       <div className="relative flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
@@ -104,36 +104,36 @@ export const BudgetGrid: React.FC = () => {
           <p className="mt-2 text-sm leading-6 text-slate-400">Direct local grid editor connected to SQLite fact tables, tuned for scanning and precise cell edits.</p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-white/10 bg-black/24 p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
-          <div className="flex items-center gap-2 rounded-xl bg-white/[0.025] p-1">
-            <span className="flex items-center px-2 text-xs font-semibold uppercase text-slate-500">Scenario</span>
+        <div className="grid w-full gap-3 sm:grid-cols-2 xl:w-auto xl:min-w-[430px]">
+          <label className="flex flex-col gap-1.5">
+            <span className="text-xs font-semibold text-slate-400">Scenario</span>
             <select
               value={scenario}
               onChange={(e) => setScenario(e.target.value)}
-              className="premium-select"
+              className="w-full premium-select"
             >
               <option value="Budget">Budget</option>
               <option value="Forecast">Forecast</option>
             </select>
-          </div>
+          </label>
 
-          <div className="flex items-center gap-2 rounded-xl bg-white/[0.025] p-1">
-            <span className="flex items-center px-2 text-xs font-semibold uppercase text-slate-500">Year</span>
+          <label className="flex flex-col gap-1.5">
+            <span className="text-xs font-semibold text-slate-400">Year</span>
             <select
               value={year}
               onChange={(e) => setYear(parseInt(e.target.value))}
-              className="premium-select"
+              className="w-full premium-select"
             >
               <option value={2023}>2023</option>
               <option value={2024}>2024</option>
             </select>
-          </div>
+          </label>
         </div>
       </div>
       </div>
 
       {/* Grid Filters */}
-      <div className="glass-panel flex flex-wrap items-end gap-4 p-5">
+      <div className="enterprise-card flex flex-wrap items-end gap-4 p-5">
         <div className="flex min-w-[220px] flex-1 flex-col gap-1.5 sm:flex-none">
           <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Entity Rollup</label>
           <select
@@ -198,24 +198,24 @@ export const BudgetGrid: React.FC = () => {
           <p className="text-gray-400 text-sm">Querying SQLite records...</p>
         </div>
       ) : (
-        <div className="glass-panel max-h-[calc(100vh-330px)] overflow-auto rounded-[1.45rem] border-white/10">
-          <table className="w-full min-w-[1980px] border-collapse text-left">
+        <div className="enterprise-card max-h-[calc(100vh-340px)] overflow-auto">
+          <table className="w-full min-w-[1680px] border-collapse text-left">
             <thead>
               <tr>
-                <th className="table-header sticky left-0 z-30 w-[340px] min-w-[340px] bg-[#111827]">Account</th>
-                <th className="table-header w-48 min-w-48">Department</th>
+                <th className="table-header sticky left-0 z-30 w-[260px] min-w-[260px] bg-[#111827]">Account</th>
+                <th className="table-header w-40 min-w-40">Department</th>
                 {periods.map((p) => (
-                  <th key={p.id} className="table-header w-36 min-w-36 text-right">{p.label}</th>
+                  <th key={p.id} className="table-header w-28 min-w-28 text-right">{p.label}</th>
                 ))}
-                <th className="table-header w-44 min-w-44 bg-[#162033] text-right">Row Total</th>
+                <th className="table-header w-36 min-w-36 bg-[#162033] text-right">Row Total</th>
               </tr>
             </thead>
             <tbody>
               {filteredRows.map((row, rowIdx) => (
                 <tr key={`${row.account_id}-${row.dept_id}`} className="hover:bg-cyan-200/[0.035]">
                   <td className="table-cell sticky left-0 z-20 border-r border-white/10 bg-[#0f141d] font-semibold">
-                    <div className="flex min-w-0 items-center gap-3">
-                      <span className="shrink-0 rounded-md bg-cyan-200/10 px-2.5 py-1 font-mono text-xs text-cyan-100">
+                    <div className="flex min-w-0 items-center gap-2">
+                      <span className="shrink-0 rounded-md bg-cyan-200/10 px-2 py-0.5 font-mono text-[11px] text-cyan-100">
                         {row.account_code}
                       </span>
                       <span className="min-w-0 truncate text-white">{row.account_name}</span>

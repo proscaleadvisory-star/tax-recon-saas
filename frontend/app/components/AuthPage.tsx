@@ -1184,7 +1184,7 @@ function HeroCommandVisual({ signal }: { signal: (typeof heroCapabilities)[numbe
         <div className="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/10 blur-2xl" />
         {signal.chips.concat(["AI", "AUDIT"]).slice(0, 5).map((label, index) => (
           <span
-            key={label}
+            key={`${label}-${index}`}
             className="hero-orbit-chip"
             style={{
               transform: `rotate(${index * 72}deg) translateX(238px) rotate(-${index * 72}deg)`,
@@ -1378,8 +1378,8 @@ function ModuleVisual({ type, accent }: { type: string; accent: string }) {
               ["Vendor filed late", "43 invoices", "#F59E0B"],
               ["ITC blocked", "INR 8.6L", "#F43F5E"],
               ["Ready to claim", "INR 31.2L", "#10B981"],
-            ].map(([label, value, color]) => (
-              <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.035] p-4">
+            ].map(([label, value, color], index) => (
+              <div key={`${label}-${index}`} className="rounded-2xl border border-white/10 bg-white/[0.035] p-4">
                 <div className="text-[0.62rem] uppercase tracking-wider text-slate-500">{label}</div>
                 <div className="mt-1 font-mono text-xl font-black" style={{ color }}>{value}</div>
               </div>
@@ -1420,7 +1420,7 @@ function ModuleVisual({ type, accent }: { type: string; accent: string }) {
               {["Returns", "COGS", "Ads", "Claims", "Margin"].map((label, index) => {
                 const angle = (-90 + index * 72) * (Math.PI / 180);
                 return (
-                  <text key={label} x={160 + Math.cos(angle) * 126} y={116 + Math.sin(angle) * 118} textAnchor="middle" fill="rgba(203,213,225,.65)" fontSize="10" fontWeight="700">
+                  <text key={`${label}-${index}`} x={160 + Math.cos(angle) * 126} y={116 + Math.sin(angle) * 118} textAnchor="middle" fill="rgba(203,213,225,.65)" fontSize="10" fontWeight="700">
                     {label}
                   </text>
                 );
@@ -1438,8 +1438,8 @@ function ModuleVisual({ type, accent }: { type: string; accent: string }) {
               ["Return leakage", "6.8%", "#F59E0B"],
               ["Ad ROAS", "3.1x", "#38BDF8"],
               ["Weighted margin", "28.6%", "#10B981"],
-            ].map(([label, value, color]) => (
-              <div key={label} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.035] p-4">
+            ].map(([label, value, color], index) => (
+              <div key={`${label}-${index}`} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.035] p-4">
                 <span className="text-sm text-slate-300">{label}</span>
                 <span className="font-mono text-lg font-black" style={{ color }}>{value}</span>
               </div>
@@ -1520,8 +1520,8 @@ function ModuleVisual({ type, accent }: { type: string; accent: string }) {
             ["Burn alert", "Stable", "#38BDF8"],
             ["Ledger audit", "12 flags", "#F59E0B"],
             ["CFO chat", "Ready", "#A78BFA"],
-          ].map(([label, value, color]) => (
-            <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.035] p-4">
+          ].map(([label, value, color], index) => (
+            <div key={`${label}-${index}`} className="rounded-2xl border border-white/10 bg-white/[0.035] p-4">
               <div className="text-[0.62rem] uppercase tracking-wider text-slate-500">{label}</div>
               <div className="mt-1 font-mono text-xl font-black" style={{ color }}>{value}</div>
             </div>

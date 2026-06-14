@@ -271,7 +271,7 @@ function CommandCore() {
         </div>
         <div className="grid gap-3 sm:grid-cols-3">
           {["Capture", "Explain", "Deploy"].map((label, index) => (
-            <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.035] p-3">
+            <div key={`${label}-${index}`} className="rounded-2xl border border-white/10 bg-white/[0.035] p-3">
               <div className="mb-8 h-1 rounded-full bg-white/10">
                 <motion.div
                   initial={{ width: 0 }}
@@ -519,7 +519,7 @@ export function OutcomeSection() {
         <div className="grid gap-4 md:grid-cols-4">
           {outcomes.map(([value, label], index) => (
             <motion.div
-              key={label}
+              key={`${label}-${index}`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-120px" }}

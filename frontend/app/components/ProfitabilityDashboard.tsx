@@ -35,84 +35,64 @@ type TabType = "overview" | "margins" | "forecast" | "leakage";
 
 export default function ProfitabilityDashboard({ onBackToHub }: ProfitabilityDashboardProps) {
   const [activeTab, setActiveTab] = useState<TabType>("overview");
+  const tabs = [
+    { id: "overview" as const, label: "Cockpit", icon: LayoutDashboard },
+    { id: "margins" as const, label: "SKU Margins", icon: TrendingUp },
+    { id: "forecast" as const, label: "Cash Forecast", icon: Zap },
+    { id: "leakage" as const, label: "Leakage & Claims", icon: BarChart3 },
+  ];
 
   return (
-    <div className="min-h-screen flex flex-col relative z-10 bg-[#07080a] text-slate-100 font-sans">
+    <div className="enterprise-shell flex flex-col relative z-10 font-sans">
       {/* Header / Nav */}
-      <header className="flex items-center justify-between px-6 py-4 border-b border-slate-900/60 bg-[#07080a]/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="enterprise-topbar">
         <div className="flex items-center gap-4">
           <button 
             onClick={onBackToHub}
-            className="flex items-center justify-center w-9 h-9 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800 text-slate-400 hover:text-slate-200 transition-all active:scale-95 cursor-pointer"
+            className="enterprise-icon-btn"
             title="Back to Suite Hub"
           >
             <ArrowLeft size={16} />
           </button>
           
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+            <div className="enterprise-module-mark border-emerald-400/20 bg-emerald-400/10 text-emerald-300">
               <TrendingUp size={16} className="text-emerald-400" />
             </div>
             <div>
-              <span className="text-sm font-extrabold tracking-tight bg-gradient-to-r from-emerald-400 to-indigo-400 bg-clip-text text-transparent">
+              <span className="text-base font-extrabold tracking-tight text-slate-100">
                 Profitability & Cash Flow
               </span>
+              <p className="mt-1 text-sm text-slate-400">SKU margin, runway, leakage and claims control.</p>
             </div>
           </div>
         </div>
 
         {/* Tab Controls */}
-        <div className="flex bg-slate-950/80 border border-slate-900/60 p-1.5 rounded-xl gap-2">
-          <button
-            onClick={() => setActiveTab("overview")}
-            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
-              activeTab === "overview" 
-                ? "bg-slate-900 text-emerald-400 border border-slate-800 shadow" 
-                : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <LayoutDashboard size={13} /> Cockpit
-          </button>
-          <button
-            onClick={() => setActiveTab("margins")}
-            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
-              activeTab === "margins" 
-                ? "bg-slate-900 text-emerald-400 border border-slate-800 shadow" 
-                : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <TrendingUp size={13} /> SKU Margins
-          </button>
-          <button
-            onClick={() => setActiveTab("forecast")}
-            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
-              activeTab === "forecast" 
-                ? "bg-slate-900 text-emerald-400 border border-slate-800 shadow" 
-                : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <Zap size={13} /> Cash Forecast
-          </button>
-          <button
-            onClick={() => setActiveTab("leakage")}
-            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
-              activeTab === "leakage" 
-                ? "bg-slate-900 text-emerald-400 border border-slate-800 shadow" 
-                : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            <BarChart3 size={13} /> Leakage & Claims
-          </button>
+        <div className="enterprise-tabbar">
+          {tabs.map((tab) => {
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className="enterprise-tab"
+                data-active={activeTab === tab.id}
+              >
+                <Icon size={14} /> {tab.label}
+              </button>
+            );
+          })}
         </div>
 
-        <div className="flex items-center gap-3 px-3 py-1.5 rounded-xl bg-slate-900/50 border border-slate-800">
+        <div className="enterprise-status-pill">
           <div className="w-2 h-2 rounded-full bg-emerald-500 shadow shadow-emerald-500/50 animate-pulse" />
-          <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Local Processor</span>
+          <span>Local Processor</span>
         </div>
       </header>
 
       {/* Main Workspace Area */}
-      <main className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+      <main className="enterprise-content flex-1 overflow-y-auto custom-scrollbar">
         {activeTab === "overview" && <ProfitabilityOverview setActiveTab={setActiveTab} />}
         {activeTab === "margins" && <ProfitabilityTab />}
         {activeTab === "forecast" && <ForecastTab />}
