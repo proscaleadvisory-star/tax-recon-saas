@@ -8,9 +8,11 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
+import indiaMap from "@svg-maps/india";
 import { supabase } from "../lib/supabase";
 
 type ToolKey = "taxrecon" | "gstrecon" | "itrecon" | "profitability" | "fpa";
+type IndiaMapLocation = { id: string; name: string; path: string };
 
 const modules = [
   {
@@ -945,10 +947,29 @@ export default function AuthPage() {
           position: relative;
           z-index: 1;
         }
-        .india-map-shape {
-          filter: drop-shadow(0 0 28px color-mix(in srgb, var(--accent) 28%, transparent));
-          transform-origin: 158px 180px;
+        .india-map-svg {
+          filter: drop-shadow(0 0 22px color-mix(in srgb, var(--accent) 20%, transparent));
+          transform-origin: center;
           animation: mapBreathe 4.8s ease-in-out infinite;
+        }
+        .india-map-state {
+          fill: rgba(15,23,42,0.74);
+          stroke: rgba(203,213,225,0.26);
+          stroke-width: 0.8;
+          vector-effect: non-scaling-stroke;
+          transition: fill 0.3s ease, stroke 0.3s ease, opacity 0.3s ease;
+        }
+        .india-map-state.is-hot {
+          fill: color-mix(in srgb, var(--accent) var(--heat, 34%), rgba(15,23,42,0.78));
+          stroke: rgba(248,250,252,0.46);
+        }
+        .india-map-state.is-alert {
+          fill: color-mix(in srgb, #F43F5E 38%, rgba(15,23,42,0.78));
+          stroke: rgba(251,113,133,0.62);
+        }
+        .india-map-state.is-ready {
+          fill: color-mix(in srgb, #10B981 32%, rgba(15,23,42,0.78));
+          stroke: rgba(52,211,153,0.56);
         }
         .india-flow-line {
           fill: none;
@@ -990,6 +1011,13 @@ export default function AuthPage() {
           letter-spacing: 0.12em;
           text-transform: uppercase;
           color: rgba(226,232,240,0.78);
+        }
+        .india-state-map {
+          min-height: 390px;
+        }
+        .india-state-map-svg {
+          height: 360px;
+          min-height: 0;
         }
         .radar-polygon {
           transform-origin: 160px 112px;
@@ -1158,7 +1186,7 @@ export default function AuthPage() {
           .data-node,
           .animated-bar::after,
           .india-map-panel::before,
-          .india-map-shape,
+          .india-map-svg,
           .india-flow-line,
           .india-map-node,
           .india-map-ring,
@@ -1234,6 +1262,12 @@ export default function AuthPage() {
           .india-map-panel {
             min-height: 292px;
           }
+          .india-state-map {
+            min-height: 340px;
+          }
+          .india-state-map-svg {
+            height: 320px;
+          }
           .india-map-label {
             font-size: 7.5px;
           }
@@ -1260,6 +1294,12 @@ export default function AuthPage() {
           }
           .india-map-panel {
             min-height: 260px;
+          }
+          .india-state-map {
+            min-height: 310px;
+          }
+          .india-state-map-svg {
+            height: 290px;
           }
           .india-map-chip {
             padding: 0.38rem 0.46rem;
@@ -1509,6 +1549,26 @@ function ModuleVisual({ type, accent }: { type: string; accent: string }) {
   }
 
   if (type === "gst") {
+    const hotStates: Record<string, { tone: "hot" | "alert" | "ready"; heat?: number }> = {
+      dl: { tone: "hot", heat: 42 },
+      hr: { tone: "hot", heat: 36 },
+      gj: { tone: "hot", heat: 34 },
+      mh: { tone: "alert" },
+      ka: { tone: "hot", heat: 40 },
+      tg: { tone: "hot", heat: 36 },
+      tn: { tone: "ready" },
+      wb: { tone: "hot", heat: 32 },
+      up: { tone: "hot", heat: 28 },
+    };
+    const mapNodes = [
+      { label: "NCR", value: "11.8L", x: 255, y: 185, color: "#38BDF8" },
+      { label: "GJ", value: "6.4L", x: 142, y: 333, color: "#F59E0B" },
+      { label: "MH", value: "18.6L", x: 218, y: 420, color: "#F43F5E" },
+      { label: "BLR", value: "14.2L", x: 238, y: 535, color: accent },
+      { label: "TN", value: "9.1L", x: 286, y: 608, color: "#10B981" },
+      { label: "WB", value: "7.2L", x: 438, y: 348, color: "#38BDF8" },
+    ];
+
     return (
       <div className="capability-shell w-full max-w-[520px]" style={{ "--accent": accent } as CSSProperties}>
         <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
@@ -1518,9 +1578,9 @@ function ModuleVisual({ type, accent }: { type: string; accent: string }) {
           </div>
           <div className="font-mono text-xs text-violet-200">GSTR-2B</div>
         </div>
-        <div className="grid gap-5 p-5 md:grid-cols-[0.95fr_1.05fr]">
-          <div className="india-map-panel p-3">
-            <svg viewBox="0 0 320 340" className="h-full min-h-[280px] w-full overflow-visible" role="img" aria-label="Animated India sales and GST credit map">
+        <div className="grid gap-5 p-5">
+          <div className="india-map-panel india-state-map p-3">
+            <svg viewBox={indiaMap.viewBox} className="india-map-svg india-state-map-svg w-full overflow-visible" role="img" aria-label="India state boundary map showing sales and GST credit activity">
               <defs>
                 <linearGradient id="indiaHeatGradient" x1="70" x2="250" y1="40" y2="320" gradientUnits="userSpaceOnUse">
                   <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.22" />
@@ -1541,41 +1601,35 @@ function ModuleVisual({ type, accent }: { type: string; accent: string }) {
                 </filter>
               </defs>
 
-              <path className="india-flow-line" d="M103 88 C142 118 178 145 214 170" stroke="#38BDF8" strokeOpacity="0.45" strokeWidth="1.6" />
-              <path className="india-flow-line" d="M78 170 C124 178 160 206 191 263" stroke={accent} strokeOpacity="0.48" strokeWidth="1.6" style={{ animationDelay: "0.35s" }} />
-              <path className="india-flow-line" d="M216 128 C189 164 184 202 197 286" stroke="#10B981" strokeOpacity="0.42" strokeWidth="1.6" style={{ animationDelay: "0.7s" }} />
+              <g filter="url(#indiaSoftGlow)">
+                {(indiaMap.locations as IndiaMapLocation[]).map((location) => {
+                  const state = hotStates[location.id];
+                  return (
+                    <path
+                      key={location.id}
+                      className={`india-map-state${state ? ` is-${state.tone}` : ""}`}
+                      d={location.path}
+                      style={state?.heat ? ({ "--heat": `${state.heat}%` } as CSSProperties) : undefined}
+                    >
+                      <title>{location.name}</title>
+                    </path>
+                  );
+                })}
+              </g>
 
-              <path
-                className="india-map-shape"
-                d="M143 34 L170 45 L181 70 L211 78 L229 104 L221 129 L240 151 L228 181 L238 206 L218 230 L203 260 L186 303 L170 321 L154 291 L145 252 L124 232 L118 201 L92 188 L74 160 L84 130 L70 106 L97 87 L109 58 Z"
-                fill="url(#indiaHeatGradient)"
-                stroke={accent}
-                strokeOpacity="0.58"
-                strokeWidth="1.5"
-                filter="url(#indiaSoftGlow)"
-              />
-              <path
-                d="M143 34 L170 45 L181 70 L211 78 L229 104 L221 129 L240 151 L228 181 L238 206 L218 230 L203 260 L186 303 L170 321 L154 291 L145 252 L124 232 L118 201 L92 188 L74 160 L84 130 L70 106 L97 87 L109 58 Z"
-                fill="none"
-                stroke="rgba(255,255,255,0.16)"
-                strokeWidth="0.7"
-              />
+              <path className="india-flow-line" d="M255 185 C310 250 374 305 438 348" stroke="#38BDF8" strokeOpacity="0.48" strokeWidth="2.2" />
+              <path className="india-flow-line" d="M142 333 C184 360 207 392 218 420" stroke="#F59E0B" strokeOpacity="0.46" strokeWidth="2.2" style={{ animationDelay: "0.35s" }} />
+              <path className="india-flow-line" d="M218 420 C238 462 244 504 238 535" stroke={accent} strokeOpacity="0.52" strokeWidth="2.2" style={{ animationDelay: "0.7s" }} />
+              <path className="india-flow-line" d="M238 535 C252 568 268 590 286 608" stroke="#10B981" strokeOpacity="0.46" strokeWidth="2.2" style={{ animationDelay: "1s" }} />
 
-              {[
-                { label: "NCR", value: "11.8L", x: 145, y: 78, color: "#38BDF8" },
-                { label: "GJ", value: "6.4L", x: 96, y: 150, color: "#F59E0B" },
-                { label: "MH", value: "18.6L", x: 125, y: 196, color: "#F43F5E" },
-                { label: "BLR", value: "14.2L", x: 160, y: 248, color: accent },
-                { label: "TN", value: "9.1L", x: 178, y: 288, color: "#10B981" },
-                { label: "WB", value: "7.2L", x: 218, y: 164, color: "#38BDF8" },
-              ].map((node, index) => (
+              {mapNodes.map((node, index) => (
                 <g key={node.label} style={{ color: node.color }}>
                   <circle className="india-map-ring" cx={node.x} cy={node.y} r="5" stroke={node.color} style={{ animationDelay: `${index * 0.22}s` }} />
-                  <circle className="india-map-node" cx={node.x} cy={node.y} r="4.6" fill="url(#indiaNodeGlow)" style={{ animationDelay: `${index * 0.22}s` }} />
-                  <text className="india-map-label" x={node.x + (node.x > 170 ? 12 : -12)} y={node.y - 6} textAnchor={node.x > 170 ? "start" : "end"}>
+                  <circle className="india-map-node" cx={node.x} cy={node.y} r="6.2" fill="url(#indiaNodeGlow)" style={{ animationDelay: `${index * 0.22}s` }} />
+                  <text className="india-map-label" x={node.x + (node.x > 320 ? 14 : -14)} y={node.y - 8} textAnchor={node.x > 320 ? "start" : "end"}>
                     {node.label}
                   </text>
-                  <text className="india-map-value" x={node.x + (node.x > 170 ? 12 : -12)} y={node.y + 7} textAnchor={node.x > 170 ? "start" : "end"}>
+                  <text className="india-map-value" x={node.x + (node.x > 320 ? 14 : -14)} y={node.y + 8} textAnchor={node.x > 320 ? "start" : "end"}>
                     {node.value}
                   </text>
                 </g>
@@ -1587,7 +1641,7 @@ function ModuleVisual({ type, accent }: { type: string; accent: string }) {
               ))}
             </div>
           </div>
-          <div className="space-y-3">
+          <div className="grid gap-3 sm:grid-cols-3">
             {[
               ["Vendor filed late", "43 invoices", "#F59E0B"],
               ["ITC blocked", "INR 8.6L", "#F43F5E"],
@@ -1598,13 +1652,13 @@ function ModuleVisual({ type, accent }: { type: string; accent: string }) {
                 <div className="mt-1 font-mono text-xl font-black" style={{ color }}>{value}</div>
               </div>
             ))}
-            <div className="rounded-2xl border border-violet-300/20 bg-violet-400/10 p-4">
-              <div className="mb-3 flex items-center justify-between text-[0.62rem] uppercase tracking-wider text-violet-200">
-                <span>Evidence pack readiness</span><span>91%</span>
-              </div>
-              <div className="h-2 overflow-hidden rounded-full bg-white/[0.06]">
-                <div className="animated-bar h-full w-[91%] rounded-full bg-violet-300" />
-              </div>
+          </div>
+          <div className="rounded-2xl border border-violet-300/20 bg-violet-400/10 p-4">
+            <div className="mb-3 flex items-center justify-between text-[0.62rem] uppercase tracking-wider text-violet-200">
+              <span>Evidence pack readiness</span><span>91%</span>
+            </div>
+            <div className="h-2 overflow-hidden rounded-full bg-white/[0.06]">
+              <div className="animated-bar h-full w-[91%] rounded-full bg-violet-300" />
             </div>
           </div>
         </div>
