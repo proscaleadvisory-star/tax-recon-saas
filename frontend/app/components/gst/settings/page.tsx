@@ -121,7 +121,7 @@ export default function SettingsPage() {
               
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-500 uppercase">Firm Name</label>
-                <input type="text" defaultValue="ProScale Consulting LLP" required className="settings-input" />
+                <input type="text" defaultValue="ProScale Advisory" required className="settings-input" />
               </div>
 
               <div className="space-y-2">

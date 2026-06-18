@@ -57,7 +57,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("tax-recon")
 
 app = FastAPI(
-    title="TaxRecon Financial OS API",
+    title="ProScale Advisory Financial OS API",
     description="Engine for dynamic tax mappings, profit tracking, and operations.",
     version="2.0.0",
 )
@@ -417,7 +417,17 @@ class TemplateSaveRequest(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"service": "TaxRecon Dynamic Financial OS Engine", "version": "2.0.0"}
+    return {"service": "ProScale Advisory Dynamic Financial OS Engine", "version": "2.0.0"}
+
+
+@app.get("/health")
+async def health_check():
+    return {"status": "ok", "service": "proscale-advisory-api", "version": "2.0.0"}
+
+
+@app.get("/api/health")
+async def api_health_check():
+    return {"status": "ok", "service": "proscale-advisory-api", "version": "2.0.0"}
 
 # --------------------------------------------------------------------------
 # FILE PREVIEW & AUTO-MAPPING SUGGESTION

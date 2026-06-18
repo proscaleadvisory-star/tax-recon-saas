@@ -373,8 +373,10 @@ export default function AuthPage() {
       <header className="absolute left-0 right-0 top-0 z-40">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8">
           <a href="#" className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#38BDF8] text-sm font-black text-black">C</span>
-            <span className="text-base font-bold tracking-[-0.02em] text-white">CLIENT Suite</span>
+            <span className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white p-1">
+              <img src="/proscale-logo.png" alt="ProScale Advisory logo" className="h-full w-full object-contain" />
+            </span>
+            <span className="text-base font-bold tracking-[-0.02em] text-white">ProScale Advisory</span>
           </a>
           <div className="hidden items-center gap-7 text-sm font-medium text-[#A7B0BE] md:flex">
             <a href="#mod-start" className="transition hover:text-white">Modules</a>
@@ -434,7 +436,7 @@ export default function AuthPage() {
               <span className="hero-word gradient-text block">from one operating suite.</span>
             </h1>
             <p className="hero-sub mb-7 max-w-2xl text-[clamp(1rem,1.25vw,1.15rem)] leading-8 text-[#B6C0CC]">
-              CLIENT brings ecommerce payouts, GST credits, profit visibility, direct tax evidence and CFO workflows into one launch-ready SaaS workspace.
+              ProScale Advisory brings ecommerce payouts, GST credits, profit visibility, direct tax evidence and CFO workflows into one launch-ready SaaS workspace.
             </p>
             <div className="hero-btns flex flex-wrap items-center gap-3">
               <motion.a href="#hero-auth" className="btn-cyan" whileHover={shouldReduceMotion ? undefined : { y: -3 }} whileTap={{ scale: 0.98 }}>Create account</motion.a>
@@ -653,7 +655,7 @@ export default function AuthPage() {
         <div className="container-cinematic flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <div className="h-2 w-2 rounded-full bg-[#00D4FF] shadow-[0_0_8px_rgba(0,212,255,0.3)]" />
-            <span className="text-sm font-bold">CLIENT</span>
+            <span className="text-sm font-bold">ProScale Advisory</span>
           </div>
           <div className="flex flex-wrap gap-5">
             {modules.map((mod) => (
@@ -662,7 +664,7 @@ export default function AuthPage() {
               </a>
             ))}
           </div>
-          <p className="text-[0.65rem] text-[#444]">© {new Date().getFullYear()} CLIENT Finance Suite</p>
+          <p className="text-[0.65rem] text-[#444]">© {new Date().getFullYear()} ProScale Advisory</p>
         </div>
       </footer>
 

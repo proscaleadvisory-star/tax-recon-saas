@@ -62,7 +62,7 @@ export default function Home() {
       >
         <div className="spinner" />
         <p style={{ color: "var(--text-secondary)", fontSize: "0.875rem" }}>
-          Loading TaxRecon...
+          Loading ProScale Advisory...
         </p>
       </div>
     );

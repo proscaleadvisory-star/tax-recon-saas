@@ -204,7 +204,7 @@ export function CinematicHero({ onSelectTool }: LandingProps) {
           </h1>
 
           <p className="mt-8 max-w-2xl text-base leading-8 text-slate-300/76 sm:text-lg">
-            CLIENT turns reconciliations, tax evidence, profitability signals and CFO planning into a cinematic operating system for finance teams.
+            ProScale Advisory turns reconciliations, tax evidence, profitability signals and CFO planning into a cinematic operating system for finance teams.
           </p>
 
           <div className="mt-10 flex flex-wrap gap-3">

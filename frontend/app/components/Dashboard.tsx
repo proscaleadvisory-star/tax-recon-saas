@@ -169,7 +169,7 @@ export default function Dashboard({ user, onBackToHub }: { user: User; onBackToH
               WebkitTextFillColor: "transparent",
             }}
           >
-            TaxRecon OS
+            ProScale Recon OS
           </span>
         </div>
 
@@ -481,7 +481,7 @@ export default function Dashboard({ user, onBackToHub }: { user: User; onBackToH
           color: "var(--text-muted)",
         }}
       >
-        <span>TaxRecon Financial OS v2.0</span>
+        <span>ProScale Advisory Financial OS v2.0</span>
         <span>Built for Indian E-Commerce Sellers</span>
       </footer>
     </div>

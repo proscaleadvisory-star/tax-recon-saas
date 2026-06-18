@@ -22,7 +22,7 @@ from typing import Any, Dict, List, Optional
 
 import pandas as pd
 from fastapi import APIRouter, File, HTTPException, UploadFile
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from ledger_models import (
     REQUIRED_COLUMNS,
@@ -75,7 +75,8 @@ class LedgerEntryInput(BaseModel):
     cost_center: str = Field(..., description="Cost center code (e.g., 'CC-OPS')")
     posting_timestamp: str = Field(..., description="ISO 8601 timestamp of the journal posting")
 
-    @validator("amount")
+    @field_validator("amount")
+    @classmethod
     def amount_must_be_positive(cls, v: float) -> float:
         if v <= 0:
             raise ValueError("amount must be greater than 0")
@@ -85,7 +86,7 @@ class LedgerEntryInput(BaseModel):
 class AuditBatchRequest(BaseModel):
     """Batch of pending ledger entries to audit before period close."""
     entries: List[LedgerEntryInput] = Field(
-        ..., min_items=1, max_items=50_000,
+        ..., min_length=1, max_length=50_000,
         description="Batch of pending journal entries (1 to 50,000)"
     )
     tenant_id: Optional[str] = Field(None, description="Tenant identifier for multi-tenant deployments")
@@ -132,6 +133,8 @@ class TrainResponse(BaseModel):
 
 
 class AuditorStatusResponse(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     is_trained: bool
     train_timestamp: Optional[str]
     ae_threshold_tau: float

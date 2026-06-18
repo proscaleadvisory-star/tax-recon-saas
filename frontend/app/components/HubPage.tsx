@@ -66,11 +66,11 @@ export default function HubPage({ user, onSelectTool }: HubPageProps) {
       <header className="border-b border-white/10 bg-[#05070B]/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-5 py-5 sm:px-8">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#38BDF8] text-sm font-black text-[#020617]">
-              C
+            <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white p-1 shadow-[0_10px_30px_rgba(0,0,0,0.22)]">
+              <img src="/proscale-logo.png" alt="ProScale Advisory logo" className="h-full w-full object-contain" />
             </div>
             <div>
-              <p className="text-lg font-bold tracking-[-0.02em]">CLIENT Suite</p>
+              <p className="text-lg font-bold tracking-[-0.02em]">ProScale Advisory Suite</p>
               <p className="text-sm text-slate-400">All finance modules</p>
             </div>
           </div>
