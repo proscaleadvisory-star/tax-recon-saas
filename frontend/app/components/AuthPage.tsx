@@ -518,7 +518,7 @@ export default function AuthPage() {
           <ModuleBackdrop type={mod.id} accent={mod.accent} />
           <motion.a
             href="#hero-auth"
-            className="container-cinematic group grid cursor-pointer items-center gap-10 rounded-[2rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 lg:grid-cols-2 lg:gap-16"
+            className="container-cinematic module-story-card group grid cursor-pointer items-center gap-10 rounded-[2rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 lg:grid-cols-2 lg:gap-16"
             aria-label={`Sign in to view ${mod.label} in the module hub`}
             whileHover={shouldReduceMotion ? undefined : { y: -4 }}
             whileTap={{ scale: 0.992 }}
@@ -919,28 +919,78 @@ export default function AuthPage() {
           transform: translateX(-100%);
           animation: barScan 2.6s ease-in-out infinite;
         }
-        .india-heatmap {
-          display: grid;
-          grid-template-columns: repeat(4, minmax(0, 1fr));
-          gap: 0.55rem;
-        }
-        .heat-cell {
-          aspect-ratio: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 0.95rem;
+        .india-map-panel {
+          position: relative;
+          min-height: 306px;
+          overflow: hidden;
+          border-radius: 1.35rem;
           border: 1px solid rgba(255,255,255,0.10);
-          font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-          font-size: 0.72rem;
-          font-weight: 900;
-          color: rgba(248,250,252,0.9);
-          animation: heatPulse 2.9s ease-in-out infinite;
+          background:
+            radial-gradient(circle at 52% 46%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 42%),
+            radial-gradient(circle at 20% 18%, rgba(56,189,248,0.13), transparent 34%),
+            linear-gradient(145deg, rgba(2,6,23,0.86), rgba(0,0,0,0.96));
         }
-        .heat-1 { background: rgba(16,185,129,0.16); box-shadow: 0 0 18px rgba(16,185,129,0.08); }
-        .heat-2 { background: rgba(56,189,248,0.16); box-shadow: 0 0 18px rgba(56,189,248,0.09); }
-        .heat-3 { background: rgba(245,158,11,0.18); box-shadow: 0 0 22px rgba(245,158,11,0.11); }
-        .heat-4 { background: rgba(244,63,94,0.18); box-shadow: 0 0 24px rgba(244,63,94,0.12); }
+        .india-map-panel::before {
+          content: "";
+          position: absolute;
+          inset: -32% -18%;
+          background:
+            repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 18px),
+            linear-gradient(90deg, transparent, rgba(125,211,252,0.08), transparent);
+          transform: translateY(-30%);
+          animation: mapScan 5.8s ease-in-out infinite;
+          opacity: 0.6;
+        }
+        .india-map-panel > * {
+          position: relative;
+          z-index: 1;
+        }
+        .india-map-shape {
+          filter: drop-shadow(0 0 28px color-mix(in srgb, var(--accent) 28%, transparent));
+          transform-origin: 158px 180px;
+          animation: mapBreathe 4.8s ease-in-out infinite;
+        }
+        .india-flow-line {
+          fill: none;
+          stroke-linecap: round;
+          stroke-dasharray: 7 13;
+          animation: mapFlow 3.6s linear infinite;
+        }
+        .india-map-node {
+          filter: drop-shadow(0 0 12px currentColor);
+          animation: mapPulse 2.8s ease-in-out infinite;
+        }
+        .india-map-ring {
+          fill: none;
+          stroke-width: 1.3;
+          opacity: 0;
+          transform-origin: center;
+          animation: mapRing 2.8s ease-out infinite;
+        }
+        .india-map-label {
+          font-size: 9px;
+          font-weight: 900;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          fill: rgba(226,232,240,0.86);
+        }
+        .india-map-value {
+          font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+          font-size: 8px;
+          font-weight: 900;
+          fill: rgba(125,211,252,0.92);
+        }
+        .india-map-chip {
+          border: 1px solid rgba(255,255,255,0.10);
+          border-radius: 999px;
+          background: rgba(2,6,23,0.62);
+          padding: 0.45rem 0.55rem;
+          font-size: 0.58rem;
+          font-weight: 900;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: rgba(226,232,240,0.78);
+        }
         .radar-polygon {
           transform-origin: 160px 112px;
           animation: radarBreathe 3.6s ease-in-out infinite;
@@ -1062,9 +1112,24 @@ export default function AuthPage() {
           45%, 65% { opacity: 0.8; }
           100% { transform: translateX(100%); opacity: 0; }
         }
-        @keyframes heatPulse {
-          0%, 100% { transform: translateY(0); filter: brightness(0.92); }
-          50% { transform: translateY(-3px); filter: brightness(1.25); }
+        @keyframes mapBreathe {
+          0%, 100% { transform: scale(0.985); opacity: 0.86; }
+          50% { transform: scale(1.015); opacity: 1; }
+        }
+        @keyframes mapPulse {
+          0%, 100% { transform: scale(1); opacity: 0.72; }
+          50% { transform: scale(1.2); opacity: 1; }
+        }
+        @keyframes mapRing {
+          0% { r: 5; opacity: 0.55; }
+          70%, 100% { r: 18; opacity: 0; }
+        }
+        @keyframes mapFlow {
+          to { stroke-dashoffset: -40; }
+        }
+        @keyframes mapScan {
+          0%, 100% { transform: translateY(-34%); opacity: 0.22; }
+          50% { transform: translateY(34%); opacity: 0.62; }
         }
         @keyframes radarBreathe {
           0%, 100% { transform: scale(0.96); opacity: 0.8; }
@@ -1092,7 +1157,11 @@ export default function AuthPage() {
           .mod-dash,
           .data-node,
           .animated-bar::after,
-          .heat-cell,
+          .india-map-panel::before,
+          .india-map-shape,
+          .india-flow-line,
+          .india-map-node,
+          .india-map-ring,
           .radar-polygon,
           .evidence-row,
           .forecast-line,
@@ -1106,11 +1175,101 @@ export default function AuthPage() {
             animation: none !important;
           }
         }
+        @media (max-width: 1024px) {
+          .mod-section { padding: 4rem 0; }
+          .module-story-card {
+            gap: 2rem;
+            border-radius: 1.5rem;
+          }
+          .mod-dash::before {
+            top: -2rem;
+            right: auto;
+            left: 0;
+            font-size: 0.5rem;
+            letter-spacing: 0.14em;
+          }
+          .mod-dash::after {
+            opacity: 0.28;
+          }
+        }
         @media (max-width: 768px) {
           .container-cinematic { padding: 0 1.25rem; }
           .floating-fragment { display: none; }
-          .capability-shell { border-radius: 1.25rem; }
-          .india-heatmap { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+          .module-backdrop { opacity: 0.42; }
+          .module-story-card {
+            align-items: start;
+            gap: 1.6rem;
+          }
+          .mod-title {
+            font-size: clamp(2.15rem, 12vw, 3.1rem) !important;
+            line-height: 0.98 !important;
+            letter-spacing: -0.045em !important;
+          }
+          .mod-desc {
+            max-width: none;
+            font-size: 0.98rem !important;
+          }
+          .mod-feat {
+            font-size: 0.9rem !important;
+            line-height: 1.45;
+          }
+          .mod-dash {
+            margin-top: 1.7rem;
+            width: 100%;
+          }
+          .mod-dash > div {
+            max-width: 100%;
+          }
+          .capability-shell {
+            max-width: 100%;
+            border-radius: 1.25rem;
+          }
+          .capability-shell .grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem;
+          }
+          .capability-shell .p-5 {
+            padding: 1rem;
+          }
+          .india-map-panel {
+            min-height: 292px;
+          }
+          .india-map-label {
+            font-size: 7.5px;
+          }
+          .india-map-value {
+            font-size: 7px;
+          }
+        }
+        @media (max-width: 520px) {
+          .container-cinematic { padding: 0 1rem; }
+          .mod-section { padding: 3.25rem 0; }
+          .mod-title {
+            font-size: clamp(1.95rem, 13.5vw, 2.65rem) !important;
+          }
+          .capability-shell {
+            border-radius: 1rem;
+          }
+          .capability-shell [class*="px-5"] {
+            padding-left: 1rem;
+            padding-right: 1rem;
+          }
+          .capability-shell [class*="py-4"] {
+            padding-top: 0.85rem;
+            padding-bottom: 0.85rem;
+          }
+          .india-map-panel {
+            min-height: 260px;
+          }
+          .india-map-chip {
+            padding: 0.38rem 0.46rem;
+            font-size: 0.5rem;
+            letter-spacing: 0.08em;
+          }
+          .mod-dash span.mt-3 {
+            padding: 0.8rem 1rem;
+            font-size: 0.82rem;
+          }
         }
       `}</style>
     </main>
@@ -1360,20 +1519,73 @@ function ModuleVisual({ type, accent }: { type: string; accent: string }) {
           <div className="font-mono text-xs text-violet-200">GSTR-2B</div>
         </div>
         <div className="grid gap-5 p-5 md:grid-cols-[0.95fr_1.05fr]">
-          <div className="india-heatmap rounded-3xl border border-white/10 bg-black/55 p-4">
-            {[
-              ["DL", 4], ["RJ", 2], ["UP", 3], ["GJ", 1], ["MP", 2],
-              ["MH", 4], ["KA", 3], ["TN", 2], ["TG", 1], ["WB", 3],
-              ["KL", 2], ["PB", 1],
-            ].map(([state, level], index) => (
-              <div
-                key={state}
-                className={`heat-cell heat-${level}`}
-                style={{ animationDelay: `${index * 0.08}s` }}
-              >
-                {state}
-              </div>
-            ))}
+          <div className="india-map-panel p-3">
+            <svg viewBox="0 0 320 340" className="h-full min-h-[280px] w-full overflow-visible" role="img" aria-label="Animated India sales and GST credit map">
+              <defs>
+                <linearGradient id="indiaHeatGradient" x1="70" x2="250" y1="40" y2="320" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.22" />
+                  <stop offset="48%" stopColor={accent} stopOpacity="0.34" />
+                  <stop offset="100%" stopColor="#10B981" stopOpacity="0.24" />
+                </linearGradient>
+                <radialGradient id="indiaNodeGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#F8FAFC" stopOpacity="1" />
+                  <stop offset="42%" stopColor={accent} stopOpacity="0.9" />
+                  <stop offset="100%" stopColor={accent} stopOpacity="0" />
+                </radialGradient>
+                <filter id="indiaSoftGlow" x="-35%" y="-35%" width="170%" height="170%">
+                  <feGaussianBlur stdDeviation="7" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <path className="india-flow-line" d="M103 88 C142 118 178 145 214 170" stroke="#38BDF8" strokeOpacity="0.45" strokeWidth="1.6" />
+              <path className="india-flow-line" d="M78 170 C124 178 160 206 191 263" stroke={accent} strokeOpacity="0.48" strokeWidth="1.6" style={{ animationDelay: "0.35s" }} />
+              <path className="india-flow-line" d="M216 128 C189 164 184 202 197 286" stroke="#10B981" strokeOpacity="0.42" strokeWidth="1.6" style={{ animationDelay: "0.7s" }} />
+
+              <path
+                className="india-map-shape"
+                d="M143 34 L170 45 L181 70 L211 78 L229 104 L221 129 L240 151 L228 181 L238 206 L218 230 L203 260 L186 303 L170 321 L154 291 L145 252 L124 232 L118 201 L92 188 L74 160 L84 130 L70 106 L97 87 L109 58 Z"
+                fill="url(#indiaHeatGradient)"
+                stroke={accent}
+                strokeOpacity="0.58"
+                strokeWidth="1.5"
+                filter="url(#indiaSoftGlow)"
+              />
+              <path
+                d="M143 34 L170 45 L181 70 L211 78 L229 104 L221 129 L240 151 L228 181 L238 206 L218 230 L203 260 L186 303 L170 321 L154 291 L145 252 L124 232 L118 201 L92 188 L74 160 L84 130 L70 106 L97 87 L109 58 Z"
+                fill="none"
+                stroke="rgba(255,255,255,0.16)"
+                strokeWidth="0.7"
+              />
+
+              {[
+                { label: "NCR", value: "11.8L", x: 145, y: 78, color: "#38BDF8" },
+                { label: "GJ", value: "6.4L", x: 96, y: 150, color: "#F59E0B" },
+                { label: "MH", value: "18.6L", x: 125, y: 196, color: "#F43F5E" },
+                { label: "BLR", value: "14.2L", x: 160, y: 248, color: accent },
+                { label: "TN", value: "9.1L", x: 178, y: 288, color: "#10B981" },
+                { label: "WB", value: "7.2L", x: 218, y: 164, color: "#38BDF8" },
+              ].map((node, index) => (
+                <g key={node.label} style={{ color: node.color }}>
+                  <circle className="india-map-ring" cx={node.x} cy={node.y} r="5" stroke={node.color} style={{ animationDelay: `${index * 0.22}s` }} />
+                  <circle className="india-map-node" cx={node.x} cy={node.y} r="4.6" fill="url(#indiaNodeGlow)" style={{ animationDelay: `${index * 0.22}s` }} />
+                  <text className="india-map-label" x={node.x + (node.x > 170 ? 12 : -12)} y={node.y - 6} textAnchor={node.x > 170 ? "start" : "end"}>
+                    {node.label}
+                  </text>
+                  <text className="india-map-value" x={node.x + (node.x > 170 ? 12 : -12)} y={node.y + 7} textAnchor={node.x > 170 ? "start" : "end"}>
+                    {node.value}
+                  </text>
+                </g>
+              ))}
+            </svg>
+            <div className="pointer-events-none absolute bottom-3 left-3 right-3 grid grid-cols-3 gap-2">
+              {["Sales velocity", "ITC block", "Ready claim"].map((item) => (
+                <span key={item} className="india-map-chip text-center">{item}</span>
+              ))}
+            </div>
           </div>
           <div className="space-y-3">
             {[
